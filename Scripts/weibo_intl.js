@@ -25,7 +25,9 @@ if (url.includes("interface/sdk/sdkad.php")) {
   } else if (url.includes("ct=feed&a=trends")) { 
     // 趋势页
     if (e.data?.order) { 
-      e. data.order = [“搜索主题”]; 
+      e.data.order =  ["discover", "search_topic"];
+      e.data.discover.splice(0, 1);
+      
     } 
   } else if (url.includes("php?a=search_topic")) { 
     // 热搜置顶
