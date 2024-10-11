@@ -1,85 +1,77 @@
-//2024-10-11 12:54:03 
+// URL和处理函数的映射
+const otherUrls = {
+    "user_center": modifiedUserCenter, // 用户中心
+    "php?a=open_app": removeAdBanner,  // 帖子下方广告banner
+    "a=trends": removeTopics,          // 趋势页
+    "a=get_coopen_ads": removeIntlOpenAds, // 开屏广告
+    "interface/sdk/sdkad.php": removePhpScreenAds, // SDK广告
+    "php?a=search_topic": "removeSearchTopic"
+};
 
-let url = $request.url, 
-  body = $response.body; 
-if (url.includes("interface/sdk/sdkad.php")) { 
-  try { 
-    let x = JSON.parse(body.substring(0, body.length - 2)); 
-    x.show_push_splash_ad = false; 
-    x.background_delay_display_time = 6e6; 
-    x.ads = []; 
-    $done({ body: JSON.stringify(x) + "OK" }); 
-  } catch (error) {} 
-} else { 
-  let e = JSON.parse(body); 
-  if (url.includes("/statuses/")) { 
-    // 瀑布流
-    e.ad = []; 
-    e.advertises = undefined; 
-    e.趋势=未定义；
-    if (e.statuses) { 
-      e.statuses = e.statuses.filter( 
-        (item) => 
-          !(["广告", "广告", "热推", "热推"].includes(item.mblogtypename) || item?.promotion?.type === "ad" 
-          ));} 
-  } else if (url.includes("portal.php?a=trends")) { 
-    // 趋势页
-    if (e.data?.order) { 
-      e.data.order =  ["discover", "search_topic"];
-      e.data.discover.splice(0, 1);
-      
-    } 
-  } else if (url.includes("php?a=search_topic")) { 
-    // 热搜置顶
-    if (e.data?.length && e.data[0].type === "searchtop") { 
-      e.data.shift(); } 
-    } 
-  } else if (url.includes("user_center")) { 
-    // 我的页面 尊享专属
-    if (e?.data?.cards) { 
-      e.data.cards.forEach((card) => { 
-        car​​d.items = card.items.filter( 
-          (item) => !["personal_vip", "personal_wallpaper"].includes(item.type) 
-        );})} 
-  } else if (url.includes("a=get_searching_info")) { 
-    e = { 
-      data: { 
-        expiration_time: "8e8", 
-        cards: [{ tip: "", word: "" }], 
-      }, 
-      info: "", 
-      retcode: 0, 
-    }; 
-  } else if (url.includes("a=icon_center")) { 
-    if (e.data[0].title === "单色") { 
-      for (const i of e.data) { 
-        for (const k of i.card) { 
-          k.status = 1; 
-          k.forbidden = 0; 
-    }}}; 
-  } else if (url.includes("a=open_app&auth")) { 
-    // 详情横幅
-    if (e.data) { 
-      e.data.uve_ad_scene = ""; 
-      e.data.vip_info.tips = {}; 
-      e.data.vip_title_ad = ""; 
-      e.data.close_ad_setting = {}; 
-      e.data.background_preview = ""; 
-      e.data.detail_banner_ad = []; 
-    } 
-  } else if (url.includes("a=get_coopen_ads")) { 
-    if (e.data) {
-      e.data.ad_list = []; 
-      e.data.gdt_video_ad_ios = []; 
-      e.data.display_ad = 0; e.data.ad_ios_id 
-      = null; 
-      e.data.app_ad_ios_id = null; 
-      e.data.reserve_ad_ios_id = ""; 
-      e.data.reserve_app_ad_ios_id = ""; 
-      e.data.ad_duration = 6e6; 
-      e.data.ad_cd_interval = 6e6; 
-      e.data.pic_ad = []; 
-    } 
-  } 
-  $done({ body: JSON.stringify(e) }); 
+// 根据URL获取处理函数
+function getModifyMethod(url) {
+    for (let key in otherUrls) {
+        if (url.includes(key)) {
+            return otherUrls[key]; // 返回处理函数
+        }
+    }
+    return null; // 没有匹配的返回null
 }
+
+// 删除广告的具体实现函数
+function removeAdBanner(e) {
+    return e.data.close_ad_setting && delete e.data.close_ad_setting, e.data.detail_banner_ad && (e.data.detail_banner_ad = []), e;
+}
+
+function modifiedUserCenter(e) {
+    return e.data && 0 !== e.data.length && e.data.cards && (e.data.cards = Object.values(e.data.cards).filter(e => "personal_vip" != e.items[0].type)), e;
+}
+
+function removeTopics(e) {
+    if (e.data) {
+        e.data.order = ["discover", "search_topic"];
+        if (e.data.discover && Array.isArray(e.data.discover)) {
+            e.data.discover.splice(0, 1);
+        }
+    }
+    return e;
+}
+
+function removeIntlOpenAds(e) {
+    return e.data && (e.data = {display_ad: 1}), e;
+}
+
+function removePhpScreenAds(e) {
+    if (!e.ads) return e;
+    for (let t of (e.show_push_splash_ad = !1, e.background_delay_display_time = 0, e.lastAdShow_delay_display_time = 0, e.realtime_ad_video_stall_time = 0, e.realtime_ad_timeout_duration = 0, e.ads)) {
+        t.displaytime = 0;
+        t.displayintervel = 86400;
+        t.allowdaydisplaynum = 0;
+        t.displaynum = 0;
+        t.displaytime = 1;
+        t.begintime = "2029-12-30 00:00:00";
+        t.endtime = "2029-12-30 23:59:59";
+    }
+    return e;
+}
+
+function removeSearchTopic(e) {
+    return e.data && 0 !== e.data.search_topic?.cards.length && (e.data.search_topic.cards = Object.values(e.data.search_topic.cards).filter(e => "searchtop" != e.type), e.data.trending_topic && delete e.data.trending_topic), e
+}
+
+// 主逻辑：根据请求的URL选择适当的函数处理响应
+var body = $response.body;
+var url = $request.url;
+let modifyFunction = getModifyMethod(url); // 获取对应的处理函数
+
+if (modifyFunction) {
+    log(modifyFunction.name); // 打印函数名，便于调试
+    let data = JSON.parse(body.match(/\{.*\}/)[0]); // 提取JSON数据
+    modifyFunction(data); // 执行处理函数
+    body = JSON.stringify(data); // 将处理后的数据转换回字符串
+    if (modifyFunction === removePhpScreenAds) {
+        body = JSON.stringify(data) + "OK";
+    }
+}
+
+$done({body}); // 返回修改后的响应
