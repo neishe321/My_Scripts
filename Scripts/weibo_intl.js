@@ -22,7 +22,7 @@ if (url.includes("interface/sdk/sdkad.php")) {
         (item) => 
           !(["广告", "广告", "热推", "热推"].includes(item.mblogtypename) || item?.promotion?.type === "ad" 
           ));} 
-  } else if (url.includes("ct=feed&a=trends")) { 
+  } else if (url.includes("pottal.php?a=trends")) { 
     // 趋势页
     if (e.data?.order) { 
       e.data.order =  ["discover", "search_topic"];
