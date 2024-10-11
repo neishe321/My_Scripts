@@ -6,7 +6,8 @@
 
 [rewrite_local]
 ^https?:\/\/[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+){1,3}(:\d+)?\/api\/v\d\/movie\/index_recommend url script-response-body https://raw.githubusercontent.com/neishe321/QuanX/main/Scripts/dyls.js
-^https?:\/\/[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+){1,3}(:\d+)?\/api\/v\d\/advert url reject-200
+# ^https?:\/\/[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+){1,3}(:\d+)?\/api\/v\d\/advert url reject-200
+^https:\/\/app-v1\.ecoliving168\.com\/api\/v1\/advert\/config reject-dict
 
 [mitm]
 hostname = app-v1.ecoliving168.com
