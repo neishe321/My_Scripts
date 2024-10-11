@@ -30,13 +30,15 @@ function removeAdBanner(e) {
 function modifiedUserCenter(e) {
     if (e.data && e.data.cards) {
         e.data.cards = e.data.cards.filter(card => {
-            return card.items && card.items.length > 0 && 
-                   card.items[0].type !== "personal_vip" &&
-                   card.items[0].type !== "ic_profile_wallpaper"; 
+            card.items = card.items.filter(item => 
+                item.type !== "personal_vip" && item.type !== "ic_profile_wallpaper"
+            );
+            return card.items.length > 0;
         });
     }
     return e;
 }
+
 
 
 function removeTopics(e) {
