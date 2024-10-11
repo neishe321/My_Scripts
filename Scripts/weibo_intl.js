@@ -30,7 +30,9 @@ function removeAdBanner(e) {
 function modifiedUserCenter(e) {
     if (e.data && e.data.cards) {
         e.data.cards = e.data.cards.filter(card => {
-            return card.items && card.items.length > 0 && card.items[0].type !== "personal_vip";
+            return card.items && card.items.length > 0 && 
+                   card.items[0].type !== "personal_vip" &&
+                   card.items[0].type !== "ic_profile_wallpaper"; 
         });
     }
     return e;
