@@ -28,11 +28,14 @@ function removeAdBanner(e) {
 }
 
 function modifiedUserCenter(e) {
-    if (e.data && e.data.length > 0 && e.data.cards) {
-        e.data.cards = Object.values(e.data.cards).filter(e => e.items[0].type !== "personal_vip");
+    if (e.data && e.data.cards) {
+        e.data.cards = e.data.cards.filter(card => {
+            return card.items && card.items.length > 0 && card.items[0].type !== "personal_vip";
+        });
     }
     return e;
 }
+
 
 function removeTopics(e) {
     if (e.data) {
