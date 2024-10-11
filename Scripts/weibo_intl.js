@@ -1,4 +1,4 @@
-// URL和处理函数的映射
+// 函数映射
 const otherUrls = {
     "user_center": modifiedUserCenter, // 用户中心
     "php?a=open_app": removeAdBanner,  // 帖子下方广告banner
@@ -8,17 +8,17 @@ const otherUrls = {
     "php?a=search_topic": removeSearchTopic // 搜索话题
 };
 
-// 根据URL获取处理函数
+// 获取处理函数
 function getModifyMethod(url) {
     for (let key in otherUrls) {
         if (url.includes(key)) {
-            return otherUrls[key]; // 返回处理函数
+            return otherUrls[key]; 
         }
     }
-    return null; // 没有匹配的返回null
+    return null; 
 }
 
-// 删除广告的具体实现函数
+// 实现函数
 function removeAdBanner(e) {
     if (e.data) {
         if (e.data.close_ad_setting) delete e.data.close_ad_setting;
@@ -79,19 +79,19 @@ function removeSearchTopic(e) {
     return e;
 }
 
-// 主逻辑：根据请求的URL选择适当的函数处理响应
+// 主函数
 var body = $response.body;
 var url = $request.url;
-let modifyFunction = getModifyMethod(url); // 获取对应的处理函数
+let modifyFunction = getModifyMethod(url); 
 
 if (modifyFunction) {
-    console.log(modifyFunction.name); // 打印函数名，便于调试
-    let data = JSON.parse(body.match(/\{.*\}/)[0]); // 提取JSON数据
-    modifyFunction(data); // 执行处理函数
-    body = JSON.stringify(data); // 将处理后的数据转换回字符串
+    console.log(modifyFunction.name);
+    let data = JSON.parse(body.match(/\{.*\}/)[0]); 
+    modifyFunction(data); 
+    body = JSON.stringify(data); 
     if (modifyFunction === removePhpScreenAds) {
-        body = JSON.stringify(data) + "OK"; // 如果是removePhpScreenAds，则附加"OK"
+        body = JSON.stringify(data) + "OK";
     }
 }
 
-$done({ body }); // 返回修改后的响应
+$done({ body });
