@@ -92,7 +92,7 @@ var url = $request.url;
 let modifyFunction = getModifyMethod(url); 
 
 if (modifyFunction) {
-    console.log(modifyFunction.name);
+    //console.log(modifyFunction.name);
     let data = JSON.parse(body.match(/\{.*\}/)[0]); 
     modifyFunction(data); 
     body = JSON.stringify(data); 
