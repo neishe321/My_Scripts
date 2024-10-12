@@ -1,6 +1,5 @@
 # Rewrite
 
-快链接
 微博国际版 
 https://raw.githubusercontent.com/neishe321/QuanX/main/Rewrite/weibo_intl.conf
 
