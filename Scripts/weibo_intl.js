@@ -1,11 +1,12 @@
-// 函数映射
+// 脚本自定义优化于：https://raw.githubusercontent.com/ddgksf2013/Scripts/master/weibo_json.js
+// 关系映射
 const otherUrls = {
+    // "php?a=search_topic": removeSearchTopic // 搜索话题
     "php?a=user_center": modifiedUserCenter, // 用户中心
-    "php?a=open_app": removeAdBanner,  // 帖子下方广告banner
-    "php?a=trends": removeTopics,          // 趋势页
+    "php?a=open_app": removeAdBanner,  // 帖子广告banner
+    "php?a=trends": removeTopics,          // 趋势页card
     "php?a=get_coopen_ads": removeIntlOpenAds, // 开屏广告
-    "interface/sdk/sdkad.php": removePhpScreenAds, // SDK广告
-    "php?a=search_topic": removeSearchTopic // 搜索话题
+    "interface/sdk/sdkad.php": removePhpScreenAds // SDK广告  
 };
 
 // 获取处理函数
@@ -18,7 +19,7 @@ function getModifyMethod(url) {
     return null; 
 }
 
-// 实现函数
+// 功能函数
 function removeAdBanner(e) {
     if (e.data) {
         //if (e.data.close_ad_setting) delete e.data.close_ad_setting;
@@ -39,7 +40,6 @@ function modifiedUserCenter(e) {
     }
     return e;
 }
-
 
 
 function removeTopics(e) {
@@ -79,13 +79,14 @@ function removePhpScreenAds(e) {
     return e;
 }
 
-function removeSearchTopic(e) {
-    if (e.data && e.data.search_topic && e.data.search_topic.cards.length > 0) {
-        e.data.search_topic.cards = Object.values(e.data.search_topic.cards).filter(e => e.type !== "searchtop");
-        if (e.data.trending_topic) delete e.data.trending_topic;
-    }
-    return e;
-}
+// function removeSearchTopic(e) {
+//     if (e.data && e.data.search_topic && e.data.search_topic.cards.length > 0) {
+//         e.data.search_topic.cards = Object.values(e.data.search_topic.cards).filter(e => e.type !== "searchtop");
+//         if (e.data.trending_topic) delete e.data.trending_topic;
+//     }
+//     return e;
+// }
+
 
 // 主函数
 var body = $response.body;
