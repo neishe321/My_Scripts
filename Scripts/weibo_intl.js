@@ -3,7 +3,7 @@
 const otherUrls = {
     // "php?a=search_topic": removeSearchTopic, // 搜索话题
     "php?a=user_center": modifiedUserCenter, // 用户中心
-    "php?a=open_app": removeAdBanner,  // 帖子广告banner
+    "php?a=open_app": removeAdBanner,  // 帖子下方广告banner
     "php?a=trends": removeTopics,          // 趋势页card
     "php?a=get_coopen_ads": removeIntlOpenAds // 开屏广告
 };
@@ -22,9 +22,8 @@ function getModifyMethod(url) {
 function removeAdBanner(e) {
     if (e.data) {
         if (e.data.close_ad_setting) delete e.data.close_ad_setting;
-        if (e.data.detail_banner_ad) e.data.detail_banner_ad = [];
-        // 推荐
-        // e.data = {};
+        if (e.data.vip_title_blog) delete e.data.vip_title_blog;
+        if (e.data.tips) delete e.data.tips;
     }
     return e;
 }
