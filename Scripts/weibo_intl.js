@@ -21,9 +21,10 @@ function getModifyMethod(url) {
 // 功能函数
 function removeAdBanner(e) {
     if (e.data) {
-        //if (e.data.close_ad_setting) delete e.data.close_ad_setting;
-        //if (e.data.detail_banner_ad) e.data.detail_banner_ad = [];
-        e.data = {};
+        if (e.data.close_ad_setting) delete e.data.close_ad_setting;
+        if (e.data.detail_banner_ad) e.data.detail_banner_ad = [];
+        // 推荐
+        // e.data = {};
     }
     return e;
 }
