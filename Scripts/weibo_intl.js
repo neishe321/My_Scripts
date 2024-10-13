@@ -1,9 +1,9 @@
 // 函数映射
 const otherUrls = {
-    "user_center": modifiedUserCenter, // 用户中心
+    "php?user_center": modifiedUserCenter, // 用户中心
     "php?a=open_app": removeAdBanner,  // 帖子下方广告banner
-    "a=trends": removeTopics,          // 趋势页
-    "a=get_coopen_ads": removeIntlOpenAds, // 开屏广告
+    "php?a=trends": removeTopics,          // 趋势页
+    "php?a=get_coopen_ads": removeIntlOpenAds, // 开屏广告
     "interface/sdk/sdkad.php": removePhpScreenAds, // SDK广告
     "php?a=search_topic": removeSearchTopic // 搜索话题
 };
@@ -21,8 +21,9 @@ function getModifyMethod(url) {
 // 实现函数
 function removeAdBanner(e) {
     if (e.data) {
-        if (e.data.close_ad_setting) delete e.data.close_ad_setting;
-        if (e.data.detail_banner_ad) e.data.detail_banner_ad = [];
+        //if (e.data.close_ad_setting) delete e.data.close_ad_setting;
+        //if (e.data.detail_banner_ad) e.data.detail_banner_ad = [];
+        e.data = {};
     }
     return e;
 }
