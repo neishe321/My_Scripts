@@ -98,8 +98,7 @@ if (modifyFunction) {
     modifyFunction(data); 
     body = JSON.stringify(data); 
     // if (modifyFunction === removePhpScreenAds) {
-    //     body = JSON.stringify(data) + "OK";
-    }
+    //     body = JSON.stringify(data) + "OK";}
 }
 
 $done({ body });
