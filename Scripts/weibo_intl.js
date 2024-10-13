@@ -1,8 +1,8 @@
 // 脚本自定义优化于：https://raw.githubusercontent.com/ddgksf2013/Scripts/master/weibo_json.js
 // 关系映射
 const otherUrls = {
-    // "php?a=search_topic": removeSearchTopic // 搜索话题
-    // "interface/sdk/sdkad.php": removePhpScreenAds // SDK
+    // "php?a=search_topic": removeSearchTopic, // 搜索话题
+    // "interface/sdk/sdkad.php": removePhpScreenAds, // SDK
     "php?a=user_center": modifiedUserCenter, // 用户中心
     "php?a=open_app": removeAdBanner,  // 帖子广告banner
     "php?a=trends": removeTopics,          // 趋势页card
