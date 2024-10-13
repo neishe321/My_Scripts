@@ -1,5 +1,5 @@
 // 脚本自定义优化于：https://raw.githubusercontent.com/ddgksf2013/Scripts/master/weibo_json.js
-// 关系映射
+
 const otherUrls = {
     // "php?a=search_topic": removeSearchTopic, // 搜索话题
     "php?a=user_center": modifiedUserCenter, // 用户中心
@@ -8,7 +8,6 @@ const otherUrls = {
     "php?a=get_coopen_ads": removeIntlOpenAds // 开屏广告
 };
 
-// 获取处理函数
 function getModifyMethod(url) {
     for (let key in otherUrls) {
         if (url.includes(key)) {
@@ -18,7 +17,7 @@ function getModifyMethod(url) {
     return null; 
 }
 
-// 功能函数
+// 
 function removeAdBanner(e) {
     if (e.data) {
         if (e.data.close_ad_setting) delete e.data.close_ad_setting;
@@ -66,7 +65,7 @@ function removeIntlOpenAds(e) {
 // }
 
 
-// 主函数
+// 
 var body = $response.body;
 var url = $request.url;
 let modifyFunction = getModifyMethod(url); 
@@ -76,8 +75,6 @@ if (modifyFunction) {
     let data = JSON.parse(body.match(/\{.*\}/)[0]); 
     modifyFunction(data); 
     body = JSON.stringify(data); 
-    // if (modifyFunction === removePhpScreenAds) {
-    //     body = JSON.stringify(data) + "OK";}
 }
 
 $done({ body });
