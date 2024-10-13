@@ -11,13 +11,13 @@
 ^https?:\/\/m?api\.weibo\.c(n|om)\/\d\/ad\/weibointl\? url reject-dict
 #  微博国际版_开屏ad 2024-10-13
 ^https:\/\/open\.e\.kuaishou\.com\/rest\/e\/v\d+\/open url reject-dict
-^https:\/\/adstrategy\.biz\.weibo\.com\/v\d+\/strategy\/ad url reject-dict
+#^https:\/\/adstrategy\.biz\.weibo\.com\/v\d+\/strategy\/ad url reject-dict
 #^https:\/\/api\.weibo\.cn\/\d+\/friendships\/dynamic url reject-dict
-^https:\/\/bootpreload\.uve\.weibo\.com\/v\d+\/ad\/preload url reject-dict
+#^https:\/\/bootpreload\.uve\.weibo\.com\/v\d+\/ad\/preload url reject-dict
 
 # [Script]
 # > 微博国际版 信息流ad、趋势页卡片、个人设置
 ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a= url script-response-body https://raw.githubusercontent.com/neishe321/QuanX/main/Scripts/weibo_intl.js
 
 # [MitM]
-hostname = *api.weibo.cn, *weibo.com, open.e.kuaishou.com
+hostname = *api.weibo.cn, open.e.kuaishou.com
