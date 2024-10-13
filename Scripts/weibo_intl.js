@@ -1,6 +1,6 @@
 // 函数映射
 const otherUrls = {
-    "php?user_center": modifiedUserCenter, // 用户中心
+    "php?a=user_center": modifiedUserCenter, // 用户中心
     "php?a=open_app": removeAdBanner,  // 帖子下方广告banner
     "php?a=trends": removeTopics,          // 趋势页
     "php?a=get_coopen_ads": removeIntlOpenAds, // 开屏广告
