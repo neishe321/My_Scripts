@@ -3,23 +3,24 @@
 #!date = 2024-10-13 22:30:14
 
 # [Rewrite]
-#  微博国际版_屏蔽趋势页热门视频
-^https?:\/\/api\.weibo\.cn\/\d\/cardlist\?v_f=.*Weibo_intl url reject-dict
-#  微博国际版_屏蔽hotsearch
-^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=hot_search_users url reject-dict
-#  微博国际版_屏蔽热推荐
-^https?:\/\/api\.weibo\.cn\/\d\/ad\/weibointl\? url reject-dict
-#  微博国际版_开屏ad 2024-10-13
+#  开屏ad open.e.kuaishou.com, mi.gdt.qq.com, tqt.weibo.cn, *uve.weibo.com, *biz.weibo.com
 ^https?:\/\/open\.e\.kuaishou\.com\/rest\/e\/v\d\/open url reject-dict
 ^https?:\/\/mi\.gdt\.qq\.com\/ url reject
+^https?:\/\/tqt\.weibo\.cn\/ url reject
 ^https?:\/\/adstrategy\.biz\.weibo\.com\/v\d\/strategy\/ad url reject-dict
 ^https?:\/\/bootpreload\.uve\.weibo\.com\/v\d\/ad\/preload url reject-dict
-^https?:\/\/tqt\.weibo\.cn\/ url reject
+
+#  趋势页热门视频 *api.weibo.cn
+^https?:\/\/api\.weibo\.cn\/\d\/cardlist\?v_f=.*Weibo_intl url reject-dict
+#  hotsearch
+^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=hot_search_users url reject-dict
+#  热推荐
+^https?:\/\/api\.weibo\.cn\/\d\/ad\/weibointl\? url reject-dict
 
 # [Script]
-# > 微博国际版 信息流ad、趋势页卡片、个人设置
+# > 信息流ad、趋势页卡片、个人设置
 ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a= url script-response-body https://raw.githubusercontent.com/neishe321/QuanX/main/Scripts/weibo_intl.js
 
 # [MitM]
-hostname = *api.weibo.cn, open.e.kuaishou.com, *uve.weibo.com, *biz.weibo.com, mi.gdt.qq.com, tqt.weibo.cn
+hostname = *api.weibo.cn, open.e.kuaishou.com, mi.gdt.qq.com, tqt.weibo.cn, *uve.weibo.com, *biz.weibo.com
 
