@@ -13,13 +13,8 @@ function getModifyHandler(url) {
 
 function removeAdBanner(data) {
     if (data?.data) {
-        const adFields = [
-            "vip_info",       // VIP相关信息
-            "vip_title_blog",
-            "close_ad_setting"
-        ];
-        
-        adFields.forEach(field => delete data.data[field]);
+        delete data.data.close_ad_setting;
+        delete data.data.vip_title_blog;
     }
 }
 
