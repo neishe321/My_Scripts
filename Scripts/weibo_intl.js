@@ -13,9 +13,17 @@ function getModifyHandler(url) {
 
 function removeAdBanner(data) {
     if (data?.data) {
-        delete data.data.close_ad_setting;
-        delete data.data.vip_title_blog;
-        delete data.data.tips;
+        const adFields = [
+            "uve_feed_ad",    // 时间线广告
+            "uve_hot_ad",     // 热门广告
+            "search_hot",     // 热搜广告
+            "feed_warning_tips", // feed广告提示
+            "vip_info",       // VIP相关信息
+            "vip_lead",       // VIP推广信息
+            "vip_lite_index_recommand" // 轻享版推荐
+        ];
+        
+        adFields.forEach(field => delete data.data[field]);
     }
 }
 
