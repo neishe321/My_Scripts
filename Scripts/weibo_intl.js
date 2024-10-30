@@ -15,6 +15,7 @@ function removeAdBanner(data) {
     if (data?.data) {
         delete data.data.close_ad_setting;
         delete data.data.vip_title_blog;
+        delete data.data.vip_info;
     }
 }
 
