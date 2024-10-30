@@ -30,7 +30,7 @@ function modifyUserCenter(data) {
 
 function removeTrendsCards(data) {
     if (data?.data) {
-        data.data.order = ["discover", "search_topic"];
+        data.data.order = ["discover","search_topic","native_content"];
         if (Array.isArray(data.data.discover)) data.data.discover.shift();
     }
 }
