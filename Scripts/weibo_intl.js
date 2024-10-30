@@ -2,21 +2,13 @@
 
 const modifyHandlers = {
     "php?a=user_center": modifyUserCenter,      // 用户中心
-    "php?a=open_app": removeAdBanner,           // 帖子下方广告 banner
+    "php?a=open_app": removeAdBanner,           // 帖子 banner
     "php?a=trends": removeTrendsCards,          // 趋势页
-    "php?a=get_coopen_ads": removeOpenAds       // 开屏广告
+    "php?a=get_coopen_ads": removeOpenAds       // 开屏
 };
 
 function getModifyHandler(url) {
     return Object.keys(modifyHandlers).find(key => url.includes(key)) ? modifyHandlers[Object.keys(modifyHandlers).find(key => url.includes(key))] : null;
-}
-
-function removeAdBanner(data) {
-    if (data?.data) {
-        delete data.data.close_ad_setting;
-        delete data.data.vip_title_blog;
-        delete data.data.vip_info;
-    }
 }
 
 function modifyUserCenter(data) {
@@ -25,6 +17,14 @@ function modifyUserCenter(data) {
             card.items = card.items.filter(item => !["personal_vip", "ic_profile_wallpaper"].includes(item.type));
             return card.items.length > 0;
         });
+    }
+}
+
+function removeAdBanner(data) {
+    if (data?.data) {
+        delete data.data.close_ad_setting;
+        delete data.data.vip_title_blog;
+        delete data.data.vip_info;
     }
 }
 
