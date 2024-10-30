@@ -3,7 +3,7 @@
 const modifyHandlers = {
     "php?a=user_center": modifyUserCenter,      // 用户中心
     "php?a=open_app": removeAdBanner,           // 帖子下方广告 banner
-    "php?a=trends": removeTrendsCards,          // 趋势页卡片
+    "php?a=trends": removeTrendsCards,          // 趋势页
     "php?a=get_coopen_ads": removeOpenAds       // 开屏广告
 };
 
@@ -30,7 +30,7 @@ function modifyUserCenter(data) {
 
 function removeTrendsCards(data) {
     if (data?.data) {
-        data.data.order = ["discover","search_topic","native_content"];
+        data.data.order = ["discover","search_topic","topics","native_content"];
         if (Array.isArray(data.data.discover)) data.data.discover.shift();
     }
 }
