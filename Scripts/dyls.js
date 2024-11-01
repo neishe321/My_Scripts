@@ -1,6 +1,6 @@
-const url = $request.url;
 let obj = JSON.parse($response.body);
-if (url.includes("/movie/index_recommend")) {
+
+if ($request.url.indexOf("/movie/index_recommend") !== -1) {
     obj.data = obj?.data?.filter(item => item.layout !== "advert_self");
     obj.data?.forEach(item => {
         item.list = item.list?.filter(subItem => subItem.type !== 3);
