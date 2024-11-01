@@ -3,7 +3,9 @@ const url = $request.url;
 
 if (url.indexOf("c3frontend/af-nearby/nearby") !== -1) {
     // 附近
-    obj.data?.modules && (obj.data.modules = {});
+    obj.data?.modules && (obj.data.modules = Object.values(obj.data.modules).filter(
+        a => !["banner"].includes(a.dataType)
+    ));
 }
 else if (url.indexOf("ws/promotion-web/resource") !== -1) {
     // 打车
