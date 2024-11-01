@@ -6,12 +6,12 @@ hostname=*.amap.com
 
 # 首页
 ^http:\/\/amdc\.m\.taobao\.com url reject-200
-^https?:\/\/.*\.amap\.com\/ws\/faas\/amap-navigation\/main-page url reject-dict
+^https?:\/\/.*\.amap\.com\/ws\/faas\/amap-navigation\/main-page url reject-200
 # 附近
 ^https?:\/\/.*\.amap\.com\/ws\/c3frontend\/af-nearby\/nearby url script-response-body https://raw.githubusercontent.com/neishe321/QuanX/main/Scripts/amap.js
 # 打车
-#^https?:\/\/.*\.amap\.com\/ws\/boss\/order_web\/\w{8}_information url reject-200
-^https?:\/\/.*\.amap\.com\/ws\/boss\/car\/order\/content_info url reject-dict
+^https?:\/\/.*\.amap\.com\/ws\/boss\/order_web\/\w{8}_information url reject-200
+^https?:\/\/.*\.amap\.com\/ws\/boss\/car\/order\/content_info url reject-200
 ^https?:\/\/.*\.amap\.com\/ws\/promotion-web\/resource url script-response-body https://raw.githubusercontent.com/neishe321/QuanX/main/Scripts/amap.js
 # 我的
 ^https?:\/\/.*\.amap\.com\/ws\/shield\/dsp\/profile\/index\/nodefaas url script-response-body https://raw.githubusercontent.com/neishe321/QuanX/main/Scripts/amap.js
