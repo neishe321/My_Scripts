@@ -2,10 +2,9 @@ const obj = JSON.parse($response.body);
 const url = $request.url;
 
 if (url.indexOf("c3frontend/af-nearby/nearby") !== -1) {
-    // 附近
-    obj.data?.modules && (obj.data.modules = Object.values(obj.data.modules).filter(
-        a => !["banner"].includes(a.dataType)
-    ));
+    for (let key in obj.data?.modules) {
+        ["banner"].includes(obj.data.modules[key].dataType) && delete obj.data.modules[key];
+    }
 }
 else if (url.indexOf("ws/promotion-web/resource") !== -1) {
     // 打车
