@@ -12,5 +12,8 @@ else if (url.includes("profile/index/node")) {
         a => ["MyOrderCard", "GdRecommendCard"].includes(a.dataType)
     ));
 }
-
+else if ( - 1 != $request.url.indexOf("search/nearbyrec_smart")){
+	// 附近
+	obj.data.modules && obj.data.modules= {};
+}
 $done({ body: JSON.stringify(obj) });
