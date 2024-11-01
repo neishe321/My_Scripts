@@ -2,10 +2,10 @@ const obj = JSON.parse($response.body);
 const url = $request.url;
 
 if (url.indexOf("c3frontend/af-nearby/nearby") !== -1) {
+    // 附近
     const excludeKeys = ["banner","contentPoster","feedRec"];
     for (let key of excludeKeys) {
-        delete obj.data?.modules?.[key];
-    }
+        delete obj.data?.modules?.[key]}
 }
 else if (url.indexOf("ws/promotion-web/resource") !== -1) {
     // 打车
