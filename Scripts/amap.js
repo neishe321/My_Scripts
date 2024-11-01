@@ -2,7 +2,7 @@ const obj = JSON.parse($response.body);
 const url = $request.url;
 
 if (url.indexOf("c3frontend/af-nearby/nearby") !== -1) {
-    const excludeKeys = ["banner"];
+    const excludeKeys = ["banner","contentPoster","feedRec"];
     for (let key of excludeKeys) {
         delete obj.data?.modules?.[key];
     }
