@@ -30,7 +30,7 @@ function removeAdBanner(data) {
 
 function removeTrendsCards(data) {
     if (data?.data) {
-        data.data.order = ["discover","search_topic","topics","native_content"];
+        data.data.order = ["discover","search_topic"];
         if (Array.isArray(data.data.discover)) data.data.discover.shift();
     }
 }
