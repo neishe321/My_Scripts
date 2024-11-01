@@ -1,14 +1,15 @@
 const obj = JSON.parse($response.body);
 const url = $request.url;
 
-if (url.includes("c3frontend/af-nearby/nearby")) {
+if (url.indexOf("c3frontend/af-nearby/nearby") !== -1) {
     // 附近
-    obj.data?.modules && obj.data.modules = {};
+    obj.data?.modules && (obj.data.modules = {});
 }
-else if (url.includes("ws/promotion-web/resource")) {
+else if (url.indexOf("ws/promotion-web/resource") !== -1) {
     // 打车
     ["icon", "banner", "tips", "popup", "bubble", "other"].forEach(el => obj.data?.[el] && (obj.data[el] = []));
-} else if (url.includes("profile/index/node")) {
+} 
+else if (url.indexOf("profile/index/node") !== -1) {
     // 我的
     delete obj.data?.tipData;
     obj.data?.cardList && (obj.data.cardList = Object.values(obj.data.cardList).filter(
