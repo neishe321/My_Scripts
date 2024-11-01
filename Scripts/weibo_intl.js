@@ -1,58 +1,40 @@
-// 脚本自定义优化于：https://raw.githubusercontent.com/ddgksf2013/Scripts/master/weibo_json.js
+let body = $response.body;
+let data;
 
-const modifyHandlers = {
-    "php?a=user_center": modifyUserCenter,      // 用户中心
-    "php?a=open_app": removeAdBanner,           // 帖子 banner
-    "php?a=trends": removeTrendsCards,          // 趋势页
-    "php?a=get_coopen_ads": removeOpenAds       // 开屏
-};
-
-function getModifyHandler(url) {
-    return Object.keys(modifyHandlers).find(key => url.includes(key)) ? modifyHandlers[Object.keys(modifyHandlers).find(key => url.includes(key))] : null;
+try {
+    data = JSON.parse(body);
+} catch (e) {
+    console.log("JSON 解析错误:", e);
+    data = {};
 }
 
-function modifyUserCenter(data) {
+
+if ($request.url.indexOf("php?a=user_center") !== -1) {
+    # 用户中心
     if (data?.data?.cards) {
         data.data.cards = data.data.cards.filter(card => {
             card.items = card.items.filter(item => !["personal_vip", "ic_profile_wallpaper"].includes(item.type));
             return card.items.length > 0;
         });
     }
-}
-
-function removeAdBanner(data) {
+} else if ($request.url.indexOf("php?a=open_app") !== -1) {
+    # 帖子
     if (data?.data) {
         delete data.data.close_ad_setting;
         delete data.data.vip_title_blog;
         delete data.data.vip_info;
     }
-}
-
-function removeTrendsCards(data) {
+} else if ($request.url.indexOf("php?a=trends") !== -1) {
+    # 趋势
     if (data?.data) {
-        data.data.order = ["discover","search_topic"];
+        data.data.order = ["discover", "search_topic"];
         if (Array.isArray(data.data.discover)) data.data.discover.shift();
     }
-}
-
-function removeOpenAds(data) {
+} else if ($request.url.indexOf("php?a=get_coopen_ads") !== -1) {
+    # 开屏
     if (data?.data) {
         data.data = { display_ad: 1 };
     }
 }
 
-let body = $response.body;
-let url = $request.url;
-let modifyHandler = getModifyHandler(url);
-
-if (modifyHandler) {
-    try {
-        let data = JSON.parse(body.match(/\{.*\}/)?.[0] || "{}");
-        modifyHandler(data);
-        body = JSON.stringify(data);
-    } catch (e) {
-        console.log("JSON 解析错误:", e);
-    }
-}
-
-$done({ body });
+$done({ body: JSON.stringify(data) });
