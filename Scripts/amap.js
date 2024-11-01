@@ -2,8 +2,9 @@ const obj = JSON.parse($response.body);
 const url = $request.url;
 
 if (url.indexOf("c3frontend/af-nearby/nearby") !== -1) {
-    for (let key in obj.data?.modules) {
-        ["banner"].includes(obj.data.modules[key].dataType) && delete obj.data.modules[key];
+    const excludeKeys = ["banner"];
+    for (let key of excludeKeys) {
+        delete obj.data?.modules?.[key];
     }
 }
 else if (url.indexOf("ws/promotion-web/resource") !== -1) {
