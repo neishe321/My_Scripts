@@ -23,6 +23,16 @@ if ($request.url.indexOf("php?a=user_center") !== -1) {
 } else if ($request.url.indexOf("php?a=get_coopen_ads") !== -1) {
     // 开屏
     data?.data && (data.data = { display_ad: 1 });
+} else if ($request.url.indexOf("php?a=icon_center") !== -1) {
+    // 图标
+    if (data?.data) {
+        data.data.forEach(item => {
+            item.card?.forEach(cardItem => {
+                cardItem.status = 1;
+                cardItem.forbidden = 0;
+            });
+        });
+    }
 }
 
 $done({ body: JSON.stringify(data) });
