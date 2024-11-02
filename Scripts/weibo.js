@@ -12,7 +12,6 @@ if (url.includes("comments/build_comments") && obj.datas) {
     delete obj.snapshot_share_customize_dic;
     delete obj.dynamic_share_items;
     delete obj.report_data;
-
     // obj.head_cards = obj.head_cards.filter(card => card.actionlog?.source !== "ad");
 }
 
