@@ -8,7 +8,7 @@ if (url.indexOf("c3frontend/af-nearby/nearby") !== -1) {
 else if (url.indexOf("ws/promotion-web/resource") !== -1) {
     // 打车
     // ["icon", "banner", "tips", "popup", "bubble", "other"].forEach(el => obj.data?.[el] && (obj.data[el] = []));
-    obj?.data = {};
+    obj.data = {};
 } 
 else if (url.indexOf("profile/index/node") !== -1) {
     // 我的
