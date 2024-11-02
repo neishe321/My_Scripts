@@ -9,7 +9,11 @@ else if (url.indexOf("ws/promotion-web/resource") !== -1) {
     // 打车
     // ["banner","other","bubble","popup","push"].forEach(el => obj.data?.[el] && (obj.data[el] = []));
     obj.data = {};
-} 
+}
+else if (url.indexOf("ws/shield/frogserver/aocs/updatable") !== -1) {
+    // 打车卡片
+    ["taxi"].forEach(el => obj.data?.[el] && delete obj.data[el]);
+}
 else if (url.indexOf("profile/index/node") !== -1) {
     // 我的
     delete obj.data?.tipData;
