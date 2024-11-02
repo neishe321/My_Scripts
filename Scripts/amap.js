@@ -7,7 +7,7 @@ if (url.indexOf("c3frontend/af-nearby/nearby") !== -1) {
 } 
 else if (url.indexOf("ws/promotion-web/resource") !== -1) {
     // 打车
-    // ["icon", "banner", "tips", "popup", "bubble", "other"].forEach(el => obj.data?.[el] && (obj.data[el] = []));
+    // ["banner","other","bubble","popup","push"].forEach(el => obj.data?.[el] && (obj.data[el] = []));
     obj.data = {};
 } 
 else if (url.indexOf("profile/index/node") !== -1) {
