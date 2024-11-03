@@ -20,7 +20,6 @@ function filterItems(items) {
     });
 }
 
-
 if (url.includes("/profile/me")) {
     console.log('处理个人界面');
     obj.items = obj.items.slice(0, 2);
