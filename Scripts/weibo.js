@@ -70,7 +70,7 @@ if (url.includes("/profile/me")) {
 } else if (url.includes("/statuses/container_timeline_hot")) {
     console.log('处理首页推荐动态推广');
     if (obj.items) {
-        obj.items = obj.items.filter(item => item.category === "feed");
+        obj.items = obj.items.filter(item => item.category === "feed"); 
         obj.items = filterItems(obj.items);
     }
 }
