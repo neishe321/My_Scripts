@@ -17,7 +17,7 @@ const categoriesToRemove = ["hot_ad", "trend"];
 function filterItems(items) {
     return items.filter(item => {
         return !(
-            categoriesToRemove.includes(item.item_category) ||
+            categoriesToRemove.includes(item.item_category) || 
             (item.data && item.data.mblogtypename === '广告')
         );
     });
