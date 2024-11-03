@@ -92,5 +92,12 @@ else if (url.includes("/statuses/container_timeline_hot")) {
     }
 }
 
+else if (url.includes("aj/appicon/list")) {
+    // 图标
+    obj.data?.list?.forEach(item => {
+        item.cardType = "2";
+        item.tag = "";
+    });
+}
 
 $done({ body: JSON.stringify(obj) });
