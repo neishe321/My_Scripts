@@ -87,7 +87,7 @@ else if (url.includes("/statuses/container_timeline_hot")) {
         obj.items = obj.items.filter(item => item.category === "feed");
         const categoriesToRemove = ["trend", "hot_ad"];
         obj.items = obj.items.filter(item => 
-            !categoriesToRemove.includes(item.item_category) ||
+            !categoriesToRemove.includes(item.item_category) &&
             !(item.data && item.data.mblogtypename === '广告')
         );
     }
