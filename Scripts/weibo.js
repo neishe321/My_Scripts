@@ -17,7 +17,7 @@ const categoriesToRemove = ["hot_ad", "trend"];
 function filterItems(items) {
     return items.filter(item => {
         return !(
-            categoriesToRemove.includes(item.item_category) &&
+            categoriesToRemove.includes(item.item_category) ||
             (item.data && item.data.mblogtypename === '广告')
         );
     });
@@ -70,8 +70,8 @@ if (url.includes("/profile/me")) {
 } else if (url.includes("/statuses/container_timeline_hot")) {
     console.log('处理首页推荐动态推广');
     if (obj.items) {
-        obj.items = obj.items.filter(item => item.category === "feed"); // 保留 category 为 feed 的项
-        obj.items = filterItems(obj.items); // 再次过滤 item_category 和 mblogtypename
+        obj.items = obj.items.filter(item => item.category === "feed");
+        obj.items = filterItems(obj.items);
     }
 }
 
