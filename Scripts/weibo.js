@@ -86,8 +86,12 @@ else if (url.includes("/statuses/container_timeline_hot")) {
     if (obj.items) {
         obj.items = obj.items.filter(item => item.category === "feed");
         const categoriesToRemove = ["trend", "hot_ad"];
-        obj.items = obj.items.filter(item => !categoriesToRemove.includes(item.item_category));
+        obj.items = obj.items.filter(item => 
+            !categoriesToRemove.includes(item.item_category) &&
+            !(item.data && item.data.mblogtypename === '广告')
+        );
     }
 }
+
 
 $done({ body: JSON.stringify(obj) });
