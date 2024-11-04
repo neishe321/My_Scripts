@@ -25,6 +25,7 @@ hostname=*api.weibo.cn, *.uve.weibo.com, *vip.weibo.cn
 
 # 开屏
 ^https:\/\/wbapp\.uve\.weibo\.com\/wbapplua\/wbpullad\.lua url reject-200
-^https?:\/\/bootpreload\.uve\.weibo\.com\/v\d\/ad\/preload url reject-200
+^https?:\/\/boot(?:preload|realtime)\.uve\.weibo\.com\/v\d\/ad\/(?:preload|realtime) url reject-200
+
 
 
