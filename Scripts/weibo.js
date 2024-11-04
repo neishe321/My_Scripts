@@ -113,16 +113,22 @@ else if (url.includes("/profile/me")) {
 }
 
 else if (url.includes("aj/appicon/list")) {
-    	obj.data?.list?.forEach(item => {
-        	item.cardType = "2";
-        	item.tag = "";
-    });
+    const list = obj.data.list;
+    for (let i = 0; i < list.length; i++) {
+        list[i].cardType = "2";
+        list[i].tag = "";
+    }
 }
 
 else if (url.includes("/messageflow/notice")) {
-    	obj.messages = obj.messages.filter((message) => {
-		return message.isInsert !== false && !(message.ad_tag?.text === '广告');
-    });
+    const filteredMessages = [];
+    for (let i = 0; i < obj.messages.length; i++) {
+        const message = obj.messages[i];
+        if (message.isInsert !== false && !(message.ad_tag?.text === '广告')) {
+            filteredMessages.push(message);
+        }
+    }
+    obj.messages = filteredMessages;
 }
 
 $done({ body: JSON.stringify(obj) });
