@@ -33,7 +33,7 @@ function RemoveAds(array = []) {
             array.splice(i, 1);
         }
     }
-    // console.log("页面广告已过滤 o(*￣▽￣*)ブ");
+    // console.log("页面广告已过滤 o(*￣▽￣*)ブ")
 }
 
 
@@ -41,15 +41,16 @@ function RemoveAds(array = []) {
 // 发现页模块
 function RemoveCardtype(array = []) {
     for (let i = array.length - 1; i >= 0; i--) {
+        const item = array[i];
         if (
-            array[i].category === 'card' && 
+            item?.category === 'card' && 
             (
-                ([118, 19, 101, 236].includes(array[i].data.card_type) && !(array[i].data.card_type === 101 && array[i].data.scheme == ""))
+                ([118, 19, 101, 236].includes(item?.data?.card_type) && !(item?.data?.card_type === 101 && item?.data?.scheme === ""))
             )
         ) {
             array.splice(i, 1); 
         }
-    };
+    }
     // console.log("多余模块已剔除 o(*￣▽￣*)ブ")
 }
 
