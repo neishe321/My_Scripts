@@ -1,4 +1,6 @@
 # Rewrite
+请用Qx
+
 微博 
 https://raw.githubusercontent.com/neishe321/QuanX/main/Rewrite/weibo.snippet
 
