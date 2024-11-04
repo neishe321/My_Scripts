@@ -10,18 +10,102 @@ try {
     return;
 }
 
-// 数组筛选
-function filterItems(items) {
-    return items.filter(item => {
-        return !(
-            (item.category === "feed" && item.item_category === "hot_ad") ||
-            (item.category === "card")
-        );
-    });
+/*
+card_type 
+317 		今日错过
+101 17 		微博热搜
+118 		轮播
+19  		快捷功能
+101 236  	微博趋势
+
+*/
+
+
+function RemoveAds(array = []) {
+    for (let i = array.length - 1; i >= 0; i--) {
+        const isSearchAd = 
+            ["hot_ad", "trend"].includes(array[i]?.item_category) ||
+            array[i].data?.mblogtypename === "广告" ||
+            array[i].data?.ad_state === 1 ||
+            array[i].itemId === "INTEREST_PEOPLE";
+
+        if (isSearchAd) {
+            array.splice(i, 1);
+        }
+    };
+    console.log("页面广告已过滤 o(*￣▽￣*)ブ")
 }
 
-if (url.includes("/profile/me")) {
-    console.log('处理个人界面');
+
+// 发现页模块
+function RemoveCardtype(array = []) {
+    for (let i = array.length - 1; i >= 0; i--) {
+        if (
+            array[i].category === 'card' && 
+            (
+                ([118, 19, 101, 236].includes(array[i].data.card_type) && !(array[i].data.card_type === 101 && array[i].data.scheme == ""))
+            )
+        ) {
+            array.splice(i, 1); 
+        }
+    };
+	console.log("多余模块已过滤 o(*￣▽￣*)ブ")
+}
+
+
+
+if (url.includes("comments/build_comments")) {
+    if (obj.datas) {
+        obj.datas = obj.datas.filter(item => !item.adType)
+	};
+	console.log("多余详情推广已删除 o(*￣▽￣*)ブ")
+}
+
+else if (url.includes("guest/statuses_extend") || url.includes("statuses/extend")) {
+	delete obj.head_cards;
+    delete obj.trend;
+    delete obj.snapshot_share_customize_dic;
+    delete obj.dynamic_share_items;
+    delete obj.report_data;
+	delete obj.loyal_fans_guide_info;
+	delete obj.top_cards;
+    console.log("多余详情卡片已删除 o(*￣▽￣*)ブ")
+}
+
+else if (url.includes("search/finder")) {
+	// console.log("首次进入发现页");
+	obj.channelInfo.channels[0].payload?.loadedInfo?.headerBack && delete obj.channelInfo.channels[0].payload?.loadedInfo?.headerBack;
+    RemoveAds(obj.channelInfo.channels[0].payload.items);
+
+	RemoveCardtype(obj.channelInfo.channels[0].payload.items);
+	console.log(url.slice(0, 70)) 
+
+}
+
+else if (url.includes("search/container_timeline")) {
+	// console.log("已刷新发现页面");
+    RemoveAds(obj.items);
+	RemoveCardtype(obj.items);
+	console.log(url.slice(0, 70))
+}
+
+
+else if (url.includes("/2/searchall?")) {
+	RemoveAds(obj.items);
+	console.log(url.slice(0, 70))
+}
+
+else if (url.includes("/statuses/container_timeline")) {
+	RemoveAds(obj.items);
+	console.log(url.slice(0, 70))
+}
+
+else if (url.includes("profile/container_timeline")) {
+	RemoveAds(obj.items);
+	console.log(url.slice(0, 70))
+}
+
+else if (url.includes("/profile/me")) {
     obj.items = obj.items.slice(0, 2);
     if (obj.items.length > 0 && obj.items[0].header) {
         delete obj.items[0].header.vipIcon;
@@ -29,74 +113,16 @@ if (url.includes("/profile/me")) {
     }
 }
 
-else if (url.includes("comments/build_comments")) {
-    // 热门
-    if (obj.datas) {
-        console.log("处理评论区推广");
-        obj.datas = obj.datas.filter(item => !item.adType);
-    }
-} 
-
-else if (url.includes("guest/statuses_extend") || url.includes("statuses/extend")) {
-    // 热门
-    console.log("处理详情页推广");
-    delete obj.head_cards;
-    delete obj.trend;
-    delete obj.snapshot_share_customize_dic;
-    delete obj.dynamic_share_items;
-    delete obj.report_data;
-}
-
-else if (url.includes("/search/finder")) {
-    console.log("处理发现页面");
-    const channels = obj.channelInfo?.channels || [];
-    channels.forEach(channel => {
-        if (channel.payload?.loadedInfo) {
-            channel.payload.loadedInfo.searchBarContent = [];
-            if (channel.payload.loadedInfo.headerBack) {
-                channel.payload.loadedInfo.headerBack.channelStyleMap = {};
-            }
-        }
-        if (channel.payload?.items) {
-            channel.payload.items = filterItems(channel.payload.items);
-        }
-    });
-} 
-
-else if (url.includes("/search/container_timeline") || url.includes("/search/container_discover")) {
-    console.log("刷新发现页面");
-    if (obj?.items) {
-        obj.items = filterItems(obj.items);
-    }
-} 
-
-else if (url.includes("/2/searchall?")) {
-    console.log('处理搜索结果');
-    obj.items = obj.items.filter(item => item.category !== "feed" && item.category !== "cell");
-    obj.items.forEach(currentItem => {
-        if (currentItem.items) {
-            currentItem.items = currentItem.items.filter(subItem => subItem.category !== 'card' && subItem.category !== 'cell');
-        }
-    });
-}
-
-else if (url.includes("/statuses/container_timeline_hot")) {
-    console.log('处理首页推荐动态推广');
-    if (obj.items) {
-        obj.items = obj.items.filter(item => item.category === "feed");
-        const categoriesToRemove = ["trend", "hot_ad"];
-        obj.items = obj.items.filter(item => 
-            !categoriesToRemove.includes(item.item_category) &&
-            !(item.data && item.data.mblogtypename === '广告')
-        );
-    }
-}
-
 else if (url.includes("aj/appicon/list")) {
-    // 图标
     obj.data?.list?.forEach(item => {
         item.cardType = "2";
         item.tag = "";
+    });
+}
+
+else if (url.includes("/messageflow/notice")) {
+    obj.messages = obj.messages.filter((message) => {
+        return message.isInsert !== false && !(message.ad_tag?.text === '广告');
     });
 }
 
