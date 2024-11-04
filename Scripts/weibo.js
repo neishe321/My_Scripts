@@ -22,18 +22,20 @@ card_type
 
 function RemoveAds(array = []) {
     for (let i = array.length - 1; i >= 0; i--) {
+        const item = array[i];
         const isSearchAd = 
-            ["hot_ad", "trend"].includes(array[i]?.item_category) ||
-            array[i].data?.mblogtypename === "广告" ||
-            array[i].data?.ad_state === 1 ||
-            array[i].itemId === "INTEREST_PEOPLE";
+            ["hot_ad", "trend"].includes(item?.item_category) || 
+            item?.data?.mblogtypename === "广告" ||
+            item?.data?.ad_state === 1 ||
+            item?.itemId === "INTEREST_PEOPLE";
 
         if (isSearchAd) {
             array.splice(i, 1);
         }
-    };
-    // console.log("页面广告已过滤 o(*￣▽￣*)ブ")
+    }
+    // console.log("页面广告已过滤 o(*￣▽￣*)ブ");
 }
+
 
 
 // 发现页模块
