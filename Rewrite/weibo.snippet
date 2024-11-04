@@ -20,7 +20,10 @@ hostname=*api.weibo.cn, *.uve.weibo.com, *vip.weibo.cn
 ^https?://new\.vip\.weibo\.cn/aj/appicon/list url script-response-body https://raw.githubusercontent.com/neishe321/QuanX/main/Scripts/weibo.js
 # 猜你想搜
 ;^https?:\/\/api\.weibo\.cn\/\d\/cardlist -url reject-200
+# 弹窗
+^https?:\/\/sdkapp\.uve\.weibo\.com\/interface\/sdk\/sdkconfig\.php url reject-200
 
+hostname = sdkapp.uve.weibo.com
 # 开屏
 ^https:\/\/wbapp\.uve\.weibo\.com\/wbapplua\/wbpullad\.lua url reject-200
 ^https?:\/\/bootpreload\.uve\.weibo\.com\/v\d\/ad\/preload url reject-200
