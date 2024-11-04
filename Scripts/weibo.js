@@ -17,7 +17,6 @@ card_type
 118 		轮播
 19  		快捷功能
 101 236  	微博趋势
-
 */
 
 
@@ -33,7 +32,7 @@ function RemoveAds(array = []) {
             array.splice(i, 1);
         }
     };
-    console.log("页面广告已过滤 o(*￣▽￣*)ブ")
+    // console.log("页面广告已过滤 o(*￣▽￣*)ブ")
 }
 
 
@@ -49,16 +48,16 @@ function RemoveCardtype(array = []) {
             array.splice(i, 1); 
         }
     };
-	console.log("多余模块已过滤 o(*￣▽￣*)ブ")
+    // console.log("多余模块已剔除 o(*￣▽￣*)ブ")
 }
 
 
 
 if (url.includes("comments/build_comments")) {
     if (obj.datas) {
-        obj.datas = obj.datas.filter(item => !item.adType)
-	};
-	console.log("多余详情推广已删除 o(*￣▽￣*)ブ")
+        obj.datas = obj.datas.filter(item => !item.adType);
+	// console.log("详情推广已删除 o(*￣▽￣*)ブ")
+	}
 }
 
 else if (url.includes("guest/statuses_extend") || url.includes("statuses/extend")) {
@@ -69,40 +68,37 @@ else if (url.includes("guest/statuses_extend") || url.includes("statuses/extend"
     	delete obj.report_data;
 	delete obj.loyal_fans_guide_info;
 	delete obj.top_cards;
-    console.log("多余详情卡片已删除 o(*￣▽￣*)ブ")
+    // console.log("详情卡片已删除 o(*￣▽￣*)ブ")
 }
 
 else if (url.includes("search/finder")) {
-	// console.log("首次进入发现页");
 	obj.channelInfo.channels[0].payload?.loadedInfo?.headerBack && delete obj.channelInfo.channels[0].payload?.loadedInfo?.headerBack;
     	RemoveAds(obj.channelInfo.channels[0].payload.items);
-
 	RemoveCardtype(obj.channelInfo.channels[0].payload.items);
-	console.log(url.slice(0, 70)) 
+	// console.log(url.slice(0, 70)) 
 
 }
 
 else if (url.includes("search/container_timeline")) {
-	// console.log("已刷新发现页面");
     	RemoveAds(obj.items);
 	RemoveCardtype(obj.items);
-	console.log(url.slice(0, 70))
+	// console.log(url.slice(0, 70))
 }
 
 
 else if (url.includes("/2/searchall?")) {
 	RemoveAds(obj.items);
-	console.log(url.slice(0, 70))
+	// console.log(url.slice(0, 70))
 }
 
 else if (url.includes("/statuses/container_timeline")) {
 	RemoveAds(obj.items);
-	console.log(url.slice(0, 70))
+	// console.log(url.slice(0, 70))
 }
 
 else if (url.includes("profile/container_timeline")) {
 	RemoveAds(obj.items);
-	console.log(url.slice(0, 70))
+	// console.log(url.slice(0, 70))
 }
 
 else if (url.includes("/profile/me")) {
