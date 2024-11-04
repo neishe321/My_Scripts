@@ -63,10 +63,10 @@ if (url.includes("comments/build_comments")) {
 
 else if (url.includes("guest/statuses_extend") || url.includes("statuses/extend")) {
 	delete obj.head_cards;
-    delete obj.trend;
-    delete obj.snapshot_share_customize_dic;
-    delete obj.dynamic_share_items;
-    delete obj.report_data;
+    	delete obj.trend;
+   	delete obj.snapshot_share_customize_dic;
+    	delete obj.dynamic_share_items;
+    	delete obj.report_data;
 	delete obj.loyal_fans_guide_info;
 	delete obj.top_cards;
     console.log("多余详情卡片已删除 o(*￣▽￣*)ブ")
@@ -75,7 +75,7 @@ else if (url.includes("guest/statuses_extend") || url.includes("statuses/extend"
 else if (url.includes("search/finder")) {
 	// console.log("首次进入发现页");
 	obj.channelInfo.channels[0].payload?.loadedInfo?.headerBack && delete obj.channelInfo.channels[0].payload?.loadedInfo?.headerBack;
-    RemoveAds(obj.channelInfo.channels[0].payload.items);
+    	RemoveAds(obj.channelInfo.channels[0].payload.items);
 
 	RemoveCardtype(obj.channelInfo.channels[0].payload.items);
 	console.log(url.slice(0, 70)) 
@@ -84,7 +84,7 @@ else if (url.includes("search/finder")) {
 
 else if (url.includes("search/container_timeline")) {
 	// console.log("已刷新发现页面");
-    RemoveAds(obj.items);
+    	RemoveAds(obj.items);
 	RemoveCardtype(obj.items);
 	console.log(url.slice(0, 70))
 }
@@ -106,23 +106,23 @@ else if (url.includes("profile/container_timeline")) {
 }
 
 else if (url.includes("/profile/me")) {
-    obj.items = obj.items.slice(0, 2);
-    if (obj.items.length > 0 && obj.items[0].header) {
-        delete obj.items[0].header.vipIcon;
-        delete obj.items[0].header.vipView;
+    	obj.items = obj.items.slice(0, 2);
+    	if (obj.items.length > 0 && obj.items[0].header) {
+        	delete obj.items[0].header.vipIcon;
+        	delete obj.items[0].header.vipView;
     }
 }
 
 else if (url.includes("aj/appicon/list")) {
-    obj.data?.list?.forEach(item => {
-        item.cardType = "2";
-        item.tag = "";
+    	obj.data?.list?.forEach(item => {
+        	item.cardType = "2";
+        	item.tag = "";
     });
 }
 
 else if (url.includes("/messageflow/notice")) {
-    obj.messages = obj.messages.filter((message) => {
-        return message.isInsert !== false && !(message.ad_tag?.text === '广告');
+    	obj.messages = obj.messages.filter((message) => {
+		return message.isInsert !== false && !(message.ad_tag?.text === '广告');
     });
 }
 
