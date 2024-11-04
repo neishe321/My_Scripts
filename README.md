@@ -1,5 +1,8 @@
 # Rewrite
-微博国际版 
+微博 
+https://raw.githubusercontent.com/neishe321/QuanX/main/Rewrite/weibo.snippet
+
+微博轻享版 
 https://raw.githubusercontent.com/neishe321/QuanX/main/Rewrite/weibo_intl.snippet
 
 高德地图
