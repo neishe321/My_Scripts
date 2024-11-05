@@ -21,6 +21,15 @@ card_type
 
 // ------------------ 函数定义 ------------------
 
+// 删除指定属性
+function deleteFields(obj, fields) {
+    fields.forEach(field => {
+        if (obj && obj.hasOwnProperty(field)) {
+            delete obj[field];
+        }
+    });
+}
+
 // 删除广告
 function RemoveAds(array = []) {
     for (let i = array.length - 1; i >= 0; i--) {
@@ -70,7 +79,7 @@ if (url.includes("comments/build_comments")) {
 }
 
 else if (url.includes("guest/statuses_extend") || url.includes("statuses/extend")) {
-    // 删除不需要的字段
+    // 删除不需要的属性
     deleteFields(obj, ['head_cards', 'trend', 'snapshot_share_customize_dic', 'dynamic_share_items', 'report_data', 'loyal_fans_guide_info', 'top_cards']);
 }
 
@@ -119,14 +128,6 @@ else if (url.includes("/messageflow/notice")) {
     obj.messages = obj.messages.filter(message => message.isInsert !== false && message.ad_tag?.text !== '广告');
 }
 
-// 删除指定属性
-function deleteFields(obj, fields) {
-    fields.forEach(field => {
-        if (obj && obj.hasOwnProperty(field)) {
-            delete obj[field];
-        }
-    });
-}
 
 // ------------------ 返回处理结果 ------------------
 $done({ body: JSON.stringify(obj) });
