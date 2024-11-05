@@ -19,12 +19,14 @@ card_type
 101 236  	微博趋势
 */
 
+// ------------------ 函数定义 ------------------
 
+// 删除广告
 function RemoveAds(array = []) {
     for (let i = array.length - 1; i >= 0; i--) {
         const item = array[i];
-        const isSearchAd = 
-            ["hot_ad", "trend"].includes(item?.item_category) || 
+        const isSearchAd =
+            ["hot_ad", "trend"].includes(item?.item_category) ||
             item?.data?.mblogtypename === "广告" ||
             item?.data?.ad_state === 1 ||
             item?.itemId === "INTEREST_PEOPLE";
@@ -36,99 +38,95 @@ function RemoveAds(array = []) {
     // console.log("页面广告已过滤 o(*￣▽￣*)ブ")
 }
 
-
-
-// 发现页模块
+// 删除发现页的卡片类型
 function RemoveCardtype(array = []) {
     for (let i = array.length - 1; i >= 0; i--) {
         const item = array[i];
         if (
-            item?.category === 'card' && 
-            (
-                ([118, 19, 101, 236].includes(item?.data?.card_type) && !(item?.data?.card_type === 101 && item?.data?.scheme === ""))
-            )
+            item?.category === 'card' &&
+            ([118, 19, 101, 236].includes(item?.data?.card_type) && !(item?.data?.card_type === 101 && item?.data?.scheme === ""))
         ) {
-            array.splice(i, 1); 
+            array.splice(i, 1);
         }
     }
     // console.log("多余模块已剔除 o(*￣▽￣*)ブ")
 }
 
+// 递归处理嵌套的 items
+function processItems(el) {
+    if (Array.isArray(el?.items)) {
+        RemoveAds(el.items);
+        RemoveCardtype(el.items);
+        el.items.forEach(item => processItems(item));
+    }
+}
 
+// ------------------ 处理响应 ------------------
 
 if (url.includes("comments/build_comments")) {
     if (obj.datas) {
         obj.datas = obj.datas.filter(item => !item.adType);
-	// console.log("详情推广已删除 o(*￣▽￣*)ブ")
-	}
+    }
 }
 
 else if (url.includes("guest/statuses_extend") || url.includes("statuses/extend")) {
-	delete obj.head_cards;
-    	delete obj.trend;
-   	delete obj.snapshot_share_customize_dic;
-    	delete obj.dynamic_share_items;
-    	delete obj.report_data;
-	delete obj.loyal_fans_guide_info;
-	delete obj.top_cards;
-    // console.log("详情卡片已删除 o(*￣▽￣*)ブ")
+    // 删除不需要的字段
+    deleteFields(obj, ['head_cards', 'trend', 'snapshot_share_customize_dic', 'dynamic_share_items', 'report_data', 'loyal_fans_guide_info', 'top_cards']);
 }
 
 else if (url.includes("search/finder")) {
-	obj.channelInfo.channels[0].payload?.loadedInfo?.headerBack && delete obj.channelInfo.channels[0].payload?.loadedInfo?.headerBack;
-    	RemoveAds(obj.channelInfo.channels[0].payload.items);
-	RemoveCardtype(obj.channelInfo.channels[0].payload.items);
-	// console.log(url.slice(0, 70)) 
-
+    const channels = obj?.channelInfo?.channels;
+    if (channels && channels.length > 0) {
+        const payload = channels[0]?.payload;
+        if (payload) {
+            deleteFields(payload.loadedInfo, ['headerBack', 'searchBarContent']);
+            processItems(payload);  // 递归处理最外层和嵌套的 items
+        }
+    }
 }
 
 else if (url.includes("search/container_timeline")) {
-    	RemoveAds(obj.items);
-	RemoveCardtype(obj.items);
-	// console.log(url.slice(0, 70))
+    if (obj?.loadedInfo) {
+        deleteFields(obj.loadedInfo, ['headerBack', 'searchBarContent']);
+    }
+    processItems(obj);  // 递归处理最外层和嵌套的 items
 }
-
 
 else if (url.includes("/2/searchall?")) {
-	RemoveAds(obj.items);
-	// console.log(url.slice(0, 70))
+    RemoveAds(obj.items);
 }
 
-else if (url.includes("/statuses/container_timeline")) {
-	RemoveAds(obj.items);
-	// console.log(url.slice(0, 70))
-}
-
-else if (url.includes("profile/container_timeline")) {
-	RemoveAds(obj.items);
-	// console.log(url.slice(0, 70))
+else if (url.includes("/statuses/container_timeline") || url.includes("profile/container_timeline")) {
+    RemoveAds(obj.items);
 }
 
 else if (url.includes("/profile/me")) {
-    	obj.items = obj.items.slice(0, 2);
-    	if (obj.items.length > 0 && obj.items[0].header) {
-        	delete obj.items[0].header.vipIcon;
-        	delete obj.items[0].header.vipView;
+    obj.items = obj.items.slice(0, 2);
+    if (obj.items.length > 0 && obj.items[0].header) {
+        deleteFields(obj.items[0].header, ['vipIcon', 'vipView']);
     }
 }
 
 else if (url.includes("aj/appicon/list")) {
     const list = obj.data.list;
-    for (let i = 0; i < list.length; i++) {
-        list[i].cardType = "2";
-        list[i].tag = "";
-    }
+    list.forEach(item => {
+        item.cardType = "2";
+        item.tag = "";
+    });
 }
 
 else if (url.includes("/messageflow/notice")) {
-    const filteredMessages = [];
-    for (let i = 0; i < obj.messages.length; i++) {
-        const message = obj.messages[i];
-        if (message.isInsert !== false && !(message.ad_tag?.text === '广告')) {
-            filteredMessages.push(message);
-        }
-    }
-    obj.messages = filteredMessages;
+    obj.messages = obj.messages.filter(message => message.isInsert !== false && message.ad_tag?.text !== '广告');
 }
 
+// 删除指定属性
+function deleteFields(obj, fields) {
+    fields.forEach(field => {
+        if (obj && obj.hasOwnProperty(field)) {
+            delete obj[field];
+        }
+    });
+}
+
+// ------------------ 返回处理结果 ------------------
 $done({ body: JSON.stringify(obj) });
