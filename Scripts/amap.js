@@ -1,33 +1,35 @@
 const obj = JSON.parse($response.body);
 const url = $request.url;
 
-if (url.indexOf("c3frontend/af-nearby/nearby") !== -1) {
+const nearbyModules = ["banner", "contentPoster", "feedRec"];
+// const rideModules = ["banner", "other", "bubble", "popup", "push"];
+const taxiModules = ["taxi"];
+
+if (url.includes("c3frontend/af-nearby/nearby")) {
     // 附近
-    ["banner", "contentPoster", "feedRec"].forEach(key => delete obj.data?.modules?.[key]);
+    nearbyModules.forEach(key => delete obj.data?.modules?.[key]);
 } 
-else if (url.indexOf("ws/promotion-web/resource") !== -1) {
+else if (url.includes("ws/promotion-web/resource")) {
     // 打车
-    // ["banner","other","bubble","popup","push"].forEach(el => obj.data?.[el] && (obj.data[el] = []));
+    // rideModules.forEach(key => delete obj.data?.[key]);
     obj.data = {};
-}
-else if (url.indexOf("ws/shield/frogserver/aocs/updatable") !== -1) {
+} 
+else if (url.includes("ws/shield/frogserver/aocs/updatable")) {
     // 打车卡片
-    ["taxi"].forEach(el => obj.data?.[el] && delete obj.data[el]);
-}
-else if (url.indexOf("profile/index/node") !== -1) {
+    taxiModules.forEach(key => delete obj.data?.[key]);
+} 
+else if (url.includes("profile/index/node")) {
     // 我的
-    delete obj.data?.tipData;
-    obj.data?.cardList && (obj.data.cardList = Object.values(obj.data.cardList).filter(
-        a => ["MyOrderCard", "GdRecommendCard"].includes(a.dataType)
-    ));
+    delete obj.data?.tipData; 
+    if (Array.isArray(obj.data?.cardList)) {
+        obj.data.cardList = Object.values(obj.data.cardList).filter(a => 
+            ["MyOrderCard", "GdRecommendCard"].includes(a.dataType)
+        );
+    }
 } 
-else if (url.indexOf("ws/message/notice/list") !== -1) {
-    // 角标
-    obj.data?.noticeList && (obj.data.noticeList = []);
-} 
-else if (url.indexOf("valueadded/alimama/splash_screen") !== -1) {
+else if (url.includes("valueadded/alimama/splash_screen")) {
     // 开屏
-    if (obj.data?.ad) {
+    if (Array.isArray(obj.data?.ad)) {
         obj.data.ad.forEach(ad => {
             ad.set.setting.display_time = 0;
             ad.creative[0].start_time = 2240150400;
