@@ -1,5 +1,5 @@
 const url = $request.url;
-let obj = null;
+let obj;
 
 try {
     obj = JSON.parse($response.body);
