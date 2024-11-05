@@ -1,5 +1,13 @@
-const obj = JSON.parse($response.body);
 const url = $request.url;
+let obj;
+
+try {
+    obj = JSON.parse($response.body);
+} catch (e) {
+    console.error("JSON 解析失败:", e);
+    $done({ body: $response.body });
+    return;
+}
 
 // 定义模块
 const moduleActions = {
@@ -47,7 +55,7 @@ const moduleActions = {
 Object.keys(moduleActions).forEach(key => {
     if (url.includes(key)) {
         const action = moduleActions[key];
-        action.action(obj, action.modules); // 直接传递模块数组或 obj
+        action.action(obj, action.modules);
     }
 });
 
