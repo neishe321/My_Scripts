@@ -9,7 +9,7 @@ hostname=*api.weibo.cn, *.uve.weibo.com, *vip.weibo.cn
 # 详情
 ^https?:\/\/api\.weibo\.cn\/\d\/(comments\/build_comments|guest\/statuses_extend|statuses\/extend) url script-response-body https://raw.githubusercontent.com/neishe321/QuanX/main/Scripts/weibo.js
 # 发现页
-^https?:\/\/api\.weibo\.cn\/\d\/search\/(finder|container_timeline) url script-response-body https://raw.githubusercontent.com/neishe321/QuanX/main/Scripts/weibo.js
+^https?:\/\/api\.weibo\.cn\/\d\/search\/(finder|container_timeline|container_discover) url script-response-body https://raw.githubusercontent.com/neishe321/QuanX/main/Scripts/weibo.js
 # 搜索结果
 ^https?:\/\/api\.weibo\.cn\/\d\/searchall url script-response-body https://raw.githubusercontent.com/neishe321/QuanX/main/Scripts/weibo.js
 # 推荐动态
