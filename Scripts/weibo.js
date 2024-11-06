@@ -55,7 +55,8 @@ function RemoveCardtype(array = []) {
     for (let i = 0; i < array.length; i++) {
         const item = array[i];
         const isSearchCard =
-            (item?.category === "group" && ["vertical", "horizontal"].includes(item?.type) && item?.itemId !== null) ||
+            (item?.category === "group" && ["vertical", "horizontal"].includes(item?.type) 
+                 && ["102803_video_card", "card86_card11_cishi", "card86_card11"].includes(item?.itemId)) ||
             (item?.category === "card" && [118, 19, 101, 236].includes(item?.data?.card_type));
         
         if (!isSearchCard) {
