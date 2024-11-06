@@ -49,24 +49,24 @@ const moduleActions = {
             }
         }
     },
-    "ws/shield/search/poi/detail": {
-        allowedModules: [
-            "bigListBizRec", 
-            "nearbyRecommendModule", 
-            "check_in", 
-            "travelGuideAndQa"
-        ],
-        action: (obj) => {
+	"ws/shield/search/poi/detail": {
+		modules: [
+			"bigListBizRec", 
+			"nearbyRecommendModule", 
+			"check_in", 
+			"travelGuideAndQa"
+		],
+		action: (obj, modules) => {
+			if (obj.data?.modules) {
+				for (let key in obj.data.modules) {
+					if (!modules.includes(key)) { 
+						delete obj.data.modules[key];
+					}
+				}
+			}
+		}
+	}
 
-            if (obj.data?.modules) {
-                for (let key in obj.data.modules) {
-                    if (!this.allowedModules.includes(key)) {
-                        delete obj.data.modules[key]; 
-                    }
-                }
-            }
-        }
-    }
 };
 
 
