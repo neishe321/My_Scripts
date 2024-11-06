@@ -47,11 +47,13 @@ function RemoveCardtype(array = []) {
         "card86_card11", 
         "INTEREST_PEOPLE", 
         "profile_collection",			 // 那年今日/近期热门
+	"realtime_tag_groug",			 // 近期分享
     ];
     
     const card_itemid = [
         "finder_channel",  			// 发现功能分类
         "finder_window",   			// 发现轮播广告
+	"tongcheng_usertagwords",		// 分享标签
     ];
 
     const hot_card_keywords = [
@@ -72,8 +74,10 @@ function RemoveCardtype(array = []) {
             (item?.category === "group" && group_itemId.includes(item?.itemId)) ||
             (item?.category === "card" && card_itemid.includes(item?.data?.itemid)) ||
             (item?.itemId && hot_card_keywords.some(keyword => item?.itemId.includes(keyword))) ||
-            (item?.data?.wboxParam) || 		// wboxParam
-            (item?.data?.cate_id === "1114") ||   // wboxParam.png
+            (item?.data?.wboxParam) || 			// wboxParam
+            (item?.data?.cate_id === "1114") ||   	// wboxParam.png
+	    (items?.data?.card_ad_style === '1') ||  	// 实时图片推广
+	    (items?.data?.card_id === "search_card") || // 实时搜索框文本
 	   // 下边属于超话卡片
 	    (item?.data?.itemid && hot_card_keywords.some(keyword => item?.data.itemid.includes(keyword)) && item?.data?.itemid !== "sg_bottom_tab_search_input") ||
 	    (item?.data?.header?.title === "绝美壁纸上新")
