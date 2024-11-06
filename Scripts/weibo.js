@@ -60,8 +60,8 @@ function RemoveCardtype(array = []) {
         "hot_video", 
         "hot_chaohua_list", 
         "hot_link_mike",
-	// "chaohua_discovery_banner",  // 超话top广告
-	// "cats_top"   // 超话分类
+	"chaohua_discovery_banner",
+	"bottom"
     ];
 
     let result = [];
@@ -75,7 +75,7 @@ function RemoveCardtype(array = []) {
             (item?.data?.wboxParam) || 		// wboxParam
             (item?.data?.cate_id === "1114") ||   // wboxParam.png
 	   // 下边属于超话卡片
-	    (item?.data?.itemid &&  ["bottom", "cats_top", "chaohua_discovery_banner"].some(keyword => item?.data.itemid.includes(keyword)) && item?.data?.itemid !== "sg_bottom_tab_search_input") ||
+	    (item?.data?.itemid &&  ["bottom", "chaohua_discovery_banner"].some(keyword => item?.data.itemid.includes(keyword)) && item?.data?.itemid !== "sg_bottom_tab_search_input") ||
 	    (item?.data?.header?.title === "绝美壁纸上新")
 	
 	if (item?.data?.hotwords && item?.data?.itemid === "sg_bottom_tab_search_input") {
