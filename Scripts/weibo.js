@@ -69,14 +69,11 @@ function RemoveCardtype(array = []) {
         const isSearchCard = 
             (item?.category === "group" && group_itemId.includes(item?.itemId)) ||
             (item?.category === "card" && card_itemid.includes(item?.data?.itemid)) ||
-            (item?.itemid && hot_card_keywords.some(keyword => item?.itemid.includes(keyword))) ||
+            (item?.itemId && hot_card_keywords.some(keyword => item?.itemId.includes(keyword))) ||
             (item?.data?.wboxParam) || 		// wboxParam
             (item?.data?.cate_id === "1114") ||   // wboxParam.png
 	    (item?.data?.itemid && ["bottom"].some(keyword => item?.data.itemid.includes(keyword))) // 超话卡片
 	
-	if (item?.data?.itemid=== "sg_bottom_tab_search_input") {
-		delete item?.data?.hotwords} // 超话搜索框内关键词显示
-        
 	if (!isSearchCard) {
 		 result.push(item); // 移除多余卡片
         }
