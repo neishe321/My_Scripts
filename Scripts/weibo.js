@@ -51,13 +51,19 @@ function RemoveAds(array = []) {
 
 // 删除卡片类型
 function RemoveCardtype(array = []) {
+    /*  102803_video_card
+        card86_card11_cishi 
+        card86_card11
+        faxian_bendi_qiehuan
+        
+    */
     let result = [];
     for (let i = 0; i < array.length; i++) {
         const item = array[i];
         const isSearchCard =
             (item?.category === "group" && ["vertical", "horizontal"].includes(item?.type) 
                  && ["102803_video_card", "card86_card11_cishi", "card86_card11"].includes(item?.itemId)) ||
-            (item?.category === "card" && [118, 19, 101, 236].includes(item?.data?.card_type));
+            (item?.category === "card" && [118, 19, 101, 236].includes(item?.data?.card_type) && item?.data?.itemid !== "faxian_bendi_qiehuan");
         
         if (!isSearchCard) {
             result.push(item);
