@@ -100,7 +100,7 @@ else if (url.includes("guest/statuses_extend") || url.includes("statuses/extend"
 }
 
 else if (url.includes("search/finder")) {
-    // 发现
+    // 首次发现
     const channels = obj?.channelInfo?.channels;
     if (channels && channels.length > 0) {
         const payload = channels[0]?.payload;
@@ -111,8 +111,8 @@ else if (url.includes("search/finder")) {
     }
 }
 
-else if (url.includes("search/container_timeline")) {
-    // 发现
+else if (url.includes("search/container_timeline") || url.includes("/search/container_discover")) {
+    // 刷新发现
     if (obj?.loadedInfo) {
         deleteFields(obj.loadedInfo, ['headerBack', 'searchBarContent']);
     }
