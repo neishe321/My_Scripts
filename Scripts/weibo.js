@@ -52,13 +52,6 @@ function RemoveCardtype(array = []) {
     const card_itemId = [
         "finder_channel",  			// 发现功能分类
         "finder_window",   			// 发现轮播广告
-	// "new_sg_bottom_tab_hot_channels",	// 超话分类  tab1
-	// "new_sg_bottom_tab_discovery",		// 超话轮播卡片 tab1
-	// "sg_homebottom_airborne_item",		// 空降 tab2
-	// "sg_bottom_tab_game_high_score_title",  // 游戏
-	// "sg_bottom_tab_birth",			// 生日
-	// "bottom_guess_like_new_c_title",        // 大热IP集合
-	// "bottom_guess_like_new_c",
     ];
 
     const hot_card_keywords = [
@@ -66,7 +59,7 @@ function RemoveCardtype(array = []) {
         "local_hot_band", 
         "hot_video", 
         "hot_chaohua_list", 
-        "hot_link_mike"
+        "hot_link_mike",
     ];
 
     let result = [];
