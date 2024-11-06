@@ -35,7 +35,7 @@ function RemoveAds(array = []) {
         if (!isSearchAd) {
             result.push(item);
         }
-    }
+    }   
     array.length = 0;
     array.push(...result);
 }
