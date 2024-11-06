@@ -47,13 +47,13 @@ function RemoveCardtype(array = []) {
         "card86_card11", 
         "INTEREST_PEOPLE", 
         "profile_collection",			 // 那年今日/近期热门
-	"realtime_tag_groug",			 // 近期分享
+	"realtime_tag_groug",			 // 实时近期分享
     ];
     
     const card_itemid = [
         "finder_channel",  			// 发现功能分类
         "finder_window",   			// 发现轮播广告
-	"tongcheng_usertagwords",		// 近期分享标签
+	"tongcheng_usertagwords",		// 实时近期分享标签
     ];
 
     const hot_card_keywords = [
