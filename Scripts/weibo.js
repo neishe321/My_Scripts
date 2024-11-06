@@ -72,7 +72,7 @@ function RemoveCardtype(array = []) {
             (item?.itemId && hot_card_keywords.some(keyword => item?.itemId.includes(keyword))) ||
             (item?.data?.wboxParam) || 		// wboxParam
             (item?.data?.cate_id === "1114") ||   // wboxParam.png
-	    (item?.data?.itemid && ["bottom"].some(keyword => item?.data.itemid.includes(keyword))) // 超话卡片
+	    (item?.data?.itemid && item?.data.itemid.includes("bottom")  && item?.data.itemid !=== "sg_bottom_tab_search_input")) // 超话卡片
 	
 	if (!isSearchCard) {
 		 result.push(item); // 移除多余卡片
