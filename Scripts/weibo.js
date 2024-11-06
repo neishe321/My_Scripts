@@ -10,15 +10,6 @@ try {
     return;
 }
 
-/*
-card_type 
-317 		今日错过
-101 17 		微博热搜
-118 		轮播
-19  		快捷功能
-101 236  	微博趋势
-*/
-
 // ------------------ 函数定义 ------------------
 
 // 删除指定属性
@@ -44,13 +35,11 @@ function RemoveAds(array = []) {
             result.push(item);
         }
     }
-    
     array.length = 0;
     array.push(...result);
 }
 
 function RemoveCardtype(array = []) {
-    
     const exclusionItemIds = [
         "card86_card11_cishi", 
         "card86_card11", 
@@ -79,15 +68,8 @@ function RemoveCardtype(array = []) {
     array.push(...result);
 }
 
-
-    array.length = 0;
-    array.push(...result);
-}
-
-
 // 递归处理嵌套的 items数组
 function processItems(array = []) {
-    // 处理当前的 items 数组
     RemoveAds(array);
     RemoveCardtype(array);
 
@@ -98,8 +80,6 @@ function processItems(array = []) {
         }
     });
 }
-
-
 
 // ------------------ 处理响应 ------------------
 
@@ -164,7 +144,6 @@ else if (url.includes("aj/appicon/list")) {
 else if (url.includes("/messageflow/notice")) {
     obj.messages = obj.messages.filter(message => message.isInsert !== false && message.ad_tag?.text !== '广告');
 }
-
 
 // ------------------ 返回处理结果 ------------------
 $done({ body: JSON.stringify(obj) });
