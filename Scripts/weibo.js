@@ -82,7 +82,7 @@ function RemoveCardtype(array = []) {
             (item?.data?.cate_id === "1114"); // wboxParam.png
 	
 	if (item?.data?.itemid=== "sg_bottom_tab_search_input") {
-		delete item?.data?.itemId.hotwords} // 超话搜索关键词
+		delete item?.data?.itemid.hotwords} // 超话搜索关键词
         
 	    if (!isSearchCard) {
             result.push(item); // 移除多余卡片
