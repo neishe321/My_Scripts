@@ -32,43 +32,56 @@ function deleteFields(obj, fields) {
 
 // 删除广告
 function RemoveAds(array = []) {
-    for (let i = array.length - 1; i >= 0; i--) {
+    let result = [];
+    for (let i = 0; i < array.length; i++) {
         const item = array[i];
         const isSearchAd =
             ["hot_ad", "trend"].includes(item?.item_category) ||
             item?.data?.mblogtypename === "广告" ||
-            item?.data?.ad_state === 1 ||
-            item?.itemId === "INTEREST_PEOPLE";
+            item?.data?.ad_state === 1;
 
-        if (isSearchAd) {
-            array.splice(i, 1);
+        if (!isSearchAd) {
+            result.push(item);
         }
     }
-    // console.log("页面广告已过滤 o(*￣▽￣*)ブ")
+	
+    array.length = 0; 
+    array.push(...result);
 }
 
 // 删除发现页的卡片类型
 function RemoveCardtype(array = []) {
-    for (let i = array.length - 1; i >= 0; i--) {
+    let result = [];
+    for (let i = 0; i < array.length; i++) {
         const item = array[i];
-        if (
-            item?.category === 'card' &&
-            ([118, 19, 101, 236].includes(item?.data?.card_type) && !(item?.data?.card_type === 101 && item?.data?.scheme === ""))
-        ) {
-            array.splice(i, 1);
+        const isSearchCard =
+            (item?.category === "group" && ["vertical", "horizontal"].includes(item?.type) && item?.itemId !== null) ||
+            (item?.category === "card" && [118, 19, 101, 236].includes(item?.data?.card_type));
+        
+        if (!isSearchCard) {
+            result.push(item);
         }
     }
-    // console.log("多余模块已剔除 o(*￣▽￣*)ブ")
+
+    array.length = 0;
+    array.push(...result);
 }
 
-// 递归处理嵌套的 items
-function processItems(el) {
-    if (Array.isArray(el?.items)) {
-        RemoveAds(el.items);
-        RemoveCardtype(el.items);
-        el.items.forEach(item => processItems(item));
-    }
+// 递归处理嵌套的 items数组
+function processItems(array = []) {
+    // 处理当前的 items 数组
+    RemoveAds(array);
+    RemoveCardtype(array);
+
+    // 递归处理每个 item
+    array.forEach(item => {
+        if (Array.isArray(item?.items)) {
+            processItems(item.items);
+        }
+    });
 }
+
+
 
 // ------------------ 处理响应 ------------------
 
@@ -92,7 +105,7 @@ else if (url.includes("search/finder")) {
         const payload = channels[0]?.payload;
         if (payload) {
             deleteFields(payload.loadedInfo, ['headerBack', 'searchBarContent']);
-            processItems(payload); 
+            processItems(payload.items); 
         }
     }
 }
@@ -102,17 +115,17 @@ else if (url.includes("search/container_timeline")) {
     if (obj?.loadedInfo) {
         deleteFields(obj.loadedInfo, ['headerBack', 'searchBarContent']);
     }
-    processItems(obj);
+    processItems(obj.items);
 }
 
 else if (url.includes("/2/searchall?")) {
     // 搜索
-    RemoveAds(obj.items);
+    processItems(obj.items);
 }
 
 else if (url.includes("/statuses/container_timeline") || url.includes("profile/container_timeline")) {
     // 推荐
-    RemoveAds(obj.items);
+    processItems(obj.items);
 }
 
 else if (url.includes("/profile/me")) {
