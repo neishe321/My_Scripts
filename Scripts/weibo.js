@@ -81,7 +81,7 @@ function RemoveCardtype(array = []) {
             (item?.data?.wboxParam) || // wboxParam
             (item?.data?.cate_id === "1114"); // wboxParam.png
 	
-	if (item?.data?.itemId.sg_bottom_tab_search_input === "sg_bottom_tab_search_input") {
+	if (item?.data?.itemId=== "sg_bottom_tab_search_input") {
 		delete item?.data?.itemId.hotwords} // 超话搜索关键词
         
 	    if (!isSearchCard) {
