@@ -50,7 +50,10 @@ const moduleActions = {
         }
     },
 	"ws/shield/search/poi/detail": {
-		modules: ["yellowPageAdRecommendModule"],
+		modules: [
+			"yellowPageAdRecommendModule",
+			"new_operation_banner"
+		],
 		action: (obj, modules) => {
             modules?.forEach(key => delete obj.data?.[key]);
         }
