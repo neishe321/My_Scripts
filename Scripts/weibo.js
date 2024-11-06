@@ -49,30 +49,36 @@ function RemoveAds(array = []) {
     array.push(...result);
 }
 
-// 删除卡片类型
 function RemoveCardtype(array = []) {
-    /*  
-        card86_card11_cishi 
-        card86_card11
-        faxian_bendi_qiehuan 本地置顶card
-        INTEREST_PEOPLE 感兴趣的人
-        weibo_cardpics 那年今日/近期热门 profile_collection
-        
-    */
+    
+    const exclusionItemIds = [
+        "card86_card11_cishi", 
+        "card86_card11", 
+        "INTEREST_PEOPLE", 
+        "profile_collection", // 那年今日/近期热门
+        "finder_window"  
+    ];
+
+    const hot_card = "seqid:763879878|type:ctg1|pos:-0-0|srid:b98b195147c9401d6e218fd2a30236fb|ext:&cate=1049&module_info=hot_character,local_hot_band,hot_video,hot_chaohua_list,hot_link_mike&qtime=1730770435&mod_src=s_finder&";
+
     let result = [];
+
     for (let i = 0; i < array.length; i++) {
         const item = array[i];
-        // 发现下的热门超话/直播/人物/视频等
-        let hot_card = "seqid:763879878|type:ctg1|pos:-0-0|srid:b98b195147c9401d6e218fd2a30236fb|ext:&cate=1049&module_info=hot_character,local_hot_band,hot_video,hot_chaohua_list,hot_link_mike&qtime=1730770435&mod_src=s_finder&"
-        const isSearchCard =
-            (item?.category === "group" &&
-                 [hot_card, "card86_card11_cishi", "card86_card11", "INTEREST_PEOPLE", "profile_collection"].includes(item?.itemId))||
-            (item?.category === "card" && ["finder_window"].includes(item?.data?.itemid"))
-        
+
+        const isSearchCard = (item?.category === "group" && exclusionItemIds.includes(item?.itemId)) ||
+            (item?.category === "card" && item?.data?.itemid === "finder_window") ||
+            (item?.itemId === hot_card);
+
         if (!isSearchCard) {
             result.push(item);
         }
     }
+
+    array.length = 0;
+    array.push(...result);
+}
+
 
     array.length = 0;
     array.push(...result);
