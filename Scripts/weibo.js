@@ -76,7 +76,7 @@ function RemoveCardtype(array = []) {
             (item?.data?.cate_id === "1114"); // wboxParam.png
 	
 	if (item?.data?.itemid=== "sg_bottom_tab_search_input") {
-		delete item?.data?.hotwords} // 超话搜索关键词
+		delete item?.data?.hotwords} // 超话搜索框内关键词显示
         
 	if (!isSearchCard) {
 		 result.push(item); // 移除多余卡片
@@ -161,6 +161,12 @@ else if (url.includes("aj/appicon/list")) {
 
 else if (url.includes("/messageflow/notice")) {
     RemoveAds(obj.messages)
+}
+else if (url.includes("/your/api/endpoint")) {
+	// 超话送搜索界面关键词
+    if (obj.items && obj.items.length > 1) {
+        obj.items.shift(); 
+    }
 }
 
 // ------------------ 返回处理结果 ------------------
