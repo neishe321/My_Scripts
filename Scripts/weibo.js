@@ -83,7 +83,7 @@ function RemoveCardtype(array = []) {
 	}
 	    
 	if (!isSearchCard) {
-		 result.push(item); // 移除多余卡片
+		 result.push(item);
         }
     }
 
