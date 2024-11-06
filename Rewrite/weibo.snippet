@@ -22,6 +22,8 @@ hostname=*api.weibo.cn, *.uve.weibo.com, *vip.weibo.cn
 # 开屏
 ^https?:\/\/wbapp\.uve\.weibo\.com\/wbapplua\/wbpullad\.lua url reject-200
 ^https?:\/\/boot(?:preload|realtime)\.uve\.weibo\.com\/v\d\/ad\/(?:preload|realtime) url reject-200
+# 直播tab
+^https?:\/\/api\.weibo\.cn\/\d\/!\/live\/media_homelist -url reject-200
 # 猜你想搜
 ;^https?:\/\/api\.weibo\.cn\/\d\/cardlist\? url reject-200
 # 弹窗
