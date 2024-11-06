@@ -44,8 +44,8 @@ function RemoveAds(array = []) {
             result.push(item);
         }
     }
-	
-    array.length = 0; 
+    
+    array.length = 0;
     array.push(...result);
 }
 
@@ -66,6 +66,7 @@ function RemoveCardtype(array = []) {
     array.length = 0;
     array.push(...result);
 }
+
 
 // 递归处理嵌套的 items数组
 function processItems(array = []) {
