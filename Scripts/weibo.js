@@ -52,7 +52,7 @@ function RemoveCardtype(array = []) {
     const card_itemId = [
         "finder_channel",  			// 发现功能分类
         "finder_window",   			// 发现轮播广告
-	"sg_bottom_tab_search_input",		// 超话搜索关键词
+	// "sg_bottom_tab_search_input",		// 超话搜索关键词
 	// "mine_topics",			 // 我的超话
 	"new_sg_bottom_tab_hot_channels",	// 超话分类
 	"new_sg_bottom_tab_discovery",		// 超话轮播卡片
