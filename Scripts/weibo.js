@@ -162,12 +162,7 @@ else if (url.includes("aj/appicon/list")) {
 else if (url.includes("/messageflow/notice")) {
     RemoveAds(obj.messages)
 }
-else if (url.includes("shproxy/chaohua/discovery/searchactive")) {
-	// 超话送搜索界面关键词
-    if (obj.items && obj.items.length > 1) {
-        obj.items.shift(); 
-    }
-}
+
 
 // ------------------ 返回处理结果 ------------------
 $done({ body: JSON.stringify(obj) });
