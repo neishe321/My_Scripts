@@ -49,7 +49,7 @@ function RemoveAds(array = []) {
     array.push(...result);
 }
 
-// 删除发现页的卡片类型
+// 删除卡片类型
 function RemoveCardtype(array = []) {
     let result = [];
     for (let i = 0; i < array.length; i++) {
