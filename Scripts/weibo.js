@@ -53,7 +53,7 @@ function RemoveCardtype(array = []) {
     const card_itemid = [
         "finder_channel",  			// 发现功能分类
         "finder_window",   			// 发现轮播广告
-	"tongcheng_usertagwords",		// 分享标签
+	"tongcheng_usertagwords",		// 近期分享标签
     ];
 
     const hot_card_keywords = [
@@ -77,8 +77,8 @@ function RemoveCardtype(array = []) {
             (item?.data?.wboxParam) || 			// wboxParam
             (item?.data?.cate_id === "1114") ||   	// wboxParam.png
 	    (item?.data?.card_ad_style === '1') ||  	// 实时图片推广
-	    (item?.data?.card_id === "search_card") || // 实时搜索框文本
-	   // 下边属于超话卡片
+	    // (item?.data?.card_id === "search_card") || // 实时搜索框文本
+	    // 下边属于超话卡片
 	    (item?.data?.itemid && hot_card_keywords.some(keyword => item?.data.itemid.includes(keyword)) && item?.data?.itemid !== "sg_bottom_tab_search_input") ||
 	    (item?.data?.header?.title === "绝美壁纸上新")
 	
