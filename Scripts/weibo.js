@@ -21,7 +21,7 @@ function deleteFields(obj, fields) {
     });
 }
 
-// 删除广告
+// 移除广告
 function RemoveAds(array = []) {
     let result = [];
     for (let i = 0; i < array.length; i++) {
@@ -29,7 +29,8 @@ function RemoveAds(array = []) {
         const isSearchAd =
             ["hot_ad", "trend"].includes(item?.item_category) ||
             item?.data?.mblogtypename === "广告" ||
-            item?.data?.ad_state === 1;
+            item?.data?.ad_state === 1 ||
+			item?.isInsert == false && item?.msg_card?.ad_tag?.text == '广告'; // 消息动态推广
 
         if (!isSearchAd) {
             result.push(item);
@@ -39,6 +40,7 @@ function RemoveAds(array = []) {
     array.push(...result);
 }
 
+// 移除模块
 function RemoveCardtype(array = []) {
     const group_itemId = [
         "card86_card11_cishi", 
@@ -80,12 +82,11 @@ function RemoveCardtype(array = []) {
     array.push(...result);
 }
 
-// 递归处理嵌套的 items数组
+// 处理嵌套的 items数组
 function processItems(array = []) {
     RemoveAds(array);
     RemoveCardtype(array);
 
-    // 递归处理每个 item
     array.forEach(item => {
         if (Array.isArray(item?.items)) {
             processItems(item.items);
@@ -154,7 +155,7 @@ else if (url.includes("aj/appicon/list")) {
 }
 
 else if (url.includes("/messageflow/notice")) {
-    obj.messages = obj.messages.filter(message => message.isInsert !== false && message.ad_tag?.text !== '广告');
+    RemoveAds(obj.messages)
 }
 
 // ------------------ 返回处理结果 ------------------
