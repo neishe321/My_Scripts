@@ -18,19 +18,18 @@ hostname=*api.weibo.cn, *.uve.weibo.com, *vip.weibo.cn
 ^https?:\/\/api\.weibo\.cn\/\d\/messageflow\/notice url script-response-body https://raw.githubusercontent.com/neishe321/QuanX/main/Scripts/weibo.js
 # 图标
 ^https?://new\.vip\.weibo\.cn/aj/appicon/list url script-response-body https://raw.githubusercontent.com/neishe321/QuanX/main/Scripts/weibo.js
+
+# 开屏
+^https?:\/\/wbapp\.uve\.weibo\.com\/wbapplua\/wbpullad\.lua url reject-200
+^https?:\/\/boot(?:preload|realtime)\.uve\.weibo\.com\/v\d\/ad\/(?:preload|realtime) url reject-200
 # 猜你想搜
-;^https?:\/\/api\.weibo\.cn\/\d\/cardlist -url reject-200
+^https?:\/\/api\.weibo\.cn\/\d\/cardlist\? url reject-200
 # 弹窗
 ^https?:\/\/sdkapp\.uve\.weibo\.com\/interface\/sdk\/sdkconfig\.php url reject-200
-
 # 超话搜索推广
 ^https?:\/\/api\.weibo\.cn\/\d\/shproxy\/chaohua\/discovery\/searchactive url reject-200
 # 超话感兴趣推广
 ^https?:\/\/api\.weibo\.cn\/\d\/container\/asyn url reject-200
-
-# 开屏
-^https:\/\/wbapp\.uve\.weibo\.com\/wbapplua\/wbpullad\.lua url reject-200
-^https?:\/\/boot(?:preload|realtime)\.uve\.weibo\.com\/v\d\/ad\/(?:preload|realtime) url reject-200
 # 未知
 ^https?:\/\/api\.weibo\.cn\/\d\/(client\/addlog_batch|push\/active) url reject-200
 
