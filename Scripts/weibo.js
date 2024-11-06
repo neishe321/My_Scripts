@@ -74,7 +74,7 @@ function RemoveCardtype(array = []) {
             (item?.itemId && hot_card_keywords.some(keyword => item?.itemId.includes(keyword))) ||
             (item?.data?.wboxParam) || 		// wboxParam
             (item?.data?.cate_id === "1114") ||   // wboxParam.png
-	    (item?.data?.itemid && hot_card_keywords.some(keyword => item?.data.itemid.includes(keyword)) && item?.data?.itemid !== "sg_bottom_tab_search_input")  // 超话卡片
+	    (item?.data?.itemid &&  ["bottom", "cats_top"].some(keyword => item?.data.itemid.includes(keyword)) && item?.data?.itemid !== "sg_bottom_tab_search_input")  // 超话卡片
 	
 	if (item?.data?.hotwords && item?.data?.itemid === "sg_bottom_tab_search_input") {
 		delete item?.data?.hotwords // 超话搜索框提示文字
