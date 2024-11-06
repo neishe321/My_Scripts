@@ -40,13 +40,17 @@ function RemoveAds(array = []) {
     array.push(...result);
 }
 
-// 删除模块
+// 删除卡片
 function RemoveCardtype(array = []) {
-    const exclusionItemIds = [
+    const group_itemId = [
         "card86_card11_cishi", 
         "card86_card11", 
         "INTEREST_PEOPLE", 
         "profile_collection", // 那年今日/近期热门
+    ];
+	
+	 const card_itemId = [
+        "finder_channel", 
         "finder_window"  
     ];
 
@@ -57,9 +61,9 @@ function RemoveCardtype(array = []) {
     for (let i = 0; i < array.length; i++) {
         const item = array[i];
 
-        const isSearchCard = (item?.category === "group" && exclusionItemIds.includes(item?.itemId)) ||
-            (item?.category === "card" && item?.data?.itemid === "finder_window") ||
-            (item?.itemId === hot_card);
+        const isSearchCard = 
+		(item?.category === "group" && group_itemId.includes(item?.itemId)) ||
+            (item?.category === "card" && card_itemId.includes(item?.data?.itemid);
 
         if (!isSearchCard) {
             result.push(item);
