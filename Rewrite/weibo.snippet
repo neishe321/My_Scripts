@@ -4,8 +4,6 @@
 
 hostname=*api.weibo.cn, *.uve.weibo.com, *vip.weibo.cn
 
-# 未知
-^https?:\/\/api\.weibo\.cn\/\d\/(client\/addlog_batch|push\/active) url reject-200
 # 详情
 ^https?:\/\/api\.weibo\.cn\/\d\/(comments\/build_comments|guest\/statuses_extend|statuses\/extend) url script-response-body https://raw.githubusercontent.com/neishe321/QuanX/main/Scripts/weibo.js
 # 发现页
@@ -28,6 +26,8 @@ hostname=*api.weibo.cn, *.uve.weibo.com, *vip.weibo.cn
 # 开屏
 ^https:\/\/wbapp\.uve\.weibo\.com\/wbapplua\/wbpullad\.lua url reject-200
 ^https?:\/\/boot(?:preload|realtime)\.uve\.weibo\.com\/v\d\/ad\/(?:preload|realtime) url reject-200
+# 未知
+^https?:\/\/api\.weibo\.cn\/\d\/(client\/addlog_batch|push\/active) url reject-200
 
 
 
