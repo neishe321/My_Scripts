@@ -10,9 +10,8 @@ try {
     return;
 }
 
-
 // ------------------ 函数定义 ------------------
- 
+
 // 删除指定属性
 function deleteFields(obj, fields) {
     fields.forEach(field => {
@@ -48,8 +47,8 @@ function RemoveCardtype(array = []) {
         "INTEREST_PEOPLE", 
         "profile_collection", // 那年今日/近期热门
     ];
-	
-	 const card_itemId = [
+    
+    const card_itemId = [
         "finder_channel", 
         "finder_window"  
     ];
@@ -62,9 +61,9 @@ function RemoveCardtype(array = []) {
         const item = array[i];
 
         const isSearchCard = 
-		(item?.category === "group" && group_itemId.includes(item?.itemId)) ||
-            	(item?.category === "card" && card_itemId.includes(item?.data?.itemid) ||
-		(item?.itemId === hot_card);
+            (item?.category === "group" && group_itemId.includes(item?.itemId)) ||
+            (item?.category === "card" && card_itemId.includes(item?.data?.itemid)) ||
+            (item?.itemId === hot_card);
 
         if (!isSearchCard) {
             result.push(item);
