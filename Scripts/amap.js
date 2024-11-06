@@ -5,11 +5,11 @@ try {
     obj = JSON.parse($response.body);
 } catch (e) {
     console.error("JSON 解析失败:", e);
-    $done({ body: $response.body });
+    $done({ body: $response.body }); 
     return;
 }
 
-// 定义模块
+// 定义模块操作
 const moduleActions = {
     "c3frontend/af-nearby/nearby": {
         modules: ["banner", "contentPoster", "feedRec"],
@@ -19,7 +19,7 @@ const moduleActions = {
     },
     "ws/promotion-web/resource": {
         action: (obj) => {
-            obj.data = {}; 
+            obj.data = {};
         }
     },
     "ws/shield/frogserver/aocs/updatable": {
@@ -48,10 +48,29 @@ const moduleActions = {
                 });
             }
         }
+    },
+    "ws/shield/search/poi/detail": {
+        allowedModules: [
+            "bigListBizRec", 
+            "nearbyRecommendModule", 
+            "check_in", 
+            "travelGuideAndQa"
+        ],
+        action: (obj) => {
+
+            if (obj.data?.modules) {
+                for (let key in obj.data.modules) {
+                    if (!this.allowedModules.includes(key)) {
+                        delete obj.data.modules[key]; 
+                    }
+                }
+            }
+        }
     }
 };
 
-// 执行对应的操作
+
+// 执行对应的模块操作
 Object.keys(moduleActions).forEach(key => {
     if (url.includes(key)) {
         const action = moduleActions[key];
@@ -59,4 +78,4 @@ Object.keys(moduleActions).forEach(key => {
     }
 });
 
-$done({ body: JSON.stringify(obj) });
+$done({ body: JSON.stringify(obj) }); 
