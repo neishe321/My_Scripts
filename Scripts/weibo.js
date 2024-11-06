@@ -56,6 +56,7 @@ function RemoveCardtype(array = []) {
 	// "mine_topics",			 // 我的超话
 	"new_sg_bottom_tab_hot_channels",	// 超话分类
 	"new_sg_bottom_tab_discovery",		// 超话轮播卡片
+	"10001_sgbottomnav_209fcyec6ize9"	// 感兴趣的超话
     ];
 	
 	/* 超话处理
