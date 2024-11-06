@@ -39,7 +39,6 @@ function RemoveAds(array = []) {
     array.push(...result);
 }
 
-// 删除卡片
 function RemoveCardtype(array = []) {
     const group_itemId = [
         "card86_card11_cishi", 
@@ -53,17 +52,22 @@ function RemoveCardtype(array = []) {
         "finder_window"  
     ];
 
-    const hot_card = "seqid:763879878|type:ctg1|pos:-0-0|srid:b98b195147c9401d6e218fd2a30236fb|ext:&cate=1049&module_info=hot_character,local_hot_band,hot_video,hot_chaohua_list,hot_link_mike&qtime=1730770435&mod_src=s_finder&";
+    const hot_card_keywords = [
+        "hot_character", 
+        "local_hot_band", 
+        "hot_video", 
+        "hot_chaohua_list", 
+        "hot_link_mike"
+    ];
 
     let result = [];
 
     for (let i = 0; i < array.length; i++) {
         const item = array[i];
-
         const isSearchCard = 
             (item?.category === "group" && group_itemId.includes(item?.itemId)) ||
             (item?.category === "card" && card_itemId.includes(item?.data?.itemid)) ||
-            (item?.itemId === hot_card);
+            (item?.itemId && hot_card_keywords.some(keyword => item?.itemId.includes(keyword)));
 
         if (!isSearchCard) {
             result.push(item);
