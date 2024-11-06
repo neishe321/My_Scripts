@@ -49,7 +49,7 @@ function RemoveCardtype(array = []) {
         "profile_collection",			 // 那年今日/近期热门
     ];
     
-    const card_itemId = [
+    const card_itemid = [
         "finder_channel",  			// 发现功能分类
         "finder_window",   			// 发现轮播广告
     ];
@@ -59,7 +59,7 @@ function RemoveCardtype(array = []) {
         "local_hot_band", 
         "hot_video", 
         "hot_chaohua_list", 
-        "hot_link_mike",
+        "hot_link_mike"
     ];
 
     let result = [];
@@ -67,8 +67,8 @@ function RemoveCardtype(array = []) {
     for (let i = 0; i < array.length; i++) {
         const item = array[i];
         const isSearchCard = 
-            (item?.category === "group" && group_itemId.includes(item?.itemid)) ||
-            (item?.category === "card" && card_itemId.includes(item?.data?.itemid)) ||
+            (item?.category === "group" && group_itemId.includes(item?.itemId)) ||
+            (item?.category === "card" && card_itemid.includes(item?.data?.itemid)) ||
             (item?.itemid && hot_card_keywords.some(keyword => item?.itemid.includes(keyword))) ||
             (item?.data?.wboxParam) || 		// wboxParam
             (item?.data?.cate_id === "1114") ||   // wboxParam.png
