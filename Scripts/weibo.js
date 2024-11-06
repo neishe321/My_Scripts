@@ -40,6 +40,7 @@ function RemoveAds(array = []) {
     array.push(...result);
 }
 
+// 删除模块
 function RemoveCardtype(array = []) {
     const exclusionItemIds = [
         "card86_card11_cishi", 
