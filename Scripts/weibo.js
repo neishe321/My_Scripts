@@ -52,13 +52,13 @@ function RemoveCardtype(array = []) {
     const card_itemId = [
         "finder_channel",  			// 发现功能分类
         "finder_window",   			// 发现轮播广告
-	"new_sg_bottom_tab_hot_channels",	// 超话分类  tab1
-	"new_sg_bottom_tab_discovery",		// 超话轮播卡片 tab1
-	"sg_homebottom_airborne_item",		// 空降 tab2
-	"sg_bottom_tab_game_high_score_title",  // 游戏
-	"sg_bottom_tab_birth",			// 生日
-	"bottom_guess_like_new_c_title",        // 大热IP集合
-	"bottom_guess_like_new_c",
+	//"new_sg_bottom_tab_hot_channels",	// 超话分类  tab1
+	//"new_sg_bottom_tab_discovery",		// 超话轮播卡片 tab1
+	//"sg_homebottom_airborne_item",		// 空降 tab2
+	//"sg_bottom_tab_game_high_score_title",  // 游戏
+	//"sg_bottom_tab_birth",			// 生日
+	//"bottom_guess_like_new_c_title",        // 大热IP集合
+	//"bottom_guess_like_new_c",
     ];
 
     const hot_card_keywords = [
@@ -66,7 +66,8 @@ function RemoveCardtype(array = []) {
         "local_hot_band", 
         "hot_video", 
         "hot_chaohua_list", 
-        "hot_link_mike"
+        "hot_link_mike",
+	"bottom" // 超话卡片
     ];
 
     let result = [];
@@ -74,11 +75,11 @@ function RemoveCardtype(array = []) {
     for (let i = 0; i < array.length; i++) {
         const item = array[i];
         const isSearchCard = 
-            (item?.category === "group" && group_itemId.includes(item?.itemId)) ||
+            (item?.category === "group" && group_itemId.includes(item?.itemid)) ||
             (item?.category === "card" && card_itemId.includes(item?.data?.itemid)) ||
-            (item?.itemId && hot_card_keywords.some(keyword => item?.itemId.includes(keyword))) ||
+            (item?.itemid && hot_card_keywords.some(keyword => item?.itemid.includes(keyword))) ||
             (item?.data?.wboxParam) || // wboxParam
-            (item?.data?.cate_id === "1114"); // wboxParam.png
+            (item?.data?.cate_id === "1114") || // wboxParam.png
 	
 	if (item?.data?.itemid=== "sg_bottom_tab_search_input") {
 		delete item?.data?.hotwords} // 超话搜索框内关键词显示
