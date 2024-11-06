@@ -12,7 +12,7 @@ try {
 
 // ------------------ 函数定义 ------------------
 
-// 删除指定属性
+// 删除属性
 function deleteFields(obj, fields) {
     fields.forEach(field => {
         if (obj && obj.hasOwnProperty(field)) {
@@ -30,7 +30,7 @@ function RemoveAds(array = []) {
             ["hot_ad", "trend"].includes(item?.item_category) ||
             item?.data?.mblogtypename === "广告" ||
             item?.data?.ad_state === 1 ||
-			item?.isInsert == false && item?.msg_card?.ad_tag?.text == '广告'; // 消息动态推广
+	    item?.isInsert == false && item?.msg_card?.ad_tag?.text == '广告'; // 消息动态推广
 
         if (!isSearchAd) {
             result.push(item);
