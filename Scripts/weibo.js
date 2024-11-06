@@ -66,8 +66,7 @@ function RemoveCardtype(array = []) {
         "local_hot_band", 
         "hot_video", 
         "hot_chaohua_list", 
-        "hot_link_mike",
-	"bottom" // 超话卡片
+        "hot_link_mike"
     ];
 
     let result = [];
@@ -79,7 +78,8 @@ function RemoveCardtype(array = []) {
             (item?.category === "card" && card_itemId.includes(item?.data?.itemid)) ||
             (item?.itemid && hot_card_keywords.some(keyword => item?.itemid.includes(keyword))) ||
             (item?.data?.wboxParam) || 		// wboxParam
-            (item?.data?.cate_id === "1114")   // wboxParam.png
+            (item?.data?.cate_id === "1114") ||   // wboxParam.png
+	    (item?.data?.itemid && ["bottom"].some(keyword => item?.data.itemid.includes(keyword))) // 超话卡片
 	
 	if (item?.data?.itemid=== "sg_bottom_tab_search_input") {
 		delete item?.data?.hotwords} // 超话搜索框内关键词显示
