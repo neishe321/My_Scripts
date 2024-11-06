@@ -52,15 +52,9 @@ function RemoveCardtype(array = []) {
     const card_itemId = [
         "finder_channel",  			// 发现功能分类
         "finder_window",   			// 发现轮播广告
-	// "sg_bottom_tab_search_input",		// 超话搜索关键词
-	// "mine_topics",			 // 我的超话
 	"new_sg_bottom_tab_hot_channels",	// 超话分类
 	"new_sg_bottom_tab_discovery",		// 超话轮播卡片
     ];
-	
-	/* 超话处理
-	10001_sgbottomnav_209fcyec6ize9 	感兴趣的话题 item.title === "关注你感兴趣的超话"
-	*/
 
     const hot_card_keywords = [
         "hot_character", 
