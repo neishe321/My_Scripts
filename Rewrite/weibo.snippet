@@ -23,8 +23,10 @@ hostname=*api.weibo.cn, *.uve.weibo.com, *vip.weibo.cn
 # 弹窗
 ^https?:\/\/sdkapp\.uve\.weibo\.com\/interface\/sdk\/sdkconfig\.php url reject-200
 
-# 超话搜索 
+# 超话搜索推广
 ^https?:\/\/api\.weibo\.cn\/\d\/shproxy\/chaohua\/discovery\/searchactive url reject-200
+# 超话感兴趣推广
+^https?:\/\/api\.weibo\.cn\/\d\/container\/asyn url reject-200
 
 # 开屏
 ^https:\/\/wbapp\.uve\.weibo\.com\/wbapplua\/wbpullad\.lua url reject-200
