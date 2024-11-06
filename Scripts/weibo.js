@@ -68,7 +68,8 @@ function RemoveCardtype(array = []) {
             (item?.category === "group" && group_itemId.includes(item?.itemId)) ||
             (item?.category === "card" && card_itemId.includes(item?.data?.itemid)) ||
             (item?.itemId && hot_card_keywords.some(keyword => item?.itemId.includes(keyword))) ||
-            (item?.data?.wboxParam);  // wboxParam
+            (item?.data?.wboxParam) || // wboxParam
+            (item?.data?.cate_id === 1114); // wboxParam.png
 
         if (!isSearchCard) {
             result.push(item);
