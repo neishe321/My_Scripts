@@ -78,8 +78,8 @@ function RemoveCardtype(array = []) {
             (item?.category === "group" && group_itemId.includes(item?.itemid)) ||
             (item?.category === "card" && card_itemId.includes(item?.data?.itemid)) ||
             (item?.itemid && hot_card_keywords.some(keyword => item?.itemid.includes(keyword))) ||
-            (item?.data?.wboxParam) || // wboxParam
-            (item?.data?.cate_id === "1114") || // wboxParam.png
+            (item?.data?.wboxParam) || 		// wboxParam
+            (item?.data?.cate_id === "1114")   // wboxParam.png
 	
 	if (item?.data?.itemid=== "sg_bottom_tab_search_input") {
 		delete item?.data?.hotwords} // 超话搜索框内关键词显示
