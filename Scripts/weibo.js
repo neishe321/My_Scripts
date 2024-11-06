@@ -46,7 +46,7 @@ function RemoveCardtype(array = []) {
         "card86_card11_cishi", 
         "card86_card11", 
         "INTEREST_PEOPLE", 
-        "profile_collection", // 那年今日/近期热门
+        "profile_collection",			 // 那年今日/近期热门
     ];
     
     const card_itemId = [
@@ -56,12 +56,10 @@ function RemoveCardtype(array = []) {
 	// "mine_topics",			 // 我的超话
 	"new_sg_bottom_tab_hot_channels",	// 超话分类
 	"new_sg_bottom_tab_discovery",		// 超话轮播卡片
-	"10001_sgbottomnav_209fcyec6ize9"	// 感兴趣的超话
     ];
 	
 	/* 超话处理
 	10001_sgbottomnav_209fcyec6ize9 	感兴趣的话题 item.title === "关注你感兴趣的超话"
-	"type" : "grid" && "category" : "group",
 	*/
 
     const hot_card_keywords = [
@@ -82,9 +80,12 @@ function RemoveCardtype(array = []) {
             (item?.itemId && hot_card_keywords.some(keyword => item?.itemId.includes(keyword))) ||
             (item?.data?.wboxParam) || // wboxParam
             (item?.data?.cate_id === "1114"); // wboxParam.png
-
-        if (!isSearchCard) {
-            result.push(item);
+	
+	if (item?.data?.itemId.sg_bottom_tab_search_input === "sg_bottom_tab_search_input") {
+		delete item?.data?.itemId.hotwords} // 超话搜索关键词
+        
+	    if (!isSearchCard) {
+            result.push(item); // 移除多余卡片
         }
     }
 
