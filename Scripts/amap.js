@@ -50,21 +50,10 @@ const moduleActions = {
         }
     },
 	"ws/shield/search/poi/detail": {
-		modules: [
-			"bigListBizRec", 
-			"nearbyRecommendModule", 
-			"check_in", 
-			"travelGuideAndQa"
-		],
+		modules: ["yellowPageAdRecommendModule"],
 		action: (obj, modules) => {
-			if (obj.data?.modules) {
-				for (let key in obj.data.modules) {
-					if (!modules.includes(key)) { 
-						delete obj.data.modules[key];
-					}
-				}
-			}
-		}
+            modules?.forEach(key => delete obj.data?.[key]);
+        }
 	}
 
 };
