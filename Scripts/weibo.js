@@ -67,7 +67,8 @@ function RemoveCardtype(array = []) {
         const isSearchCard = 
             (item?.category === "group" && group_itemId.includes(item?.itemId)) ||
             (item?.category === "card" && card_itemId.includes(item?.data?.itemid)) ||
-            (item?.itemId && hot_card_keywords.some(keyword => item?.itemId.includes(keyword)));
+            (item?.itemId && hot_card_keywords.some(keyword => item?.itemId.includes(keyword))) ||
+            (item?.data?.wboxParam);  // wboxParam
 
         if (!isSearchCard) {
             result.push(item);
