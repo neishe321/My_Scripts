@@ -57,13 +57,13 @@ function RemoveCardtype(array = []) {
     ];
 
     const hot_card_keywords = [
-    "hot_character", 
-    "local_hot_band", 
-    "hot_video", 
-    "hot_chaohua_list", 
-    "hot_link_mike",
-	"chaohua_discovery_banner",
-	"bottom"
+		"hot_character", 
+		"local_hot_band", 
+		"hot_video", 
+		"hot_chaohua_list", 
+		"hot_link_mike",
+		"chaohua_discovery_banner",
+		"bottom"
     ];
 
     let result = [];
@@ -77,10 +77,12 @@ function RemoveCardtype(array = []) {
             (item?.data?.wboxParam) || 			// wboxParam
             (item?.data?.cate_id === "1114") ||   	// wboxParam.png
 	    (item?.data?.card_ad_style === '1') ||  	// 实时图片推广
-	    // (item?.data?.card_id === "search_card") || // 实时搜索框文本
+	    
 	    // 下边属于超话卡片
 	    (item?.data?.itemid && hot_card_keywords.some(keyword => item?.data.itemid.includes(keyword)) && item?.data?.itemid !== "sg_bottom_tab_search_input") ||
 	    (item?.data?.header?.title === "绝美壁纸上新")
+	
+	if (item?.data?.card_id === "search_card") {delete item?.data?.desc} // 推荐实时搜索框文本
 	
 	if (item?.data?.hotwords && item?.data?.itemid === "sg_bottom_tab_search_input") {
 		delete item?.data?.hotwords // 超话搜索框提示文字
