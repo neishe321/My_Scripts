@@ -71,7 +71,7 @@ function RemoveCardtype(array = []) {
     for (let i = 0; i < array.length; i++) {
         const item = array[i];
 	// 推荐实时搜索框文本
-	if (item?.data?.card_id === "search_card") {delete item?.data?.desc; delete item?.data?.scheme} 
+	if (item?.data?.card_id === "search_card") {delete item?.data?.desc;item?.data?.scheme = ""} 
 	// 超话搜索框提示文字
 	if (item?.data?.hotwords && item?.data?.itemid === "sg_bottom_tab_search_input") {delete item?.data?.hotwords }
         // 其余模块
