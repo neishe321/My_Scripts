@@ -55,7 +55,7 @@ function RemoveCardtype(array = []) {
         "finder_channel",  			// 发现功能分类
         "finder_window",   			// 发现轮播广告
 	"tongcheng_usertagwords",		// 实时近期分享标签
-	"hot_search_briefing";			// 发现今日错过
+	"hot_search_briefing",			// 发现今日错过
     ];
 
     const hot_card_keywords = [
