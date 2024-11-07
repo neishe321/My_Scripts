@@ -86,7 +86,7 @@ function RemoveCardtype(array = []) {
 	    (item?.arrayText?.contents) ||        // 智搜总结内容以及大家都在问/搜内容
 	    (item?.data?.title == "大家都在问") ||
 	    (item?.data?.desc == "相关搜索") ||
-	    (item?.data?.group) || 			//相关搜索内容
+	    (item?.data?.group && item?.data?.anchorId !== "") || 	//相关搜索内容
 	    (item?.data?.card_ad_style === '1') ||  	// 实时图片推广
 	    (item?.data?.card_id === "search_card") ||  // 推荐实时搜索框
 	    // 下边属于超话卡片
