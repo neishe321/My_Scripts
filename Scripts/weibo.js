@@ -70,11 +70,11 @@ function RemoveCardtype(array = []) {
 
     for (let i = 0; i < array.length; i++) {
         const item = array[i];
-	// 推荐实时搜索框文本
-	if (item?.data?.card_id === "search_card") {delete item.data.desc;item.data.scheme = ""}
+	    
 	// 超话搜索框提示文字
 	if (item?.data?.hotwords && item?.data?.itemid === "sg_bottom_tab_search_input") {delete item?.data?.hotwords }
-        // 其余模块
+        
+	// 其余模块
 	const isSearchCard = 
             (item?.category === "group" && group_itemId.includes(item?.itemId)) ||
             (item?.category === "card" && card_itemid.includes(item?.data?.itemid)) ||
@@ -82,6 +82,7 @@ function RemoveCardtype(array = []) {
             (item?.data?.wboxParam) || 			// wboxParam
             (item?.data?.cate_id === "1114") ||   	// wboxParam.png
 	    (item?.data?.card_ad_style === '1') ||  	// 实时图片推广
+	    (item?.data?.card_id === "search_card") ||  // 推荐实时搜索框
 	    // 下边属于超话卡片
 	    (item?.data?.itemid && hot_card_keywords.some(keyword => item?.data.itemid.includes(keyword)) && item?.data?.itemid !== "sg_bottom_tab_search_input") ||
 	    (item?.data?.header?.title === "绝美壁纸上新")
