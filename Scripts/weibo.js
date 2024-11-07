@@ -83,8 +83,10 @@ function RemoveCardtype(array = []) {
             (item?.itemId && hot_card_keywords.some(keyword => item?.itemId.includes(keyword))) ||
             (item?.data?.wboxParam) || 			// 微博趋势 智搜总结
             (item?.data?.cate_id === "1114") ||   	// wboxParam.png
-	    (item?.data?.arrayText?.contents) ||        // 智搜总结内容以及大家都在问/搜内容
-	    (item?.data?.title == "大家都在问") || 
+	    (item?.arrayText?.contents) ||        // 智搜总结内容以及大家都在问/搜内容
+	    (item?.data?.title == "大家都在问") ||
+	    (item?.data?.desc == "相关搜索") ||
+	    (item?.data?.group) || 			//相关搜索内容
 	    (item?.data?.card_ad_style === '1') ||  	// 实时图片推广
 	    (item?.data?.card_id === "search_card") ||  // 推荐实时搜索框
 	    // 下边属于超话卡片
