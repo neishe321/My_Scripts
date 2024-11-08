@@ -1,10 +1,10 @@
 #!name=电影猎手
-#!desc=去广告
+#!desc=净化广告
 #!system=ios
 
-[Rewrite]
-^https?:\/\/[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+){1,3}(:\d+)?\/api\/v\d\/advert\/config reject-dict
-#^https?:\/\/[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+){1,3}(:\d+)?\/api\/v1\/notice\/list url reject-dict
+[URL Rewrite]
+^https?:\/\/[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+){1,3}(:\d+)?\/api\/v\d\/advert\/config reject-200
+#^https?:\/\/[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+){1,3}(:\d+)?\/api\/v1\/notice\/list url reject-200
 ^https?:\/\/[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+){1,3}(:\d+)?\/api\/v1\/notice_v2\/list url reject-200
 
 [Script]
