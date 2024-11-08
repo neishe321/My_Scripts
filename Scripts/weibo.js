@@ -1,15 +1,5 @@
-let body = $response.body;
+let obj = JSON.parse($response.body);
 let url = $request.url;
-let obj;
-
-try {
-    obj = JSON.parse(body);
-} catch (e) {
-    console.error("JSON 解析错误:", e);
-    $done({ body });
-    return;
-}
-
 
 // ------------------ 函数定义 ------------------
 
@@ -177,6 +167,4 @@ else if (url.includes("/messageflow/notice")) {
     RemoveAds(obj.messages)
 }
 
-
-// ------------------ 返回处理结果 ------------------
-$done({ body: JSON.stringify(obj) });
+$done({body:JSON.stringify(obj)});
