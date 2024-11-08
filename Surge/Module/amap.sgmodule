@@ -2,20 +2,16 @@
 #!desc = 高德地图净化
 #!author = neishe321
 
-[URL Rewrite]
+[Map Local]
 # > 首页及弹窗
-^http:\/\/amdc\.m\.taobao\.com - reject
-^https?:\/\/.*\.amap\.com\/ws\/faas\/amap-navigation\/main-page - reject
-^https?:\/\/.*\.amap\.com\/ws\/boss\/order_web\/\w{8}_information - reject
-^https?:\/\/.*\.amap\.com\/ws\/boss\/car\/order\/content_info - reject
-^https?:\/\/.*\.amap\.com\/ws\/ride\/home\/page\/get_commuting_card - reject
+^http:\/\/amdc\.m\.taobao\.com data-type=text data="{}" status-code=200
+^https?:\/\/.*\.amap\.com\/ws\/faas\/amap-navigation\/main-page data-type=text data="{}" status-code=200
+^https?:\/\/.*\.amap\.com\/ws\/boss\/order_web\/\w{8}_information data-type=text data="{}" status-code=200
+^https?:\/\/.*\.amap\.com\/ws\/boss\/car\/order\/content_info data-type=text data="{}" status-code=200
+^https?:\/\/.*\.amap\.com\/ws\/ride\/home\/page\/get_commuting_card data-type=text data="{}" status-code=200
 
 [Script]
-高德附近 = type=http-response,pattern=^https?:\/\/.*\.amap\.com\/ws\/c3frontend\/af-nearby\/nearby ,requires-body=1,max-size=1048576,script-path=https://raw.githubusercontent.com/neishe321/My_Scripts/main/Scripts/amap.js
-高德打车1 = type=http-response,pattern=^https?:\/\/.*\.amap\.com\/ws\/promotion-web\/resource,requires-body=1,max-size=1048576,script-path=https://raw.githubusercontent.com/neishe321/My_Scripts/main/Scripts/amap.js
-高德打车2 = type=http-response,pattern=^https?:\/\/.*\.amap\.com\/ws\/shield\/frogserver\/aocs\/updatable,requires-body=1,max-size=1048576,script-path=https://raw.githubusercontent.com/neishe321/My_Scripts/main/Scripts/amap.js
-高德我的 = type=http-response,pattern=^https?:\/\/.*\.amap\.com\/ws\/shield\/dsp\/profile\/index\/nodefaas,requires-body=1,max-size=1048576,script-path=https://raw.githubusercontent.com/neishe321/My_Scripts/main/Scripts/amap.js
-高德净化 = type=http-response,pattern=^https?:\/\/.*\.amap\.com\/ws\/valueadded\/alimama\/splash_screen,requires-body=1,max-size=1048576,script-path=https://raw.githubusercontent.com/neishe321/My_Scripts/main/Scripts/amap.js
+高德净化 = type=http-response,pattern=^https?:\/\/.*\.amap\.com\/ws\/(c3frontend\/af-nearby\/nearby|promotion-web\/resource|shield\/frogserver\/aocs\/updatable|shield\/dsp\/profile\/index\/nodefaas|valueadded\/alimama\/splash_screen),requires-body=1,max-size=1048576,script-path=https://raw.githubusercontent.com/neishe321/My_Scripts/main/Scripts/amap.js
 
 [MITM]
 hostname = %APPEND% *.amap.com
