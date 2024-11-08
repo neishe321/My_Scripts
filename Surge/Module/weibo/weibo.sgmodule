@@ -1,9 +1,30 @@
 #!name = 微博
 #!desc = 微博净化模块
+#!author = Neishe321 
 
+[URL Rewrite]
+# 开屏
+^https?:\/\/wbapp\.uve\.weibo\.com\/wbapplua\/wbpullad\.lua - reject
+^https?:\/\/boot(?:preload|realtime)\.uve\.weibo\.com\/v\d\/ad\/(?:preload|realtime) - reject
+# 直播tab
+^https?:\/\/api\.weibo\.cn\/\d\/!\/live\/media_homelist - reject
+# 弹窗
+^https?:\/\/sdkapp\.uve\.weibo\.com\/interface\/sdk\/sdkconfig\.php - reject
+# 超话搜索推广
+^https?:\/\/api\.weibo\.cn\/\d\/shproxy\/chaohua\/discovery\/searchactive - reject
+# 超话感兴趣推广
+^https?:\/\/api\.weibo\.cn\/\d\/container\/asyn - reject
+# 未知
+^https?:\/\/api\.weibo\.cn\/\d\/(client\/addlog_batch|push\/active) - reject
 
-[Script]                      
-微博发现页 = type=http-response,pattern=^https?:\/\/api\.weibo\.cn\/\d\/search\/(finder|container_timeline|container_discover),requires-body=1,max-size=1048576,script-path=https://raw.githubusercontent.com/neishe321/My_Scripts/main/Surge/Scripts/weibo.js
+[Script]
+微博详情页 =type=http-response,pattern=^https?:\/\/api\.weibo\.cn\/\d\/(comments\/build_comments|guest\/statuses_extend|statuses\/extend),requires-body=1,max-size=1048576,script-path=https://raw.githubusercontent.com/neishe321/My_Scripts/main/Surge/Scripts/weibo.js
+微博发现页 =type=http-response,pattern=^https?:\/\/api\.weibo\.cn\/\d\/search\/(finder|container_timeline|container_discover),requires-body=1,max-size=1048576,script-path=https://raw.githubusercontent.com/neishe321/My_Scripts/main/Surge/Scripts/weibo.js
+微博搜索结果 =type=http-response,pattern=^https?:\/\/api\.weibo\.cn\/\d\/searchall,requires-body=1,max-size=1048576,script-path=https://raw.githubusercontent.com/neishe321/My_Scripts/main/Surge/Scripts/weibo.js
+微博推荐动态 =type=http-response,pattern=^https?:\/\/api\.weibo\.cn\/\d\/statuses\/container_timeline(_.*)?(\?.*)?$,requires-body=1,max-size=1048576,script-path=https://raw.githubusercontent.com/neishe321/My_Scripts/main/Surge/Scripts/weibo.js
+微博己他主页 =type=http-response,pattern=^https?:\/\/api\.weibo\.cn\/\d\/profile\/(me|container_timeline),requires-body=1,max-size=1048576,script-path=https://raw.githubusercontent.com/neishe321/My_Scripts/main/Surge/Scripts/weibo.js
+微博消息动态 =type=http-response,pattern=^https?:\/\/api\.weibo\.cn\/\d\/messageflow\/notice,requires-body=1,max-size=1048576,script-path=https://raw.githubusercontent.com/neishe321/My_Scripts/main/Surge/Scripts/weibo.js
+微博净化 =type=http-response,pattern=^https?://new\.vip\.weibo\.cn/aj/appicon/list,requires-body=1,max-size=1048576,script-path=https://raw.githubusercontent.com/neishe321/My_Scripts/main/Surge/Scripts/tets.js
 
 [MITM]
 hostname = %APPEND% *api.weibo.cn, *.uve.weibo.com, *vip.weibo.cn
