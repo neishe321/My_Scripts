@@ -1,6 +1,5 @@
 #!name = 微博
 #!desc = 微博净化模块
-#!author = Neishe321 
 
 [URL Rewrite]
 # 开屏
