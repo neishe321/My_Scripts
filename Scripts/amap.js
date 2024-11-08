@@ -1,13 +1,5 @@
 const url = $request.url;
-let obj;
-
-try {
-    obj = JSON.parse($response.body);
-} catch (e) {
-    console.error("JSON 解析失败:", e);
-    $done({ body: $response.body }); 
-    return;
-}
+let obj = JSON.parse($response.body);
 
 // 定义模块操作
 const moduleActions = {
