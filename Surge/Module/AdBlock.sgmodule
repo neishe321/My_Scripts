@@ -2,12 +2,11 @@
 #!desc = 去广告模块
 #!author = neishe321
 
+[URL Rewrite]
 # > 清风DJ
 ^https:\/\/open-set-api\.shenshiads\.com\/ - reject
-
 # > 威峰
 ^https?:\/\/api\.wfdata\.club\/v\d\/yesfeng\/(infoCenterAd|yesList) - reject
-
 # > 最右
 ^https?:\/\/adapi\.izuiyou\.com\/ - reject
 ^https?:\/\/api\.izuiyou\.com\/ad\/ - reject
