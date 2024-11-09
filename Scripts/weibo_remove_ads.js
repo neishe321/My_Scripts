@@ -19,6 +19,7 @@ function RemoveAds(array = []) {
         const item = array[i];
         const isSearchAd =
             ["hot_ad"].includes(item?.item_category) ||
+	    ["trend"].includes(item?.item_category) && item?.data?.card_type !== 101 ||
             item?.data?.mblogtypename === "广告" ||
             item?.data?.ad_state === 1 ||
 	    item?.isInsert == false // 消息动态推广
