@@ -1,5 +1,5 @@
 #!name = 微博去广告
-#!desc = 过滤微博广告以及去除某些非必要模块
+#!desc = 过滤微博广告，去除非必要模块。
 #!author = Neishe321 
 
 [Map Local]
