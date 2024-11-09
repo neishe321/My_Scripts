@@ -154,6 +154,9 @@ else if (url.includes("/profile/me")) {
     if (obj.items.length > 0 && obj.items[0].header) {
         deleteFields(obj.items[0].header, ['vipIcon', 'vipView']);
     }
+    if (obj.items.length > 0 && obj.items[1].items) {
+       obj.items.items = obj.items.items.splice(0,4)
+    }
 }
 
 else if (url.includes("aj/appicon/list")) {
