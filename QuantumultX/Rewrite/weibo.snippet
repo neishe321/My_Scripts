@@ -8,8 +8,8 @@ hostname=*api.weibo.cn, *.uve.weibo.com, *vip.weibo.cn
 ^https?:\/\/api\.weibo\.cn\/\d\/(comments\/build_comments|guest\/statuses_extend|statuses\/extend) url script-response-body https://raw.githubusercontent.com/neishe321/My_Scripts/main/Scripts/weibo.js
 # 发现页
 ^https?:\/\/api\.weibo\.cn\/\d\/search\/(finder|container_timeline|container_discover) url script-response-body https://raw.githubusercontent.com/neishe321/My_Scripts/main/Scripts/weibo.js
-# 搜索结果
-^https?:\/\/api\.weibo\.cn\/\d\/searchall url script-response-body https://raw.githubusercontent.com/neishe321/My_Scripts/main/Scripts/weibo.js
+# 搜索结果 & 超话净化
+^https?:\/\/api\.weibo\.cn\/\d\/(searchall|!/huati/discovery_home_bottom_channels) url script-response-body https://raw.githubusercontent.com/neishe321/My_Scripts/main/Scripts/weibo.js
 # 推荐动态
 ^https?:\/\/api\.weibo\.cn\/\d\/statuses\/container_timeline(_.*)?(\?.*)?$ url script-response-body https://raw.githubusercontent.com/neishe321/My_Scripts/main/Scripts/weibo.js
 # 主页
@@ -18,6 +18,7 @@ hostname=*api.weibo.cn, *.uve.weibo.com, *vip.weibo.cn
 ^https?:\/\/api\.weibo\.cn\/\d\/messageflow\/notice url script-response-body https://raw.githubusercontent.com/neishe321/My_Scripts/main/Scripts/weibo.js
 # 图标
 ^https?://new\.vip\.weibo\.cn/aj/appicon/list url script-response-body https://raw.githubusercontent.com/neishe321/My_Scripts/main/Scripts/weibo.js
+
 
 # 开屏
 ^https?:\/\/wbapp\.uve\.weibo\.com\/wbapplua\/wbpullad\.lua url reject-200
