@@ -50,13 +50,13 @@ function RemoveCardtype(array = []) {
     ];
 
     const hot_card_keywords = [
-		"hot_character", 
-		"local_hot_band", 
-		"hot_video", 
-		"hot_chaohua_list", 
-		"hot_link_mike",
-		"chaohua_discovery_banner",
-		"bottom",
+	"hot_character", 
+	"local_hot_band", 
+	"hot_video", 
+	"hot_chaohua_list", 
+	"hot_link_mike",
+	"chaohua_discovery_banner",
+	"bottom",
     ];
 
     let result = [];
