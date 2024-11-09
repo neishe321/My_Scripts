@@ -18,7 +18,7 @@ function RemoveAds(array = []) {
     for (let i = 0; i < array.length; i++) {
         const item = array[i];
         const isSearchAd =
-            ["hot_ad", "trend"].includes(item?.item_category) ||
+            ["hot_ad", "trend"].includes(item?.item_category) && item?.data?.item_category !== 101 || // 排除微博热搜图片
             item?.data?.mblogtypename === "广告" ||
             item?.data?.ad_state === 1 ||
 	    item?.isInsert == false // 消息动态推广
