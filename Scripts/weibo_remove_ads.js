@@ -155,7 +155,7 @@ else if (url.includes("/profile/me")) {
         deleteFields(obj.items[0].header, ['vipIcon', 'vipView']);
     }
     if (obj.items.length > 0 && obj.items[1].items) {
-       obj.items.items = obj.items.items.splice(0,4)
+       obj.items[1].items = obj.items[1].items.splice(0,4)
     }
 }
 
