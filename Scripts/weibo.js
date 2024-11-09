@@ -170,7 +170,7 @@ else if (url.includes("/messageflow/notice")) {
 else if (url.includes("/2/!/huati/discovery_home_bottom_channels")) {
 	// 删除超话广场
   if (obj?.button_configs) {
-	deleteFields(obj,button_configs)
+	delete obj.button_configs
   }
 
   if (obj?.channelInfo?.channel_list && obj.channelInfo.channel_list.length > 1) {
