@@ -21,7 +21,7 @@ function RemoveAds(array = []) {
             ["hot_ad", "trend"].includes(item?.item_category) ||
             item?.data?.mblogtypename === "广告" ||
             item?.data?.ad_state === 1 ||
-	    item?.isInsert == false && item?.msg_card?.ad_tag?.text == '广告'; // 消息动态推广
+	    item?.isInsert == false // 消息动态推广
 
         if (!isSearchAd) {
             result.push(item);
@@ -36,7 +36,8 @@ function RemoveCardtype(array = []) {
     const group_itemId = [
         "card86_card11_cishi", 
         "card86_card11", 
-        "INTEREST_PEOPLE", 
+        "INTEREST_PEOPLE",
+	"trend_top_qiehuan",
         "profile_collection",			 // 那年今日/近期热门
 	"realtime_tag_groug",			 // 实时近期分享
     ];
@@ -55,7 +56,7 @@ function RemoveCardtype(array = []) {
 		"hot_chaohua_list", 
 		"hot_link_mike",
 		"chaohua_discovery_banner",
-		"bottom"
+		"bottom",
     ];
 
     let result = [];
@@ -72,6 +73,7 @@ function RemoveCardtype(array = []) {
             (item?.category === "card" && card_itemid.includes(item?.data?.itemid)) ||
             (item?.itemId && hot_card_keywords.some(keyword => item?.itemId.includes(keyword))) ||
             (item?.data?.wboxParam) || 			// 微博趋势 智搜总结
+	    (item?.data?.cate_id === "1114") ||   	// wboxParam.png
 	    (item?.arrayText?.contents) ||        // 智搜总结内容以及大家都在问/搜内容
 	    (item?.data?.title == "大家都在问") ||
 	    (item?.data?.desc == "相关搜索") ||
@@ -79,8 +81,7 @@ function RemoveCardtype(array = []) {
 	    (item?.data?.card_ad_style === '1') ||  	// 实时图片推广
 	    (item?.data?.card_id === "search_card") ||  // 推荐实时搜索框
 	    // 下边属于超话卡片
-	    (item?.data?.itemid && hot_card_keywords.some(keyword => item?.data.itemid.includes(keyword)) && item?.data?.itemid !== "sg_bottom_tab_search_input") ||
-	    (item?.data?.header?.title === "绝美壁纸上新")
+	    (item?.data?.itemid && hot_card_keywords.some(keyword => item?.data.itemid.includes(keyword)) && item?.data?.itemid !== "sg_bottom_tab_search_input")
 	
 	if (!isSearchCard) {
 		 result.push(item);
@@ -165,5 +166,18 @@ else if (url.includes("aj/appicon/list")) {
 else if (url.includes("/messageflow/notice")) {
     RemoveAds(obj.messages)
 }
+
+else if (url.includes("/2/!/huati/discovery_home_bottom_channels")) {
+	// 删除超话广场
+  if (obj?.button_configs) {
+	deleteFields(obj,button_configs)
+  }
+
+  if (obj?.channelInfo?.channel_list && obj.channelInfo.channel_list.length > 1) {
+    	delete obj.channelInfo.channel_list[1]
+		
+  }
+}
+
 
 $done({body:JSON.stringify(obj)});
