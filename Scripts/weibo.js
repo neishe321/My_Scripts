@@ -72,7 +72,6 @@ function RemoveCardtype(array = []) {
             (item?.category === "card" && card_itemid.includes(item?.data?.itemid)) ||
             (item?.itemId && hot_card_keywords.some(keyword => item?.itemId.includes(keyword))) ||
             (item?.data?.wboxParam) || 			// 微博趋势 智搜总结
-            (item?.data?.cate_id === "1114") ||   	// wboxParam.png
 	    (item?.arrayText?.contents) ||        // 智搜总结内容以及大家都在问/搜内容
 	    (item?.data?.title == "大家都在问") ||
 	    (item?.data?.desc == "相关搜索") ||
