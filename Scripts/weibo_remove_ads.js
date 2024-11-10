@@ -113,9 +113,6 @@ if (url.includes("comments/build_comments")) {
     if (obj.datas) {
         obj.datas = obj.datas.filter(item => !item.adType);
     }
-    if (obj.status) {
-         deleteFields(obj.status,['user']);
-    }
 }
 
 else if (url.includes("guest/statuses_extend") || url.includes("statuses/extend")) {
