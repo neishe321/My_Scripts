@@ -123,7 +123,8 @@ else if (url.includes("guest/statuses_extend") || url.includes("statuses/extend"
 		       'dynamic_share_items', 
 		       'report_data', 
 		       'loyal_fans_guide_info', 
-		       'top_cards','reward_info',
+		       'top_cards',
+		       'reward_info',
 		       'follow_data'
 		      ]
 		);
