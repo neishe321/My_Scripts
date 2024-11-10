@@ -48,7 +48,8 @@ function RemoveCardtype(array = []) {
         "finder_channel",  			// 发现功能分类
         "finder_window",   			// 发现轮播广告
 	"tongcheng_usertagwords",		// 实时近期分享标签
-	"hot_search_briefing",			// 发现今日错过
+	// "hot_search_briefing",// 发现今日错过
+	// "hot_search_push",
     ];
 
     const hot_card_keywords = [
@@ -59,6 +60,7 @@ function RemoveCardtype(array = []) {
 	"hot_link_mike",
 	"chaohua_discovery_banner",
 	"bottom",
+	"hot_search", // 发现页置顶提示 错过等
     ];
 
     let result = [];
