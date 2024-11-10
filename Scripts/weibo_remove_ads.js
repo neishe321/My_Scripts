@@ -117,7 +117,16 @@ if (url.includes("comments/build_comments")) {
 
 else if (url.includes("guest/statuses_extend") || url.includes("statuses/extend")) {
     // 详情
-    deleteFields(obj, ['head_cards', 'trend', 'snapshot_share_customize_dic', 'dynamic_share_items', 'report_data', 'loyal_fans_guide_info', 'top_cards']);
+    deleteFields(obj, ['head_cards', 
+		       'trend', 
+		       'snapshot_share_customize_dic', 
+		       'dynamic_share_items', 
+		       'report_data', 
+		       'loyal_fans_guide_info', 
+		       'top_cards','reward_info',
+		       'follow_data'
+		      ]
+		);
 }
 
 else if (url.includes("search/finder")) {
