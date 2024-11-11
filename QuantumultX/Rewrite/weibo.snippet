@@ -10,10 +10,8 @@ hostname=*api.weibo.cn, *.uve.weibo.com, *vip.weibo.cn
 ^https?:\/\/api\.weibo\.cn\/\d\/(comments\/build_comments|guest\/statuses_extend|statuses\/extend|search\/(finder|container_timeline|container_discover)|searchall|statuses\/container_timeline(_.*)?(\?.*)?$|profile\/(me|container_timeline)|messageflow\/notice|!\/huati\/discovery_home_bottom_channels\?) url script-response-body https://raw.githubusercontent.com/neishe321/My_Scripts/main/Scripts/weibo_remove_ads.js
 
 # > 开屏
-^https?:\/\/wbapp\.uve\.weibo\.com\/wbapplua\/wbpullad\.lua url reject-200
+^https?:\/\/(wbapp|sdkapp)\.uve\.weibo\.com\/(wbapplua\/wbpullad\.lua|interface\/sdk\/sdkconfig\.php) url reject-200
 ^https?:\/\/boot(?:preload|realtime)\.uve\.weibo\.com\/v\d\/ad\/(?:preload|realtime) url reject-200
-# > 弹窗活动
-^https?:\/\/sdkapp\.uve\.weibo\.com\/interface\/sdk\/sdkconfig\.php url reject-200
 # > 超话推广&弹窗广告&首页签到& 其它广告
 ^https?:\/\/api\.weibo\.cn\/\d\/(container\/asyn|shproxy\/chaohua\/discovery\/searchactive|checkin\/show|!\/live\/media_homelist|client\/addlog_batch|push\/active) url reject-200
 
