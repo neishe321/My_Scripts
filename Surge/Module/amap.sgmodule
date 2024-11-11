@@ -5,12 +5,11 @@
 [URL Rewrite]
 # > 首页及弹窗
 ^http:\/\/amdc\.m\.taobao\.com - reject
-^https?:\/\/.*\.amap\.com\/ws\/faas\/amap-navigation\/main-page - reject
+^https?:\/\/.*\.amap\.com\/ws\/(valueadded\/alimama\/splash_screen|faas\/amap-navigation\/main-page|ride\/home\/page\/get_commuting_card ) - reject
 ^https?:\/\/.*\.amap\.com\/ws\/boss\/(order_web\/\w{8}_information|car\/order\/content_info) - reject
-^https?:\/\/.*\.amap\.com\/ws\/ride\/home\/page\/get_commuting_card - reject
 
 [Script]
-amap_clean = type=http-response,pattern=^https?:\/\/.*\.amap\.com\/ws\/(c3frontend\/af-nearby\/nearby|promotion-web\/resource|shield\/frogserver\/aocs\/updatable|shield\/dsp\/profile\/index\/nodefaas|valueadded\/alimama\/splash_screen),requires-body=1,max-size=1048576,script-path=https://raw.githubusercontent.com/neishe321/My_Scripts/main/Scripts/amap_remove_ads.js
+amap_clean = type=http-response,pattern=^https?:\/\/.*\.amap\.com\/ws\/(c3frontend\/af-nearby\/nearby|promotion-web\/resource|shield\/frogserver\/aocs\/updatable|shield\/dsp\/profile\/index\/nodefaas),requires-body=1,max-size=1048576,script-path=https://raw.githubusercontent.com/neishe321/My_Scripts/main/Scripts/amap_remove_ads.js
 
 [MITM]
 hostname = %APPEND% *.amap.com
