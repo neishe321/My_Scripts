@@ -1,5 +1,5 @@
 #!name = 高德地图
-#!desc = 高德地图去除广告，移除非必要模块
+#!desc = 去除高德广告，移除非必要模块
 #!author = neishe321
 
 [URL Rewrite]
