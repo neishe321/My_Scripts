@@ -1,5 +1,5 @@
 #!name = 电影猎手去广告
-#!desc = 净化轮播和列表广告
+#!desc = 去除猎手广告，移除非必要模块
 
 [URL Rewrite]
 ^https?:\/\/[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+){1,3}(:\d+)?\/api\/v\d\/(advert\/config|(notice|notice_v2)\/list) - reject
