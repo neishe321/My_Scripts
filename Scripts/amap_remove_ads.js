@@ -29,17 +29,6 @@ const moduleActions = {
                 );
             }
         }
-    },
-    "valueadded/alimama/splash_screen": {
-        action: (obj) => {
-            if (Array.isArray(obj.data?.ad)) {
-                obj.data.ad.forEach(ad => {
-                    ad.set.setting.display_time = 0;
-                    ad.creative[0].start_time = 2240150400;
-                    ad.creative[0].end_time = 2240150400;
-                });
-            }
-        }
     }
 
 };
