@@ -5,7 +5,7 @@
 [URL Rewrite]
 # > 首页及弹窗
 ^http:\/\/amdc\.m\.taobao\.com - reject
-^https?:\/\/.*\.amap\.com\/ws\/(valueadded\/alimama\/splash_screen|faas\/amap-navigation\/main-page|ride\/home\/page\/get_commuting_card ) - reject
+^https?:\/\/.*\.amap\.com\/ws\/(valueadded\/alimama\/splash_screen|faas\/amap-navigation\/main-page|ride\/home\/page\/get_commuting_card) - reject
 ^https?:\/\/.*\.amap\.com\/ws\/boss\/(order_web\/\w{8}_information|car\/order\/content_info) - reject
 
 [Script]
