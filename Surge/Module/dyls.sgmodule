@@ -1,7 +1,7 @@
 #!name = 电影猎手去广告
 #!desc = 净化轮播和列表广告
 
-[Url Rewrite]
+[URL Rewrite]
 ^https?:\/\/[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+){1,3}(:\d+)?\/api\/v\d\/(advert\/config|(notice|notice_v2)\/list) - reject
 
 [Script]
