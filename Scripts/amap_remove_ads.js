@@ -25,7 +25,7 @@ const moduleActions = {
             delete obj.data?.tipData;
             if (Array.isArray(obj.data?.cardList)) {
                 obj.data.cardList = Object.values(obj.data.cardList).filter(a => 
-                    ["MyOrderCard", "GdRecommendCard"].includes(a.dataType)
+                    ["MyOrderCard"].includes(a.dataType)
                 );
             }
         }
