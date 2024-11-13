@@ -16,84 +16,100 @@ function deleteFields(obj, fields) {
 // 移除广告
 function RemoveAds(array = []) {
     let result = [];
+    
     for (let i = 0; i < array.length; i++) {
         const item = array[i];
+        
         const isSearchAd =
             item?.item_category === "hot_ad" || 
-	    (item?.item_category === "trend" && item?.data?.card_type !== 101) ||
+            (item?.item_category === "trend" && item?.data?.card_type !== 101) ||
             item?.data?.mblogtypename === "广告" ||
             item?.data?.ad_state === 1 ||
-	    item?.isInsert == false // 消息动态推广
+            item?.isInsert === false; // 消息动态推广
 
         if (!isSearchAd) {
             result.push(item);
         }
-    }   
-    array.length = 0;
-    array.push(...result);
+    }
+
+    if (result.length > 0) {
+        array.length = 0;
+        array.push(...result);
+    }
 }
 
-// 移除模块
+// 移除模块函数
 function RemoveCardtype(array = []) {
     const group_itemId = [
         "card86_card11_cishi", 
         "card86_card11", 
         "INTEREST_PEOPLE",
-	"trend_top_qiehuan",
-        "profile_collection",			 // 那年今日/近期热门
-	"realtime_tag_groug",			 // 实时近期分享
+        "trend_top_qiehuan",
+        "profile_collection",         // 那年今日/近期热门
+        "realtime_tag_groug",         // 实时近期分享
     ];
     
     const card_itemid = [
-        "finder_channel",  			// 发现功能分类
-        "finder_window",   			// 发现轮播广告
-	"tongcheng_usertagwords",		// 实时近期分享标签
-	// "hot_search_briefing",// 发现今日错过
-	// "hot_search_push",
+        "finder_channel",             // 发现功能分类
+        "finder_window",              // 发现轮播广告
+        "tongcheng_usertagwords",     // 实时近期分享标签
     ];
 
     const hot_card_keywords = [
-	"hot_character", 
-	"local_hot_band", 
-	"hot_video", 
-	"hot_chaohua_list", 
-	"hot_link_mike",
-	"chaohua_discovery_banner",
-	"bottom",
-	"hot_search", // 发现页置顶提示 错过等
+        "hot_character", 
+        "local_hot_band", 
+        "hot_video", 
+        "hot_chaohua_list", 
+        "hot_link_mike",
+        "chaohua_discovery_banner",
+        "bottom",
+        "hot_search",                 // 发现页置顶提示 错过等
     ];
 
     let result = [];
 
     for (let i = 0; i < array.length; i++) {
         const item = array[i];
-	    
-	// 超话搜索框提示文字
-	if (item?.data?.hotwords && item?.data?.itemid === "sg_bottom_tab_search_input") {delete item?.data?.hotwords }
         
-	// 其余模块
-	const isSearchCard = 
+        // 清除超话搜索框提示文字，但保留框架
+        if (item?.data?.hotwords && item?.data?.itemid === "sg_bottom_tab_search_input") {
+            delete item.data.hotwords;
+        }
+        
+        // 判断是否需要移除该项
+        const shouldRemove = 
+            // 分类为 group 且 itemId 包含在 group_itemId 中
             (item?.category === "group" && group_itemId.includes(item?.itemId)) ||
+            
+            // 分类为 card 且 data.itemid 包含在 card_itemid 中
             (item?.category === "card" && card_itemid.includes(item?.data?.itemid)) ||
-            (item?.itemId && hot_card_keywords.some(keyword => item?.itemId.includes(keyword))) ||
-            (item?.data?.wboxParam) || 			// 微博趋势 智搜总结
-	    (item?.data?.cate_id === "1114") ||   	// wboxParam.png
-	    (item?.arrayText?.contents) ||        // 智搜总结内容以及大家都在问/搜内容
-	    (item?.data?.title == "大家都在问") ||
-	    (item?.data?.desc == "相关搜索") ||
-	    (item?.data?.group && item?.data?.anchorId) || 	//相关搜索内容
-	    (item?.data?.card_ad_style === '1') ||  	// 实时图片推广
-	    (item?.data?.card_id === "search_card") ||  // 推荐实时搜索框
-	    // 下边属于超话卡片
-	    (item?.data?.itemid && hot_card_keywords.some(keyword => item?.data.itemid.includes(keyword)) && item?.data?.itemid !== "sg_bottom_tab_search_input")
-	
-	if (!isSearchCard) {
-		 result.push(item);
+            
+            // itemId 中包含 hot_card_keywords 关键词
+            (item?.itemId && hot_card_keywords.some(keyword => item.itemId.includes(keyword))) ||
+            
+            // data.itemid 包含 hot_card_keywords，且不等于 "sg_bottom_tab_search_input"
+            (item?.data?.itemid && hot_card_keywords.some(keyword => item.data.itemid.includes(keyword)) && item.data.itemid !== "sg_bottom_tab_search_input") ||
+            
+            // 其他特定属性判断
+            item?.data?.wboxParam ||                      // 含有 wboxParam，可能是趋势相关的标记
+            item?.data?.cate_id === "1114" ||             // 特定 cate_id
+            item?.arrayText?.contents ||                  // 智搜总结内容
+            item?.data?.title === "大家都在问" ||          // 特定标题
+            item?.data?.desc === "相关搜索" ||             // 特定描述
+            (item?.data?.group && item?.data?.anchorId) ||// 相关搜索内容
+            item?.data?.card_ad_style === '1' ||          // 实时图片推广
+            item?.data?.card_id === "search_card";        // 推荐实时搜索框
+
+        // 如果不符合移除条件，则保留在结果中
+        if (!shouldRemove) {
+            result.push(item);
         }
     }
 
-    array.length = 0;
-    array.push(...result);
+    if (result.length > 0) {
+        array.length = 0;
+        array.push(...result);
+    }
 }
 
 // 处理嵌套的 items数组
