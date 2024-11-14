@@ -1,5 +1,8 @@
-let obj = JSON.parse($response.body);
 let url = $request.url;
+if (!$response.body) {
+  $done({});
+}
+let obj = JSON.parse($response.body);
 
 
 // ------------------ 函数定义 ------------------
