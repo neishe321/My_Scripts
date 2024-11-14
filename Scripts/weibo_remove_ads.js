@@ -38,7 +38,7 @@ function RemoveAds(array = []) {
     }
 }
 
-// 移除模块函数
+// 移除模块
 function RemoveCardtype(array = []) {
     const group_itemId = [
         "card86_card11_cishi", 
@@ -84,10 +84,8 @@ function RemoveCardtype(array = []) {
             // 分类为 card 且 data.itemid 包含在 card_itemid 中
             (item?.category === "card" && card_itemid.includes(item?.data?.itemid)) ||
             
-            // itemId 中包含 keywords 关键词
+            // itemId|data.itemid 中包含 keywords 关键词
             (item?.itemId && keywords.some(keyword => item.itemId.includes(keyword))) ||
-            
-            // data.itemid 包含 keywords，且不等于 "sg_bottom_tab_search_input"
             (item?.data?.itemid && keywords.some(keyword => item.data.itemid.includes(keyword)) && item.data.itemid !== "sg_bottom_tab_search_input") ||
             
             // 其他特定属性判断
@@ -100,7 +98,6 @@ function RemoveCardtype(array = []) {
             item?.data?.card_ad_style === '1' ||          // 实时图片推广
             item?.data?.card_id === "search_card";        // 推荐实时搜索框
 
-        // 如果不符合移除条件，则保留在结果中
         if (!shouldRemove) {
             result.push(item);
         }
