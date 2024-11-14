@@ -55,7 +55,7 @@ function RemoveCardtype(array = []) {
         "tongcheng_usertagwords",     // 实时近期分享标签
     ];
 
-    const hot_card_keywords = [
+    const keywords = [
         "hot_character", 
         "local_hot_band", 
         "hot_video", 
@@ -84,11 +84,11 @@ function RemoveCardtype(array = []) {
             // 分类为 card 且 data.itemid 包含在 card_itemid 中
             (item?.category === "card" && card_itemid.includes(item?.data?.itemid)) ||
             
-            // itemId 中包含 hot_card_keywords 关键词
-            (item?.itemId && hot_card_keywords.some(keyword => item.itemId.includes(keyword))) ||
+            // itemId 中包含 keywords 关键词
+            (item?.itemId && keywords.some(keyword => item.itemId.includes(keyword))) ||
             
-            // data.itemid 包含 hot_card_keywords，且不等于 "sg_bottom_tab_search_input"
-            (item?.data?.itemid && hot_card_keywords.some(keyword => item.data.itemid.includes(keyword)) && item.data.itemid !== "sg_bottom_tab_search_input") ||
+            // data.itemid 包含 keywords，且不等于 "sg_bottom_tab_search_input"
+            (item?.data?.itemid && keywords.some(keyword => item.data.itemid.includes(keyword)) && item.data.itemid !== "sg_bottom_tab_search_input") ||
             
             // 其他特定属性判断
             item?.data?.wboxParam ||                      // 含有 wboxParam，可能是趋势相关的标记
