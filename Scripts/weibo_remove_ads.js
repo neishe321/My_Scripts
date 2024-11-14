@@ -32,9 +32,9 @@ function RemoveAds(array = []) {
         }
     }
 
-    if (result.length > 0) {
-        array.length = 0;
-        array.push(...result);
+	array.length = 0;
+	if (result.length > 0) {
+       	    array.push(...result);
     }
 }
 
@@ -106,10 +106,10 @@ function RemoveCardtype(array = []) {
         }
     }
 
-    // if (result.length > 0) {
-    //     array.length = 0;
-    //     array.push(...result);
-    // }
+    array.length = 0;
+    if (result.length > 0) {
+        array.push(...result);
+    }
 }
 
 // 处理嵌套的 items数组
