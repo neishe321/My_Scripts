@@ -53,6 +53,7 @@ function RemoveCardtype(array = []) {
         "finder_channel",             // 发现功能分类
         "finder_window",              // 发现轮播广告
         "tongcheng_usertagwords",     // 实时近期分享标签
+	"new_sg_bottom_tab_discovery",
     ];
 
     const keywords = [
