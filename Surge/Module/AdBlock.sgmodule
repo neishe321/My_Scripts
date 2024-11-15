@@ -3,12 +3,12 @@
 #!author = neishe321
 
 [Rule]
-DOMAIN,open-set-api.shenshiads.com,REJECT,pre-matching
-DOMAIN,adapi.izuiyou.com,REJECT,pre-matching
-DOMAIN,api-access.pangolin-sdk-toutiao.com,REJECT,pre-matching
-DOMAIN,is.snssdk.com,REJECT,pre-matching
-DOMAIN,mi.gdt.qq.com,REJECT,pre-matching
-DOMAIN,open.e.kuaishou.com,REJECT,pre-matching
+DOMAIN,open-set-api.shenshiads.com,REJECT,extended-matching,pre-matching
+DOMAIN,adapi.izuiyou.com,REJECT,extended-matching,pre-matching
+DOMAIN,api-access.pangolin-sdk-toutiao.com,REJECT,extended-matching,pre-matching
+DOMAIN,is.snssdk.com,REJECT,extended-matching,pre-matching
+DOMAIN,mi.gdt.qq.com,REJECT,extended-matching,pre-matching
+DOMAIN,open.e.kuaishou.com,REJECT,extended-matching,pre-matching
 
 [URL Rewrite]
 # > weifeng
