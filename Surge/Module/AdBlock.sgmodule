@@ -3,8 +3,8 @@
 #!author = neishe321
 
 [Rule]
-DOMAIN open-set-api.shenshiads.com REJECT
-DOMAIN adapi.izuiyou.com REJECT
+DOMAIN,open-set-api.shenshiads.com,REJECT,pre-matching
+DOMAIN,adapi.izuiyou.com,REJECT,pre-matching
 
 [URL Rewrite]
 # > 威峰
