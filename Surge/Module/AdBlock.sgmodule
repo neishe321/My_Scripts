@@ -5,6 +5,10 @@
 [Rule]
 DOMAIN,open-set-api.shenshiads.com,REJECT,pre-matching
 DOMAIN,adapi.izuiyou.com,REJECT,pre-matching
+DOMAIN,api-access.pangolin-sdk-toutiao.com,REJECT,pre-matching
+DOMAIN,is.snssdk.com,REJECT,pre-matching
+DOMAIN,mi.gdt.qq.com,REJECT,pre-matching
+DOMAIN,open.e.kuaishou.com,REJECT,pre-matching
 
 [URL Rewrite]
 # > 威峰
@@ -13,4 +17,5 @@ DOMAIN,adapi.izuiyou.com,REJECT,pre-matching
 ^https?:\/\/api\.izuiyou\.com\/ad\/ - reject
 
 [MITM]
-hostname= %APPEND% api.wfdata.club, *.izuiyou.com, open-set-api.shenshiads.com
+hostname= %APPEND% api.wfdata.club, *.izuiyou.com, open-set-api.shenshiads.com, 
+api-access.pangolin-sdk-toutiao.com, is.snssdk.com, mi.gdt.qq.com, open.e.kuaishou.com
