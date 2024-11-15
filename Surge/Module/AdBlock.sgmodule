@@ -7,7 +7,6 @@ DOMAIN open-set-api.shenshiads.com REJECT
 DOMAIN adapi.izuiyou.com REJECT
 
 [URL Rewrite]
-# > 清风DJ
 # > 威峰
 ^https?:\/\/api\.wfdata\.club\/v\d\/yesfeng\/(infoCenterAd|yesList) - reject
 # > 最右
