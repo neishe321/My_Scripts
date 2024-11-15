@@ -17,4 +17,4 @@ DOMAIN,open.e.kuaishou.com,REJECT,pre-matching
 ^https?:\/\/api\.izuiyou\.com\/ad\/ - reject
 
 [MITM]
-hostname= %APPEND% api.wfdata.club, *.izuiyou.com, open-set-api.shenshiads.com, api-access.pangolin-sdk-toutiao.com, is.snssdk.com, mi.gdt.qq.com, open.e.kuaishou.com
+hostname= %APPEND% api.wfdata.club, api.izuiyou.com
