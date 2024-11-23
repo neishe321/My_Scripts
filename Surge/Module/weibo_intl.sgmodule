@@ -1,0 +1,14 @@
+#!name = 微博轻享版广告
+#!desc = 去除微博轻享版广告，移除非必要模块
+#!author = Neishe321 
+
+[URL Rewrite]
+# > 开屏
+^https?:\/\/(wbapp|sdkapp)\.uve\.weibo\.com\/(wbapplua\/wbpullad\.lua|interface\/sdk\/sdkconfig\.php) - reject
+^https?:\/\/boot(?:preload|realtime)\.uve\.weibo\.com\/v\d\/ad\/(?:preload|realtime) - reject
+# > 超话推广&弹窗广告&首页签到&其它广告
+^https?:\/\/api\.weibo\.cn\/\d\/(container\/asyn|shproxy\/chaohua\/discovery\/searchactive|checkin\/show|!\/live\/media_homelist|client\/addlog_batch|push\/active|statuses\/container_positive) - reject
+# > 慢加载
+^https?:\/\/api\.weibo\.cn\/!\/was\/finder\/searchbarchange - reject
+
+[Script]
