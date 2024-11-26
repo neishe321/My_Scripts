@@ -93,7 +93,7 @@ function RemoveCardtype(array = []) {
             
             // 其他特定属性判断
             item?.data?.wboxParam ||                      // 含有 wboxParam，可能是趋势相关的标记
-	    (item?.data?.scheme && item?.data?.cardtype === 22) ||
+	    item?.data?.cardtype === 22 ||
             item?.data?.cate_id === "1114" ||             // 特定 cate_id
             item?.arrayText?.contents ||                  // 智搜总结内容
             item?.data?.title === "大家都在问" ||          // 特定标题
