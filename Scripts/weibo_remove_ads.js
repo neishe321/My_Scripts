@@ -144,7 +144,8 @@ else if (url.includes("guest/statuses_extend") || url.includes("statuses/extend"
 		       'loyal_fans_guide_info', 
 		       'top_cards',
 		       'reward_info',
-		       'follow_data'
+		       'follow_data',
+		       'semantic_brand_params',  // 详情广告
 		      ]
 		);
 }
