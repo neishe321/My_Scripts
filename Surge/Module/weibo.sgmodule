@@ -6,7 +6,7 @@
 # > 开屏
 ^https?:\/\/(wbapp|sdkapp)\.uve\.weibo\.com\/(wbapplua\/wbpullad\.lua|interface\/sdk\/sdkconfig\.php) - reject
 ^https?:\/\/boot(?:preload|realtime)\.uve\.weibo\.com\/v\d\/ad\/(?:preload|realtime) - reject
-# > 广告&模块
+# > 推广
 ^https?:\/\/api\.weibo\.cn\/\d\/(container\/asyn|shproxy\/chaohua\/discovery\/searchactive|checkin\/show|!\/live\/media_homelist|client\/addlog_batch|push\/active|statuses\/container_positive) - reject
 # > 慢加载
 ^https?:\/\/api\.weibo\.cn\/!\/was\/finder\/searchbarchange - reject
