@@ -22,6 +22,10 @@ function RemoveAds(array = []) {
     
     for (let i = 0; i < array.length; i++) {
         const item = array[i];
+
+	if (item?.data) {
+		deleteFields(item?.data, ['semantic_brand_params', 'common_struct']) // 信息流牛皮癣
+	}
         
         const isSearchAd =
             item?.item_category === "hot_ad" || 
