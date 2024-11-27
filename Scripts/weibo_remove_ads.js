@@ -149,7 +149,6 @@ else if (url.includes("guest/statuses_extend") || url.includes("statuses/extend"
 		       'top_cards',
 		       'reward_info',
 		       'follow_data',
-		       'semantic_brand_params',
 		      ]
 		);
 }
