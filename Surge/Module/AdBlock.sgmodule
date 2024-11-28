@@ -33,6 +33,9 @@ DOMAIN,plbslog.umeng.com,REJECT,extended-matching,pre-matching
 DOMAIN,log.umtrack.com,REJECT,extended-matching,pre-matching
 DOMAIN,aaid.umeng.com,REJECT,extended-matching,pre-matching
 DOMAIN,log.umsns.com,REJECT,extended-matching,pre-matching
+
+DOMAIN-SUFFIX,umeng.com,REJECT,extended-matching,pre-matching
+DOMAIN-SUFFIX,umengcloud.com,REJECT,extended-matching,pre-matching
 # > snssdk
 DOMAIN,i.snssdk.com,REJECT,extended-matching,pre-matching
 DOMAIN,is.snssdk.com,REJECT,extended-matching,pre-matching
