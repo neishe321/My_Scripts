@@ -26,15 +26,15 @@ if (/php\?a=user_center/.test($request.url)) {
         delete data.data.vip_info;
     }
 } else if (/php\?a=trends/.test($request.url)) {
-    // 趋势页
+    // 趋势页模块
     if (data?.data) {
         data.data.order = ["discover", "search_topic"];
         if (Array.isArray(data.data.discover)) {
             data.data.discover.shift();
         }
     }
-}else if (/php\?a=(get_searching_info|search_topic|get_coopen_ads)/.test($request.url)) {
-    // 大家都在搜 & 搜索话题
+} else if (/php\?a=(get_searching_info|get_coopen_ads)/.test($request.url)) {
+    // 大家都在搜 & 开屏广告
     if (data?.data) {
         data.data = {};
     }
