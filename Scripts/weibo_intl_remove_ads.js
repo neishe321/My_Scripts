@@ -8,23 +8,38 @@ try {
     data = {};
 }
 
-if ($request.url.indexOf("php?a=user_center") !== -1) {
+if (/php\?a=user_center/.test($request.url)) {
     // 用户中心
-    data?.data?.cards && (data.data.cards = data.data.cards.filter(card => {
-        card.items = card.items.filter(item => !["personal_vip", "ic_profile_wallpaper"].includes(item.type));
-        return card.items.length > 0;
-    }));
-} else if ($request.url.indexOf("php?a=open_app") !== -1) {
+    if (data?.data?.cards) {
+        data.data.cards = data.data.cards.filter(card => {
+            card.items = card.items.filter(item => 
+                !["personal_vip", "ic_profile_wallpaper"].includes(item.type)
+            );
+            return card.items.length > 0;
+        });
+    }
+} else if (/php\?a=open_app/.test($request.url)) {
     // 帖子
-    data?.data && (delete data.data.close_ad_setting, delete data.data.vip_title_blog, delete data.data.vip_info);
-} else if ($request.url.indexOf("php?a=trends") !== -1) {
-    // 趋势
-    data?.data && (data.data.order = ["discover", "search_topic"], Array.isArray(data.data.discover) && data.data.discover.shift());
-} else if ($request.url.indexOf("php?a=get_coopen_ads") !== -1) {
-    // 开屏
-    data?.data && (data.data = { display_ad: 1 });
-} else if ($request.url.indexOf("php?a=icon_center") !== -1) {
-    // 图标
+    if (data?.data) {
+        delete data.data.close_ad_setting;
+        delete data.data.vip_title_blog;
+        delete data.data.vip_info;
+    }
+} else if (/php\?a=trends/.test($request.url)) {
+    // 趋势页
+    if (data?.data) {
+        data.data.order = ["discover", "search_topic"];
+        if (Array.isArray(data.data.discover)) {
+            data.data.discover.shift();
+        }
+    }
+} else if (/php\?a=get_coopen_ads/.test($request.url)) {
+    // 开屏广
+    if (data?.data) {
+        data.data = { display_ad: 1 };
+    }
+} else if (/php\?a=icon_center/.test($request.url)) {
+    // 解锁图标
     if (data?.data) {
         data.data.forEach(item => {
             item.card?.forEach(cardItem => {
