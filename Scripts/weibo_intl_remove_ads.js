@@ -33,7 +33,15 @@ if (/php\?a=user_center/.test($request.url)) {
             data.data.discover.shift();
         }
     }
-} else if (/php\?a=get_coopen_ads/.test($request.url)) {
+}else if (/php\?a=get_searching_info/.test($request.url)) {
+    // 大家都在搜
+    if (data?.data) {
+        data.data = {};
+    }
+}
+
+
+else if (/php\?a=get_coopen_ads/.test($request.url)) {
     // 开屏广
     if (data?.data) {
         data.data = { display_ad: 1 };
