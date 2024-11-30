@@ -24,7 +24,7 @@ function RemoveAds(array = []) {
         const item = array[i];
 
 	if (item?.data) {
-		deleteFields(item?.data, ['semantic_brand_params', 'common_struct']) // 信息流牛皮癣
+		deleteFields(item?.data, ['semantic_brand_params', 'common_struct', 'ad_tag_nature']) // 信息流牛皮癣以及标签
 	}
         
         const isSearchAd =
@@ -180,6 +180,9 @@ else if (url.includes("/2/searchall?")) {
 
 else if (url.includes("/statuses/container_timeline") || url.includes("profile/container_timeline")) {
     // 推荐/超话
+    if (obj?.loadedInfo) {
+        deleteFields(obj.loadedInfo, ['headers']);
+    }
     processItems(obj.items);
 }
 
