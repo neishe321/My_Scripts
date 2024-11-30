@@ -24,7 +24,7 @@ function RemoveAds(array = []) {
         const item = array[i];
 
 	if (item?.data) {
-		deleteFields(item?.data, ['semantic_brand_params', 'common_struct', 'ad_tag_nature']) // 信息流牛皮癣以及标签
+		deleteFields(item?.data, ['semantic_brand_params', 'common_struct', 'ad_tag_nature', 'tag_struct']) // 信息流标签
 	}
         
         const isSearchAd =
