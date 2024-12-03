@@ -1,7 +1,7 @@
 #!name = 高德地图去广告
 #!desc = 去除高德广告，移除非必要模块
 #!author = neishe321
-#!category = neishe
+#!category = Neishe
 
 [URL Rewrite]
 # > 首页及弹窗
