@@ -36,7 +36,7 @@ DOMAIN-SUFFIX,umengcloud.com,REJECT,extended-matching,pre-matching
 # DOMAIN,pangolin.snssdk.com,REJECT,extended-matching,pre-matching
 DOMAIN,toblog.ctobsnssdk.com,REJECT,extended-matching,pre-matching
 # DOMAIN-KEYWORD,video-cn.snssdk.com,REJECT,extended-matching,pre-matching
-DOMAIN-SUFFIX,snssdk.com,REJECT,extended-matching,pre-matching
+DOMAIN-SUFFIX,snssdk.com,REJECT-DROP,extended-matching,pre-matching
 
 # > baidu
 DOMAIN,afd.baidu.com,REJECT,extended-matching,pre-matching
