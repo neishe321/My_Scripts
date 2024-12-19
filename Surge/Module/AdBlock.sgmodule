@@ -99,10 +99,5 @@ IP-CIDR,47.110.187.87/32,REJECT,no-resolve,pre-matching
 # > zuiyou
 ^https?:\/\/api\.izuiyou\.com\/ad\/ - reject
 
-[Body Rewrite]
-# > hxq
-http-response-jq ^https?:\/\/hxqapi.hiyun.tv\/api\/common\/configs? "del(.tabs, .globalConfigs.series_item)"
-http-response-jq ^https?:\/\/hxqapi\.hiyun\.tv\/api\/user\/discovery\? ".items |= .[0:4]"
-
 [MITM]
 hostname= %APPEND% api.wfdata.club, api.izuiyou.com, hxqapi.hiyun.tv
