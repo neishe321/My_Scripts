@@ -196,15 +196,7 @@ else if (url.includes("/profile/me")) {
        obj.items[1].items = obj.items[1].items.splice(0,4)
     }
 }
-
-// else if (url.includes("aj/appicon/list")) {
-//     const list = obj.data.list;
-//     list.forEach(item => {
-//         item.cardType = "2";
-//         item.tag = "";
-//     });
-// }
-
+	
 else if (url.includes("/messageflow/notice")) {
     RemoveAds(obj.messages)
 }
