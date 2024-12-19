@@ -2,6 +2,7 @@
 #!desc = 去除高德广告，移除非必要模块
 #!author = neishe321
 #!category = Neishe
+#!date = 2024-12-19
 
 [URL Rewrite]
 # > 首页及弹窗
