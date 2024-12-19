@@ -197,13 +197,13 @@ else if (url.includes("/profile/me")) {
     }
 }
 
-else if (url.includes("aj/appicon/list")) {
-    const list = obj.data.list;
-    list.forEach(item => {
-        item.cardType = "2";
-        item.tag = "";
-    });
-}
+// else if (url.includes("aj/appicon/list")) {
+//     const list = obj.data.list;
+//     list.forEach(item => {
+//         item.cardType = "2";
+//         item.tag = "";
+//     });
+// }
 
 else if (url.includes("/messageflow/notice")) {
     RemoveAds(obj.messages)
