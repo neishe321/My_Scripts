@@ -100,4 +100,4 @@ IP-CIDR,47.110.187.87/32,REJECT,no-resolve,pre-matching
 ^https?:\/\/api\.izuiyou\.com\/ad\/ - reject
 
 [MITM]
-hostname= %APPEND% api.wfdata.club, api.izuiyou.com, hxqapi.hiyun.tv
+hostname= %APPEND% api.wfdata.club, api.izuiyou.com
