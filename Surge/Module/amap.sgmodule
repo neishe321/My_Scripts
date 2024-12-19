@@ -6,6 +6,7 @@
 
 [Rule]
 DOMAIN, admc.m.taobao.com, REJECT,extended-matching,pre-matching
+
 [URL Rewrite]
 # > 首页及弹窗
 ^https?:\/\/.*\.amap\.com\/ws\/(valueadded\/alimama\/splash_screen|faas\/amap-navigation\/main-page|ride\/home\/page\/get_commuting_card) - reject
