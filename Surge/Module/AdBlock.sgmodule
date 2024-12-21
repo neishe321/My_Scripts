@@ -5,8 +5,8 @@
 #!date = 2024-12-19
 
 [Rule]
-# > 采用DOMAIN-SET
-# > https://raw.githubusercontent.com/SukkaW/Surge/refs/heads/master/Source/domainset/reject_sukka.conf
+# > 采用RULE-SET
+# > https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Surge/AdvertisingLite/AdvertisingLite_All.list
 
 [URL Rewrite]
 # > weifeng
