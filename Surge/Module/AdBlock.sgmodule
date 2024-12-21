@@ -5,7 +5,7 @@
 #!date = 2024-12-19
 
 [Rule]
-# > 采用domain set 
+# > 采用DOMAIN-SET
 # > https://raw.githubusercontent.com/SukkaW/Surge/refs/heads/master/Source/domainset/reject_sukka.conf
 
 [URL Rewrite]
