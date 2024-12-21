@@ -11,14 +11,13 @@ DOMAIN, sdkapp.uve.weibo.com, REJECT,extended-matching,pre-matching
 DOMAIN, bootpreload.uve.weibo.com, REJECT,extended-matching,pre-matching
 DOMAIN, bootrealtime.uve.weibo.com, REJECT,extended-matching,pre-matching
 DOMAIN-SUFFIX, biz.weibo.com, REJECT,extended-matching,pre-matching
-URL-REGEX, ^https?:\/\/api\.weibo\.cn\/\d\/(push\/active|client\/addlog_batch|ad\/preload), REJECT-DROP
 
 [URL Rewrite]
 # > 开屏
 #^https?:\/\/(wbapp|sdkapp)\.uve\.weibo\.com\/(wbapplua\/wbpullad\.lua|interface\/sdk\/sdkconfig\.php) - reject
 #^https?:\/\/boot(?:preload|realtime)\.uve\.weibo\.com\/v\d\/ad\/(?:preload|realtime) - reject
 # > 推广内容
-^https?:\/\/api\.weibo\.cn\/\d\/(container\/asyn|shproxy\/chaohua\/discovery\/searchactive|checkin\/show|!\/live\/media_homelist|statuses\/container_positive) - reject
+^https?:\/\/api\.weibo\.cn\/\d\/(push\/active|client\/addlog_batch|container\/asyn|shproxy\/chaohua\/discovery\/searchactive|checkin\/show|!\/live\/media_homelist|statuses\/container_positive) - reject
 # > 慢加载内容
 ^https?:\/\/api\.weibo\.cn\/!\/was\/finder\/searchbarchange - reject
 
