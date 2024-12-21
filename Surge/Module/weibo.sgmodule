@@ -10,6 +10,7 @@ DOMAIN, wbapp.uve.weibo.com, REJECT,extended-matching,pre-matching
 DOMAIN, sdkapp.uve.weibo.com, REJECT,extended-matching,pre-matching
 DOMAIN, bootpreload.uve.weibo.com, REJECT,extended-matching,pre-matching
 DOMAIN, bootrealtime.uve.weibo.com, REJECT,extended-matching,pre-matching
+DOMAIN-SUFFIX, biz.weibo.com, REJECT,extended-matching,pre-matching
 URL-REGEX, ^https?:\/\/api\.weibo\.cn\/\d\/(push\/active|client\/addlog_batch|ad\/preload), REJECT-DROP
 
 [URL Rewrite]
