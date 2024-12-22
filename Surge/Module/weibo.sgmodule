@@ -18,7 +18,7 @@ DOMAIN-SUFFIX, biz.weibo.com, REJECT,extended-matching,pre-matching
 #^https?:\/\/boot(?:preload|realtime)\.uve\.weibo\.com\/v\d\/ad\/(?:preload|realtime) - reject
 # > 推广内容 
 # > searchbarchange 猜你想搜
-^https?:\/\/api\.weibo\.cn\/\d\/(push\/active|client\/addlog_batch|container\/asyn|shproxy\/chaohua\/discovery\/searchactive|checkin\/show|!\/live\/media_homelist|statuses\/container_positive|!\/was\/finder\/searchbarchange) - reject
+^https?:\/\/api\.weibo\.cn\/\d\/(push\/active|client\/addlog_batch|container\/asyn|shproxy\/chaohua\/discovery\/searchactive|checkin\/show|!\/live\/media_homelist|statuses\/container_positive|!\/was\/finder\/searchbarchange|cardlist?) - reject
 
 [Body Rewrite]
 http-response-jq ^https?:\/\/new\.vip\.weibo\.cn\/aj\/appicon\/list '.data.list |= map(if has("cardType") then .cardType = "2" else . end | if has("tag") then .tag = "" else . end)'
