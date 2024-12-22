@@ -18,7 +18,6 @@ DOMAIN-SUFFIX, biz.weibo.com, REJECT,extended-matching,pre-matching
 #^https?:\/\/boot(?:preload|realtime)\.uve\.weibo\.com\/v\d\/ad\/(?:preload|realtime) - reject
 # > 推广内容 
 # > searchbarchange 猜你想搜关键词
-# > cardlist 搜索页推广 
 ^https?:\/\/api\.weibo\.cn\/\d\/(push\/active|client\/addlog_batch|container\/asyn|shproxy\/chaohua\/discovery\/searchactive|checkin\/show|!\/live\/media_homelist|statuses\/container_positive|!\/was\/finder\/searchbarchange) - reject
 
 [Body Rewrite]
