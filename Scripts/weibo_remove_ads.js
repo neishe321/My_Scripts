@@ -156,13 +156,14 @@ else if (url.includes("guest/statuses_extend") || url.includes("statuses/extend"
 }
 
 else if (url.includes("search/finder")) {
-    // 发现页去除趋势和榜单
-    const channels = obj?.channelInfo?.channels[0];
-    if (channels && channels.length > 0) {
-        const payload = channels.payload;
+    const channels = obj?.channelInfo?.channels; // 获取 channels
+    if (Array.isArray(channels) && channels.length > 0) {
+	// 发现页去除趋势和榜单
+        channels.splice(1); 
+        const payload = channels[0]?.payload;
         if (payload) {
             deleteFields(payload.loadedInfo, ['headerBack', 'searchBarContent']);
-            processItems(payload.items); 
+            processItems(payload.items);
         }
     }
 }
