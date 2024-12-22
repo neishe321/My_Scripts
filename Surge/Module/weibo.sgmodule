@@ -16,7 +16,8 @@ DOMAIN-SUFFIX, biz.weibo.com, REJECT,extended-matching,pre-matching
 # > 开屏拦截
 #^https?:\/\/(wbapp|sdkapp)\.uve\.weibo\.com\/(wbapplua\/wbpullad\.lua|interface\/sdk\/sdkconfig\.php) - reject
 #^https?:\/\/boot(?:preload|realtime)\.uve\.weibo\.com\/v\d\/ad\/(?:preload|realtime) - reject
-# > 推广内容 
+# > 推广内容
+^https?:\/\/api\.weibo\.cn\/\d\/(push\/active|client\/addlog_batch|container\/asyn|shproxy\/chaohua\/discovery\/searchactive|checkin\/show|!\/live\/media_homelist|statuses\/container_positive|!\/was\/finder\/searchbarchange) - reject
 
 [Body Rewrite]
 # > 解锁会员图标
@@ -25,6 +26,7 @@ http-response-jq ^https?:\/\/new\.vip\.weibo\.cn\/aj\/appicon\/list '.data.list 
 http-response-jq ^https:\/\/api\.weibo\.cn\/\d\/video\/tiny_stream_video_list '.statuses |= map(if (.is_ad == 1 or .mblogtypename == "广告") then empty else . end)'
 
 [Script]
+# > 主体广告
 weibo_clean.js = type=http-response,pattern=^https?:\/\/api\.weibo\.cn\/\d\/(comments\/build_comments|guest\/statuses_extend|statuses\/extend|search\/(finder|container_timeline|container_discover)|searchall|statuses\/container_timeline(_.*)?(\?.*)?$|profile\/(me|container_timeline)|messageflow\/notice|!\/huati\/discovery_home_bottom_channels\?),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/neishe321/My_Scripts/main/Scripts/weibo_remove_ads.js
 
 [MITM]
