@@ -156,10 +156,10 @@ else if (url.includes("guest/statuses_extend") || url.includes("statuses/extend"
 }
 
 else if (url.includes("search/finder")) {
-    // 首次发现
-    const channels = obj?.channelInfo?.channels;
+    // 发现页去除趋势和榜单
+    const channels = obj?.channelInfo?.channels[0];
     if (channels && channels.length > 0) {
-        const payload = channels[0]?.payload;
+        const payload = channels.payload;
         if (payload) {
             deleteFields(payload.loadedInfo, ['headerBack', 'searchBarContent']);
             processItems(payload.items); 
