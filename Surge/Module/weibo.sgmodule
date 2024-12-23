@@ -22,7 +22,7 @@ http-response-jq ^https:\/\/api\.weibo\.cn\/\d\/comments\/build_comments '.datas
 # > 精简我的页面
 http-response-jq ^https:\/\/api\.weibo\.cn\/\d\/profile\/me '.items |= (.[0:2] | if length > 0 and .[0].header? then .[0].header |= del(.vipIcon, .vipView) else . end | if length > 1 and .[1].items? then .[1].items |= .[0:4] else . end)'
 # > 去除超话广场
-http-response-jq ^https:\/\/api\.weibo\.cn\/2\/\!\/huati\/discovery_home_bottom_channels '.button_configs? |= empty | .channelInfo.channel_list |= if length > 1 then del(.[1]) else . end'
+http-response-jq ^https:\/\/api\.weibo\.cn\/\d\/\!\/huati\/discovery_home_bottom_channels '.button_configs? |= empty | .channelInfo.channel_list |= if length > 1 then del(.[1]) else . end'
 # > 解锁会员图标
 http-response-jq ^https?:\/\/new\.vip\.weibo\.cn\/aj\/appicon\/list '.data.list |= map(if has("cardType") then .cardType = "2" else . end | if has("tag") then .tag = "" else . end)'
 # > 去除视频流广告
@@ -30,7 +30,7 @@ http-response-jq ^https:\/\/api\.weibo\.cn\/\d\/video\/tiny_stream_video_list '.
 
 [Script]
 # > 微博净化
-weibo_clean.js = type=http-response,pattern=^https?:\/\/api\.weibo\.cn\/\d\/(comments\/build_comments|guest\/statuses_extend|statuses\/extend|search\/(finder|container_timeline|container_discover)|searchall|statuses\/container_timeline(_.*)?(\?.*)?$|profile\/(me|container_timeline)|messageflow\/notice|!\/huati\/discovery_home_bottom_channels\?),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/neishe321/My_Scripts/main/Scripts/weibo_remove_ads.js
+weibo_clean.js = type=http-response,pattern=^https?:\/\/api\.weibo\.cn\/\d\/(guest\/statuses_extend|statuses\/extend|search\/(finder|container_timeline|container_discover)|searchall|statuses\/container_timeline(_.*)?(\?.*)?$|profile\/container_timeline|messageflow\/notice),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/neishe321/My_Scripts/main/Scripts/weibo_remove_ads.js
 
 [MITM]
 hostname = %APPEND% api.weibo.cn, new.vip.weibo.cn
