@@ -133,15 +133,8 @@ function processItems(array = []) {
 
 // ------------------ 处理响应 ------------------
 
-if (url.includes("comments/build_comments")) {
-    // 详情
-    if (obj.datas) {
-        obj.datas = obj.datas.filter(item => !item.adType);
-    }
-}
-
-else if (url.includes("guest/statuses_extend") || url.includes("statuses/extend")) {
-    // 详情
+if (url.includes("guest/statuses_extend") || url.includes("statuses/extend")) {
+    // 帖子详情
     deleteFields(obj, ['head_cards', 
 		       'trend', 
 		       'snapshot_share_customize_dic', 
@@ -169,7 +162,7 @@ else if (url.includes("search/finder")) {
 }
 
 else if (url.includes("search/container_timeline") || url.includes("search/container_discover")) {
-    // 刷新发现
+    // 发现页刷新
     if (obj?.loadedInfo) {
         deleteFields(obj.loadedInfo, ['headerBack', 'searchBarContent']);
     }
@@ -177,43 +170,20 @@ else if (url.includes("search/container_timeline") || url.includes("search/conta
 }
 
 else if (url.includes("/2/searchall?")) {
-    // 搜索
+    // 搜索结果
     processItems(obj.items);
 }
 
 else if (url.includes("/statuses/container_timeline") || url.includes("profile/container_timeline")) {
-    // 推荐/超话
+    // 推荐 & 超话
     if (obj?.loadedInfo) {
         deleteFields(obj.loadedInfo, ['headers']);
     }
     processItems(obj.items);
 }
-
-else if (url.includes("/profile/me")) {
-    obj.items = obj.items.slice(0, 2);
-    if (obj.items.length > 0 && obj.items[0].header) {
-        deleteFields(obj.items[0].header, ['vipIcon', 'vipView']);
-    }
-    if (obj.items.length > 0 && obj.items[1].items) {
-       obj.items[1].items = obj.items[1].items.splice(0,4)
-    }
-}
 	
 else if (url.includes("/messageflow/notice")) {
     RemoveAds(obj.messages)
 }
-
-else if (url.includes("/2/!/huati/discovery_home_bottom_channels")) {
-	// 删除超话广场
-  if (obj?.button_configs) {
-	delete obj.button_configs
-  }
-
-  if (obj?.channelInfo?.channel_list && obj.channelInfo.channel_list.length > 1) {
-    	delete obj.channelInfo.channel_list[1]
-		
-  }
-}
-
 
 $done({body:JSON.stringify(obj)});
