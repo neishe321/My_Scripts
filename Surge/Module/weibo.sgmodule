@@ -18,15 +18,17 @@ DOMAIN-SUFFIX, biz.weibo.com, REJECT,extended-matching,pre-matching
 
 [Body Rewrite]
 # > 去除评论区广告
-http-response-jq ^https:\/\/api\.weibo\.cn\/\d\/comments\/build_comments '.datas |= map(select(has("adType") | not))'
+http-response-jq ^https?:\/\/api\.weibo\.cn\/\d\/comments\/build_comments '.datas |= map(select(has("adType") | not))'
+# > tab标签处理
+http-response-jq ^https?:\/\/api\.weibo\.cn\/\d\/groups\/allgroups\/v\d '.pageDatas |= map(select(.pageDataType != "homeExtend")) | (.pageDatas[0].categories[0].pageDatas |= del(.[0]))'
 # > 精简我的页面
-http-response-jq ^https:\/\/api\.weibo\.cn\/\d\/profile\/me '.items |= (.[0:2] | if length > 0 and .[0].header? then .[0].header |= del(.vipIcon, .vipView) else . end | if length > 1 and .[1].items? then .[1].items |= .[0:4] else . end)'
+http-response-jq ^https?:\/\/api\.weibo\.cn\/\d\/profile\/me '.items |= (.[0:2] | if length > 0 and .[0].header? then .[0].header |= del(.vipIcon, .vipView) else . end | if length > 1 and .[1].items? then .[1].items |= .[0:4] else . end)'
 # > 去除超话广场
-http-response-jq ^https:\/\/api\.weibo\.cn\/\d\/\!\/huati\/discovery_home_bottom_channels '.button_configs? |= empty | .channelInfo.channel_list |= if length > 1 then del(.[1]) else . end'
+http-response-jq ^https?:\/\/api\.weibo\.cn\/\d\/\!\/huati\/discovery_home_bottom_channels '.button_configs? |= empty | .channelInfo.channel_list |= if length > 1 then del(.[1]) else . end'
+# > 去除视频流广告
+http-response-jq ^https?:\/\/api\.weibo\.cn\/\d\/video\/tiny_stream_video_list '.statuses |= map(if (.is_ad == 1 or .mblogtypename == "广告") then empty else . end)'
 # > 解锁会员图标
 http-response-jq ^https?:\/\/new\.vip\.weibo\.cn\/aj\/appicon\/list '.data.list |= map(if has("cardType") then .cardType = "2" else . end | if has("tag") then .tag = "" else . end)'
-# > 去除视频流广告
-http-response-jq ^https:\/\/api\.weibo\.cn\/\d\/video\/tiny_stream_video_list '.statuses |= map(if (.is_ad == 1 or .mblogtypename == "广告") then empty else . end)'
 
 [Script]
 # > 微博净化
