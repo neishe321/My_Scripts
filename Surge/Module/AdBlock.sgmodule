@@ -1,12 +1,10 @@
-#!name = ADBlock
+#!name = AdBlock
 #!desc = 自用App去广告模块
 #!author = neishe321
 #!category = Neishe
-#!date = 2024-12-19
 
 [Rule]
-# > 采用RULE-SET
-# > https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Surge/AdvertisingLite/AdvertisingLite_All.list
+# > https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Surge/Advertising/Advertising_All.list
 
 [URL Rewrite]
 # > weifeng
@@ -14,5 +12,7 @@
 # > zuiyou
 ^https?:\/\/api\.izuiyou\.com\/ad\/ - reject
 
+[Body Rewrite]
+
 [MITM]
-hostname= %APPEND% api.wfdata.club, api.izuiyou.com
+hostname= %APPEND% api.wfdata.club, api.izuiyou.com, hxqapi.hiyun.tv
