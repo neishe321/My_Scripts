@@ -5,7 +5,7 @@
 #!date = 2024-12-19
 
 [Rule]
-DOMAIN, amdc.m.taobao.com, REJECT,extended-matching,pre-matching
+DOMAIN, amdc.m.taobao.com, REJECT,pre-matching,no-resolve
 
 [URL Rewrite]
 # > 首页及弹窗
