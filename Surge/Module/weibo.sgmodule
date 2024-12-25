@@ -6,11 +6,11 @@
 
 [Rule]
 # > 开屏广告
-DOMAIN, wbapp.uve.weibo.com, REJECT,extended-matching,pre-matching
-DOMAIN, sdkapp.uve.weibo.com, REJECT,extended-matching,pre-matching
-DOMAIN, bootpreload.uve.weibo.com, REJECT,extended-matching,pre-matching
-DOMAIN, bootrealtime.uve.weibo.com, REJECT,extended-matching,pre-matching
-DOMAIN-SUFFIX, biz.weibo.com, REJECT,extended-matching,pre-matching
+DOMAIN,wbapp.uve.weibo.com,REJECT,pre-matching,no-resolve
+DOMAIN,sdkapp.uve.weibo.com,REJECT,pre-matching,no-resolve
+DOMAIN,bootpreload.uve.weibo.com,REJECT,pre-matching,no-resolve
+DOMAIN,bootrealtime.uve.weibo.com,REJECT,pre-matching,no-resolve
+DOMAIN-SUFFIX,biz.weibo.com,REJECT,pre-matching,no-resolve
 
 [URL Rewrite]
 # > 推广内容
