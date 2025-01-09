@@ -34,7 +34,8 @@ function RemoveAds(array = []) {
             item?.data?.ad_state === 1 ||
             item?.isInsert === false || 		// 消息动态推广
             item?.data?.promotion?.adtype === 1 || 	// 发现页热搜下方轮播
-	    item?.data?.card_type === 264 && item?.data?.is_shrink === 1 // 发现页热搜下方缩小推广
+	    item?.data?.card_type === 264 && item?.data?.is_shrink === 1 || // 发现页热搜下方缩小推广
+	    item?.mblogtypename === "广告"
 
         if (!isSearchAd) {
             result.push(item);
@@ -146,6 +147,10 @@ if (url.includes("guest/statuses_extend") || url.includes("statuses/extend")) {
 		       'follow_data',
 		      ]
 		);
+}
+
+else if (url.include("statuses/repost_timeline")) {
+	RemoveAds(obj.reposts) //某种帖子评论广告
 }
 
 else if (url.includes("search/finder")) {
