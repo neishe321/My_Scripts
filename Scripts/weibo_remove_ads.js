@@ -149,7 +149,7 @@ if (url.includes("guest/statuses_extend") || url.includes("statuses/extend")) {
 		);
 }
 
-else if (url.include("statuses/repost_timeline")) {
+else if (url.includes("statuses/repost_timeline")) {
 	RemoveAds(obj.reposts) //某种帖子评论广告
 }
 
