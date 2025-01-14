@@ -7,7 +7,7 @@ let obj = JSON.parse($response.body);
 
 // ------------------ 函数定义 ------------------
 
-// 处理评论区广告/评论气泡/用户标签
+// 处理评论区
 function remove_comment(array = []) {
     for (let i = array.length - 1; i >= 0; i--) {
         const item = array[i];
@@ -28,26 +28,19 @@ function remove_comment(array = []) {
     }
 }
 
-
-// 删除属性
-function deleteFields(obj, fields) {
-    fields.forEach(field => {
-        if (obj && obj.hasOwnProperty(field)) {
-            delete obj[field];
-        }
-    });
-}
-
-// 移除广告
+// 去除广告
 function RemoveAds(array = []) {
     let result = [];
     
     for (let i = 0; i < array.length; i++) {
         const item = array[i];
 
-	if (item?.data) {
-		deleteFields(item?.data, ['semantic_brand_params', 'common_struct', 'ad_tag_nature', 'tag_struct']) // 信息流标签
-	}
+        if (item?.data) {
+            delete item?.data.semantic_brand_params;
+            delete item?.data.common_struct;
+            delete item?.data.ad_tag_nature;
+            delete item?.data.tag_struct;
+        }
         
         const isSearchAd =
             item?.item_category === "hot_ad" || 
@@ -56,17 +49,17 @@ function RemoveAds(array = []) {
             item?.data?.ad_state === 1 ||
             item?.isInsert === false || 		// 消息动态推广
             item?.data?.promotion?.adtype === 1 || 	// 发现页热搜下方轮播
-	    item?.data?.card_type === 264 && item?.data?.is_shrink === 1 || // 发现页热搜下方缩小推广
-	    item?.mblogtypename === "广告"
+            item?.data?.card_type === 264 && item?.data?.is_shrink === 1 || // 发现页热搜下方缩小推广
+            item?.mblogtypename === "广告"
 
         if (!isSearchAd) {
             result.push(item);
         }
     }
 
-	array.length = 0;
-	if (result.length > 0) {
-       	    array.push(...result);
+    array.length = 0;
+    if (result.length > 0) {
+        array.push(...result);
     }
 }
 
@@ -158,24 +151,22 @@ function processItems(array = []) {
 
 if (url.includes("guest/statuses_extend") || url.includes("statuses/extend")) {
     // 帖子详情
-    deleteFields(obj, ['head_cards', 
-		       'trend', 
-		       'snapshot_share_customize_dic', 
-		       'dynamic_share_items', 
-		       'report_data', 
-		       'loyal_fans_guide_info', 
-		       'top_cards',
-		       'reward_info',
-		       'follow_data',
-		      ]
-		);
+    delete obj.head_cards;
+    delete obj.trend;
+    delete obj.snapshot_share_customize_dic;
+    delete obj.dynamic_share_items;
+    delete obj.report_data;
+    delete obj.loyal_fans_guide_info;
+    delete obj.top_cards;
+    delete obj.reward_info;
+    delete obj.follow_data;
 }
 
 else if (url.includes("comments/build_comments")) {
 	// 评论区处理
-	if (Array.isArray(obj.datas) {remove_comment(obj.datas)};
-	if (Array.isArray(obj.root_comments) {remove_comment(obj.root_comments)};
-	if obj?.rootComment {
+	if (Array.isArray(obj.datas)) {remove_comment(obj.datas);}
+	if (Array.isArray(obj.root_comments)) {remove_comment(obj.root_comments);}
+	if (obj?.rootComment) {
 		delete obj.rootComment.comment_bubble;
 		delete obj.rootComment.vip_button;
 		delete obj.rootComment.user.icons;
@@ -193,7 +184,8 @@ else if (url.includes("search/finder")) {
         channels.splice(1); 
         const payload = channels[0]?.payload;
         if (payload) {
-            deleteFields(payload.loadedInfo, ['headerBack', 'searchBarContent']);
+            delete payload.loadedInfo?.headerBack;
+            delete payload.loadedInfo?.searchBarContent;
             processItems(payload.items);
         }
     }
@@ -202,7 +194,8 @@ else if (url.includes("search/finder")) {
 else if (url.includes("search/container_timeline") || url.includes("search/container_discover")) {
     // 发现页刷新
     if (obj?.loadedInfo) {
-        deleteFields(obj.loadedInfo, ['headerBack', 'searchBarContent']);
+        delete obj.loadedInfo.headerBack;
+        delete obj.loadedInfo.searchBarContent;
     }
     processItems(obj.items);
 }
@@ -215,7 +208,7 @@ else if (url.includes("/2/searchall?")) {
 else if (url.includes("/statuses/container_timeline") || url.includes("profile/container_timeline")) {
     // 推荐 & 超话
     if (obj?.loadedInfo) {
-        deleteFields(obj.loadedInfo, ['headers']);
+        delete obj.loadedInfo.headers;
     }
     processItems(obj.items);
 }
