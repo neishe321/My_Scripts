@@ -7,6 +7,28 @@ let obj = JSON.parse($response.body);
 
 // ------------------ 函数定义 ------------------
 
+// 处理评论区广告/评论气泡/用户标签
+function remove_comment(array = []) {
+    for (let i = array.length - 1; i >= 0; i--) {
+        const item = array[i];
+        if (item.adType) {
+            array.splice(i, 1); // 广告
+        } else {
+            // 删除 comment_bubble, vip_button 和 user.icons
+            if (item.data) {
+                delete item.data.comment_bubble;
+                delete item.data.vip_button;
+                if (item.data.user) delete item.data.user.icons;
+            } else {
+                delete item.comment_bubble;
+                delete item.vip_button;
+                if (item.user) delete item.user.icons;
+            }
+        }
+    }
+}
+
+
 // 删除属性
 function deleteFields(obj, fields) {
     fields.forEach(field => {
@@ -147,6 +169,17 @@ if (url.includes("guest/statuses_extend") || url.includes("statuses/extend")) {
 		       'follow_data',
 		      ]
 		);
+}
+
+else if (url.includes("comments/build_comments")) {
+	// 评论区处理
+	if (Array.isArray(obj.datas) {remove_comment(obj.datas)};
+	if (Array.isArray(obj.root_comments) {remove_comment(obj.root_comments)};
+	if obj?.rootComment {
+		delete obj.rootComment.comment_bubble;
+		delete obj.rootComment.vip_button;
+		delete obj.rootComment.user.icons;
+	}
 }
 
 else if (url.includes("statuses/repost_timeline")) {
