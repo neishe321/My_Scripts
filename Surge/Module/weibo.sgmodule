@@ -17,8 +17,8 @@ DOMAIN-SUFFIX,biz.weibo.com,REJECT,pre-matching,no-resolve
 ^https?:\/\/api\.weibo\.cn\/\d\/(push\/active|client\/addlog_batch|container\/asyn|shproxy\/chaohua\/discovery\/searchactive|checkin\/show|!\/live\/media_homelist|statuses\/container_positive|!\/was\/finder\/searchbarchange) - reject
 
 [Body Rewrite]
-# > 去除评论区广告
-http-response-jq ^https?:\/\/api\.weibo\.cn\/\d\/comments\/build_comments '.datas |= map(select(has("adType") | not))'
+# > 去除评论区广告/评论气泡/用户标签
+http-response-jq ^https?:\/\/api\.weibo\.cn\/\d\/comments\/build_comments '.datas |= map(select(has("adType") | not) | del(.comment_bubble, .vip_button) | (.user.icons? |= null))'
 # > tab标签处理
 http-response-jq ^https?:\/\/api\.weibo\.cn\/\d\/groups\/allgroups\/v\d '.pageDatas |= map(select(.pageDataType != "homeExtend")) | (.pageDatas[0].categories[0].pageDatas |= del(.[0]))'
 # > 精简我的页面
