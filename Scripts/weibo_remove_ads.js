@@ -6,10 +6,9 @@ let obj = JSON.parse($response.body);
 
 
 // ------------------ 函数定义 ------------------
-
 // 处理评论区
 function RemoveComment(array = []) {
-    // 处理气泡/标签
+    // 气泡/标签
     function cleanItem(item) {
         if (!item) return;
         delete item.comment_bubble;
