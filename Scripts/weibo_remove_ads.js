@@ -135,13 +135,13 @@ function RemoveCardtype(array = []) {
 }
 
 // 处理嵌套的 items数组
-function processItems(array = []) {
+function ProcessItems(array = []) {
     RemoveAds(array);
     RemoveCardtype(array);
 
     array.forEach(item => {
         if (Array.isArray(item?.items)) {
-            processItems(item.items);
+            ProcessItems(item.items);
         }
     });
 }
@@ -190,7 +190,7 @@ else if (url.includes("search/finder")) {
         if (payload) {
             delete payload.loadedInfo?.headerBack;
             delete payload.loadedInfo?.searchBarContent;
-            processItems(payload.items);
+            ProcessItems(payload.items);
         }
     }
 }
@@ -201,12 +201,12 @@ else if (url.includes("search/container_timeline") || url.includes("search/conta
         delete obj.loadedInfo.headerBack;
         delete obj.loadedInfo.searchBarContent;
     }
-    processItems(obj.items);
+    ProcessItems(obj.items);
 }
 
 else if (url.includes("/2/searchall?")) {
     // 搜索结果
-    processItems(obj.items);
+    ProcessItems(obj.items);
 }
 
 else if (url.includes("/statuses/container_timeline") || url.includes("profile/container_timeline")) {
@@ -214,7 +214,7 @@ else if (url.includes("/statuses/container_timeline") || url.includes("profile/c
     if (obj?.loadedInfo) {
         delete obj.loadedInfo.headers;
     }
-    processItems(obj.items);
+    ProcessItems(obj.items);
 }
 	
 else if (url.includes("/messageflow/notice")) {
