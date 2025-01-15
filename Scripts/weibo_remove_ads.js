@@ -172,7 +172,7 @@ if (url.includes("guest/statuses_extend") || url.includes("statuses/extend")) {
     delete obj.reward_info;
     delete obj.follow_data;
     delete obj.comment_data;
-    delete obj.comment_manage_info;
+    // delete obj.comment_manage_info;
 	
 }
 
