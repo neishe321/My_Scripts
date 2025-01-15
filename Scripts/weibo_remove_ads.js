@@ -46,10 +46,12 @@ function RemoveAds(array = []) {
         const item = array[i];
 
         if (item?.data) {
-            delete item?.data.semantic_brand_params;
-            delete item?.data.common_struct;
-            delete item?.data.ad_tag_nature;
-            delete item?.data.tag_struct;
+            delete item.data.semantic_brand_params;
+            delete item.data.common_struct;
+            delete item.data.ad_tag_nature;
+            delete item.data.tag_struct;
+	    delete item.data.user?.icons;
+	    delete item.data.buttons;
         }
         
         const isSearchAd =
