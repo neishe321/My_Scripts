@@ -15,4 +15,4 @@
 [Body Rewrite]
 
 [MITM]
-hostname= %APPEND% api.wfdata.club, api.izuiyou.com, hxqapi.hiyun.tv
+hostname= %APPEND% api.wfdata.club, api.izuiyou.com
