@@ -162,23 +162,23 @@ function ProcessItems(array = []) {
 
 if (url.includes("guest/statuses_extend") || url.includes("statuses/extend")) {
     // 帖子详情
-    // delete obj.head_cards;
-    // delete obj.trend;
-    // delete obj.snapshot_share_customize_dic;
-    // delete obj.dynamic_share_items;
-    // delete obj.report_data;
-    // delete obj.loyal_fans_guide_info;
-    // delete obj.top_cards;
-    // delete obj.reward_info;
-    // delete obj.follow_data;
-    obj = {}
+    delete obj.head_cards;
+    delete obj.trend;
+    delete obj.snapshot_share_customize_dic;
+    delete obj.dynamic_share_items;
+    delete obj.report_data;
+    delete obj.loyal_fans_guide_info;
+    delete obj.top_cards;
+    delete obj.reward_info;
+    delete obj.follow_data;
 }
 
 else if (url.includes("comments/build_comments")) {
 	// 三个超链接?
 	if (obj?.status) {
-		delete obj.status.annotations;
-		delete obj.status?.user.icons;
+		obj.status = {};
+		// delete obj.status.annotations;
+		// delete obj.status?.user.icons;
 	}
 
 	// 评论区处理
