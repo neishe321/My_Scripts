@@ -51,7 +51,7 @@ function RemoveAds(array = []) {
             delete item.data.ad_tag_nature;
             delete item.data.tag_struct;
 	    delete item.data.user?.icons;
-	    delete item.data.buttons;
+	    delete item.data.pic_bg_new;
         }
         
         const isSearchAd =
