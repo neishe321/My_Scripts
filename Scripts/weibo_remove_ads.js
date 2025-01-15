@@ -172,6 +172,7 @@ if (url.includes("guest/statuses_extend") || url.includes("statuses/extend")) {
     delete obj.top_cards;
     delete obj.reward_info;
     delete obj.follow_data;
+    delete obj?.retweeted_status.ad_tag_nature;
 }
 
 else if (url.includes("comments/build_comments")) {
