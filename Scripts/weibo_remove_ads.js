@@ -171,14 +171,18 @@ if (url.includes("guest/statuses_extend") || url.includes("statuses/extend")) {
     delete obj.top_cards;
     delete obj.reward_info;
     delete obj.follow_data;
-    delete obj.annotations;
 }
 
 else if (url.includes("comments/build_comments")) {
+	// 三个超链接?
+	if (obj?.status) {
+		delete obj.status.annotations;
+		delete obj.status?.user.icons;
+	}
+
 	// 评论区处理
 	if (Array.isArray(obj.datas)) {RemoveComment(obj.datas)}
 	if (Array.isArray(obj.root_comments)) {RemoveComment(obj.root_comments)}
-	
 	if (obj?.rootComment) {
 		// 父评论
 		delete obj.rootComment.comment_bubble;
