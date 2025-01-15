@@ -9,33 +9,30 @@ let obj = JSON.parse($response.body);
 
 // 处理评论区
 function RemoveComment(array = []) {
+    // 处理气泡/标签
+    function cleanItem(item) {
+        if (!item) return;
+        delete item.comment_bubble;
+        delete item.vip_button;
+        delete item.user?.icons;
+    }
+
     for (let i = array.length - 1; i >= 0; i--) {
         const item = array[i];
-        
+
+        // 移除广告
         if (item.adType) {
-            array.splice(i, 1); // 移除广告
-            continue; 
+            array.splice(i, 1);
+            continue;
         }
 
-        // 处理数据对象的属性删除
-        if (item.data) {
-            delete item.data.comment_bubble;
-            delete item.data.vip_button;
-            delete item.data.user?.icons;
-        } else {
-            delete item.comment_bubble;
-            delete item.vip_button;
-            delete item.user?.icons;
-        }
-
-        // 如果有嵌套的评论数组，递归处理每个评论
+        // 处理当前对象的 data 和自身
+        if (item.data) {cleanItem(item.data)}
+        cleanItem(item);
+	    
+        // 递归处理嵌套的评论数组
         if (Array.isArray(item.comments)) {
-            for (let j = 0; j < item.comments.length; j++) {
-                const comment = item.comments[j];
-                delete comment.comment_bubble;
-                delete comment.vip_button;
-                delete comment.user?.icons; 
-            }
+            item.comments.forEach(cleanItem);
         }
     }
 }
