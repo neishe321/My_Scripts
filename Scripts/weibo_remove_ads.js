@@ -8,7 +8,7 @@ let obj = JSON.parse($response.body);
 // ------------------ 函数定义 ------------------
 
 // 处理评论区
-function Remove_Comment(array = []) {
+function RemoveComment(array = []) {
     for (let i = array.length - 1; i >= 0; i--) {
         const item = array[i];
         if (item.adType) {
@@ -163,8 +163,8 @@ if (url.includes("guest/statuses_extend") || url.includes("statuses/extend")) {
 
 else if (url.includes("comments/build_comments")) {
 	// 评论区处理
-	if (Array.isArray(obj.datas)) {Remove_Comment(obj.datas);}
-	if (Array.isArray(obj.root_comments)) {Remove_Comment(obj.root_comments)}
+	if (Array.isArray(obj.datas)) {RemoveComment(obj.datas);}
+	if (Array.isArray(obj.root_comments)) {RemoveComment(obj.root_comments)}
 	if (obj?.rootComment) {
 		// 父评论
 		delete obj.rootComment.comment_bubble;
@@ -173,7 +173,7 @@ else if (url.includes("comments/build_comments")) {
 	}
 	if (obj?.comments) {
 		// 子回复
-		if (Array.isArray(obj.comments)) {Remove_Comment(obj.comments)}
+		if (Array.isArray(obj.comments)) {RemoveComment(obj.comments)}
 	}
 }
 
