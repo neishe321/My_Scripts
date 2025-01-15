@@ -11,21 +11,35 @@ let obj = JSON.parse($response.body);
 function RemoveComment(array = []) {
     for (let i = array.length - 1; i >= 0; i--) {
         const item = array[i];
+        
         if (item.adType) {
-            array.splice(i, 1); // 广告
+            array.splice(i, 1); // 移除广告
+            continue; 
+        }
+
+        // 处理数据对象的属性删除
+        if (item.data) {
+            delete item.data.comment_bubble;
+            delete item.data.vip_button;
+            delete item.data.user?.icons;
         } else {
-            if (item.data) {
-                delete item.data.comment_bubble;
-                delete item.data.vip_button;
-                delete item.data.user.icons;
-            } else {
-                delete item.comment_bubble;
-                delete item.vip_button;
-                delete item.user.icons;
+            delete item.comment_bubble;
+            delete item.vip_button;
+            delete item.user?.icons;
+        }
+
+        // 如果有嵌套的评论数组，递归处理每个评论
+        if (Array.isArray(item.comments)) {
+            for (let j = 0; j < item.comments.length; j++) {
+                const comment = item.comments[j];
+                delete comment.comment_bubble;
+                delete comment.vip_button;
+                delete comment.user?.icons; 
             }
         }
     }
 }
+
 
 // 去除广告
 function RemoveAds(array = []) {
@@ -163,8 +177,9 @@ if (url.includes("guest/statuses_extend") || url.includes("statuses/extend")) {
 
 else if (url.includes("comments/build_comments")) {
 	// 评论区处理
-	if (Array.isArray(obj.datas)) {RemoveComment(obj.datas);}
+	if (Array.isArray(obj.datas)) {RemoveComment(obj.datas)}
 	if (Array.isArray(obj.root_comments)) {RemoveComment(obj.root_comments)}
+	
 	if (obj?.rootComment) {
 		// 父评论
 		delete obj.rootComment.comment_bubble;
