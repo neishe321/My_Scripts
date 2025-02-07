@@ -198,14 +198,31 @@ else if (url.includes("statuses/repost_timeline")) {
 
 else if (url.includes("search/finder")) {
     const channels = obj?.channelInfo?.channels; // 获取 channels
+
     if (Array.isArray(channels) && channels.length > 0) {
-	// 发现页去除趋势和榜单
-        channels.splice(1); 
+        // 发现页去除趋势和榜单
+        channels.splice(1);
+        delete channels[0]?.title;
+
+        // 处理 params
+        const params = channels[0]?.params;
+        if (params && typeof params === "object") {
+            for (const key in params) {
+                if (Object.hasOwn(params, key) && typeof params[key] === "number") {
+                    params[key] = 0;
+                }
+            }
+        }
+
+        // 处理 payload
         const payload = channels[0]?.payload;
-        if (payload) {
+        if (payload && typeof payload === "object") {
             delete payload.loadedInfo?.headerBack;
             delete payload.loadedInfo?.searchBarContent;
-            ProcessItems(payload.items);
+
+            if (Array.isArray(payload.items)) {
+                ProcessItems(payload.items);
+            }
         }
     }
 }
