@@ -61,6 +61,7 @@ function RemoveAds(array = []) {
             item?.isInsert === false || 		// 消息动态推广
             item?.data?.promotion?.adtype === 1 || 	// 发现页热搜下方轮播
             item?.data?.card_type === 264 && item?.data?.is_shrink === 1 || // 发现页热搜下方缩小推广
+	    item?.data?.card_type === 196 // 亚运会奖牌
             item?.mblogtypename === "广告"
 
         if (!isSearchAd) {
