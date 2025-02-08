@@ -211,43 +211,64 @@ else if (url.includes("statuses/repost_timeline")) {
   RemoveAds(obj.reposts);  // 某种帖子评论广告
 } 
 
+// else if (url.includes("search/finder")) {
+//   const channels = obj?.channelInfo?.channels;
+
+//   if (Array.isArray(channels) && channels.length > 0) {
+//     // 发现页去除趋势和榜单
+//     channels.splice(1);
+//     delete channels[0]?.title;
+
+//     const params = channels[0]?.params;
+//     if (params && typeof params === "object") {
+//       for (const key in params) {
+//         if (Object.hasOwn(params, key) && typeof params[key] === "number") {
+//           params[key] = 0;
+//         }
+//       }
+//     }
+
+//     const payload = channels[0]?.payload;
+//     if (payload && typeof payload === "object") {
+//       delete payload.loadedInfo?.headerBack;
+//       delete payload.loadedInfo?.searchBarContent;
+
+//       if (Array.isArray(payload.items)) {
+//         ProcessItems(payload.items);
+//       }
+//     }
+//   }
+// } 
+
+// else if (url.includes("search/container_timeline") || url.includes("search/container_discover")) {
+//   // 发现页推荐
+//   if (obj?.loadedInfo) {
+//     delete obj.loadedInfo.headerBack;
+//     delete obj.loadedInfo.searchBarContent;
+//   }
+//   ProcessItems(obj.items);
+// } 
+
+//  20250208 接口数据结构变动
 else if (url.includes("search/finder")) {
-  const channels = obj?.channelInfo?.channels;
+    // 
+    const data = obj?.header?.data;  // 获取 data属性
+    ProcessItems(channel.data.items)
 
-  if (Array.isArray(channels) && channels.length > 0) {
-    // 发现页去除趋势和榜单
-    channels.splice(1);
-    delete channels[0]?.title;
-
-    const params = channels[0]?.params;
-    if (params && typeof params === "object") {
-      for (const key in params) {
-        if (Object.hasOwn(params, key) && typeof params[key] === "number") {
-          params[key] = 0;
+    // moreChannels处理 微博商城等等
+    delete obj?.channelInfo?.moreChannels;
+  
+    // 热点/热转/热问//亚冬会/趋势/榜单内容处理
+    const channels = obj?.channelInfo?.channels;  // 获取 channels
+    if (Array.isArray(channels) && channels.length > 0) {
+        for (const channel of channels) {
+            if (channel?.payload?.items) {
+                ProcessItems(channel.payload.items); 
+            }
         }
-      }
     }
+}
 
-    const payload = channels[0]?.payload;
-    if (payload && typeof payload === "object") {
-      delete payload.loadedInfo?.headerBack;
-      delete payload.loadedInfo?.searchBarContent;
-
-      if (Array.isArray(payload.items)) {
-        ProcessItems(payload.items);
-      }
-    }
-  }
-} 
-
-else if (url.includes("search/container_timeline") || url.includes("search/container_discover")) {
-  // 发现页推荐
-  if (obj?.loadedInfo) {
-    delete obj.loadedInfo.headerBack;
-    delete obj.loadedInfo.searchBarContent;
-  }
-  ProcessItems(obj.items);
-} 
 
 else if (url.includes("/2/searchall?")) {
   // 搜索结果
