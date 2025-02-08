@@ -64,7 +64,6 @@ function RemoveAds(array = []) {
 		
         }
 
-        
         const isSearchAd =
             item?.item_category === "hot_ad" || 
             (item?.item_category === "trend" && item?.data?.card_type !== 101) ||
@@ -170,6 +169,7 @@ function ProcessItems(array = []) {
         }
     });
 }
+
 
 // ------------------ 处理响应 ------------------
 
