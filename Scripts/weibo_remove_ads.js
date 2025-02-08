@@ -94,6 +94,7 @@ function RemoveAds(array = []) {
 }
 
 // 移除模块项
+// 移除模块
 function RemoveCardtype(array = []) {
     const group_itemId = new Set([
         "card86_card11_cishi", 
@@ -110,16 +111,16 @@ function RemoveCardtype(array = []) {
         "tongcheng_usertagwords",     // 实时近期分享标签
     ]);
 
-    const keywords = new Set([
+    const keywords = [
         "hot_character", 
         "local_hot_band", 
         "hot_video", 
         "hot_chaohua_list", 
         "hot_link_mike",
         "chaohua_discovery_banner",
-        "bottom",
-        "hot_search",                 // 发现页置顶提示 错过等
-    ]);
+        "bottom",      // 超话板块              
+        "hot_search",  // 发现页置顶提示 错过等
+    ];
 
     let result = [];
 
@@ -139,9 +140,9 @@ function RemoveCardtype(array = []) {
             // 分类为 card 且 data.itemid 包含在 card_itemid 中
             (item?.category === "card" && card_itemid.has(item?.data?.itemid)) ||
             
-            // itemId|data.itemid 中包含 keywords 关键词
-            (item?.itemId && keywords.has(item.itemId)) ||
-            (item?.data?.itemid && keywords.has(item.data.itemid) && item.data.itemid !== "sg_bottom_tab_search_input") ||
+            // itemId|data.itemid 中包含 keywords 中的任意关键字
+            (item?.itemId && keywords.some(keyword => item.itemId.includes(keyword))) ||
+            (item?.data?.itemid && keywords.some(keyword => item.data.itemid.includes(keyword)) && item.data.itemid !== "sg_bottom_tab_search_input") ||
             
             // 其他特定属性判断
             item?.data?.wboxParam ||                      // 含有 wboxParam，可能是趋势相关的标记
