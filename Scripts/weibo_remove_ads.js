@@ -14,6 +14,10 @@ function RemoveComment(array = []) {
         delete item.comment_bubble;
         delete item.vip_button;
         delete item.user?.icons;
+	delete item.user?.avatar_extend_info;  // 头像挂件
+	delete item.user?.mbtype;
+	delete item.user?.mbrank;
+	delete item.user?.level;
     }
 
     for (let i = array.length - 1; i >= 0; i--) {
