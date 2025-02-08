@@ -54,7 +54,9 @@ function RemoveAds(array = []) {
 	    delete item.data.extra_button_info; // 关注按钮2
 	    delete item.data.user?.icons; 		// 用户标签
 	    delete item.data.user?.avatar_extend_info;  // 头像挂件
-	    delete item.data.user;
+	    delete item.data.user?.mbtype;
+	    delete item.data.user?.mbrank;
+	    delete item.data.user?.level;
 		
         }
 
@@ -65,12 +67,13 @@ function RemoveAds(array = []) {
             item?.data?.mblogtypename === "广告" ||
             item?.data?.ad_state === 1 ||
             item?.isInsert === false || 		// 消息动态推广
+	    item?.data?.card_type === 22 ||		// 不记得了
+            item?.data?.cate_id === "1114" ||           // 特定 cate_id
             item?.data?.promotion?.adtype === 1 || 	// 发现页热搜下方轮播
             item?.data?.card_type === 264 && item?.data?.is_shrink === 1 || // 发现页热搜下方缩小推广
 	    item?.data?.card_type === 196 // 亚运会奖牌
-            item?.mblogtypename === "广告"
+            item?.mblogtypename === "广告" 
 	    
-
         if (!isSearchAd) {
             result.push(item);
         }
@@ -134,8 +137,6 @@ function RemoveCardtype(array = []) {
             
             // 其他特定属性判断
             item?.data?.wboxParam ||                      // 含有 wboxParam，可能是趋势相关的标记
-	    item?.data?.card_type === 22 ||
-            item?.data?.cate_id === "1114" ||             // 特定 cate_id
             item?.arrayText?.contents ||                  // 智搜总结内容
             item?.data?.title === "大家都在问" ||          // 特定标题
             item?.data?.desc === "相关搜索" ||             // 特定描述
