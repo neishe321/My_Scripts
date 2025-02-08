@@ -8,7 +8,7 @@ let obj = JSON.parse($response.body);
 // ------------------ 函数定义 -----------------
 
 // 清理用户信息
-function cleanUserData(user) {
+function CleanUserData(user) {
   if (user) {
     delete user.icons;
     delete user.avatar_extend_info;  // 头像挂件
@@ -19,11 +19,11 @@ function cleanUserData(user) {
 }
 
 // 清理评论项
-function cleanCommentItem(item) {
+function CleanCommentItem(item) {
   if (!item) return;
   delete item.comment_bubble;
   delete item.vip_button;  // 气泡
-  cleanUserData(item.user);
+  CleanUserData(item.user);
 }
 
 // 处理评论区
@@ -38,12 +38,12 @@ function RemoveComment(array = []) {
     }
 
     // 清理当前对象的 data 和自身
-    if (item.data) cleanCommentItem(item.data);
-    cleanCommentItem(item);
+    if (item.data) CleanCommentItem(item.data);
+    CleanCommentItem(item);
 
     // 递归处理嵌套的评论
     if (Array.isArray(item.comments)) {
-      item.comments.forEach(cleanCommentItem);
+      item.comments.forEach(CleanCommentItem);
     }
   }
 }
@@ -64,7 +64,7 @@ function RemoveAds(array = []) {
             delete data.pic_bg_new;  // 卡片背景
             delete data.buttons;     // 关注按钮1
             delete data.extra_button_info; // 关注按钮2
-            cleanUserData(data.user); // 用户信息
+            CleanUserData(data.user); // 用户信息
         }
 
         // 判断是否是广告
@@ -199,7 +199,7 @@ else if (url.includes("comments/build_comments")) {
     // 父评论
     delete obj.rootComment.comment_bubble;
     delete obj.rootComment.vip_button;
-    cleanUserData(obj.rootComment.user);
+    CleanUserData(obj.rootComment.user);
   }
   if (obj?.comments && Array.isArray(obj.comments)) {
     // 子回复
