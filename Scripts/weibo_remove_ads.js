@@ -263,7 +263,7 @@ else if (url.includes("search/finder")) {
     }
 
     // 处理热点/热转/热问//亚冬会/趋势/榜单内容
-    const channels = obj?.channelInfo?.channels;
+    const channels = obj?.channelInfo?.channels?.slice(0, 2);
     if (Array.isArray(channels) && channels.length > 0) {
         for (const channel of channels) {
             if (Array.isArray(channel?.payload?.items)) {
@@ -273,10 +273,10 @@ else if (url.includes("search/finder")) {
     }
 }
 
-else if (url.includes("/flowlist")) {
-  // 热转内容
-  ProcessItems(obj.items);
-}
+// else if (url.includes("/flowlist")) {
+//   // 热转内容
+//   ProcessItems(obj.items);
+// }
 
 else if (url.includes("/2/searchall?")) {
   // 搜索结果
