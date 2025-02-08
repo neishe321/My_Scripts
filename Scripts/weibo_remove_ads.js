@@ -204,6 +204,10 @@ else if (url.includes("search/finder")) {
 
   if (Array.isArray(obj?.channelInfo?.channels)) {
     for (const channel of obj.channelInfo.channels) {
+      // 热搜关键词
+      if (channel?.payload?.loadedInfo?.searchBarContent) {
+        delete channel.payload.loadedInfo.searchBarContent; 
+      }
       if (Array.isArray(channel?.payload?.items)) {
         ProcessItems(channel.payload.items);
       }
@@ -213,9 +217,10 @@ else if (url.includes("search/finder")) {
 
 else if (url.includes("search/container_discover")) {
   if (obj.loadedInfo) {
-    delete obj.loadedInfo?.searchBarContent; // 热搜关键词
+    // 热搜关键词
+    delete obj.loadedInfo?.searchBarContent;
   }
-  ProcessItems(obj.items)
+  ProcessItems(obj.items);
 }
 
 else if (url.includes("/flowlist")) {
