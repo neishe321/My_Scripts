@@ -211,7 +211,15 @@ else if (url.includes("search/finder")) {
   }
 }
 
+else if (url.includes("search/container_discover")) {
+  if (obj.loadedInfo) {
+    delete obj.loadedInfo?.searchBarContent; // 热搜关键词
+  }
+  ProcessItems(obj.items)
+}
+
 else if (url.includes("/flowlist")) {
+  // 热推内容
   ProcessItems(obj.items);
 }
 
