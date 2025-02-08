@@ -5,7 +5,7 @@ if (!$response.body) {
 let obj = JSON.parse($response.body);
 
 // ------------------ 函数定义 ------------------
-// 清理用户信息
+// 清理用户数据
 function cleanUserData(user) {
     if (user) {
         delete user.icons;
@@ -20,7 +20,7 @@ function cleanUserData(user) {
 function cleanItem(item) {
     if (!item) return;
     delete item.comment_bubble;
-    delete item.vip_button; // 会员气泡
+    delete item.vip_button;
     cleanUserData(item.user);
 }
 
@@ -87,22 +87,22 @@ function RemoveAds(array = []) {
 
 // 清理特定模块
 function RemoveCardtype(array = []) {
-    const group_itemId = new Set([
+    const group_itemId = [
         "card86_card11_cishi", 
         "card86_card11", 
         "INTEREST_PEOPLE",
         "trend_top_qiehuan",
         "profile_collection",         // 那年今日/近期热门
         "realtime_tag_groug",         // 实时近期分享
-    ]);
+    ];
     
-    const card_itemid = new Set([
+    const card_itemid = [
         "finder_channel",             // 发现功能分类
         "finder_window",              // 发现轮播广告
         "tongcheng_usertagwords",     // 实时近期分享标签
-    ]);
+    ];
 
-    const keywords = new Set([
+    const keywords = [
         "hot_character", 
         "local_hot_band", 
         "hot_video", 
@@ -111,7 +111,7 @@ function RemoveCardtype(array = []) {
         "chaohua_discovery_banner",
         "bottom",
         "hot_search",                 // 发现页置顶提示 错过等
-    ]);
+    ];
 
     for (let i = array.length - 1; i >= 0; i--) {
         const item = array[i];
@@ -122,10 +122,17 @@ function RemoveCardtype(array = []) {
         }
 
         const shouldRemove = 
-            (item?.category === "group" && group_itemId.has(item?.itemId)) ||
-            (item?.category === "card" && card_itemid.has(item?.data?.itemid)) ||
-            (item?.itemId && Array.from(keywords).some(keyword => item.itemId.includes(keyword))) ||
-            (item?.data?.itemid && Array.from(keywords).some(keyword => item.data.itemid.includes(keyword)) && item.data.itemid !== "sg_bottom_tab_search_input") ||
+            // 分类为 group 且 itemId 包含在 group_itemId 中
+            (item?.category === "group" && group_itemId.includes(item?.itemId)) ||
+            
+            // 分类为 card 且 data.itemid 包含在 card_itemid 中
+            (item?.category === "card" && card_itemid.includes(item?.data?.itemid)) ||
+            
+            // itemId|data.itemid 中包含 keywords 关键词
+            (item?.itemId && keywords.some(keyword => item.itemId.includes(keyword))) ||
+            (item?.data?.itemid && keywords.some(keyword => item.data.itemid.includes(keyword)) && item.data.itemid !== "sg_bottom_tab_search_input") ||
+            
+            // 其他特定属性判断
             item?.data?.wboxParam ||                      // 含有 wboxParam，可能是趋势相关的标记
             item?.arrayText?.contents ||                  // 智搜总结内容
             item?.data?.title === "大家都在问" ||          // 特定标题
@@ -153,6 +160,8 @@ function ProcessItems(array = []) {
 }
 
 // ------------------ 处理响应 ------------------
+
+// 根据不同请求 URL 执行不同的处理逻辑
 if (url.includes("guest/statuses_extend") || url.includes("statuses/extend")) {
     // 帖子详情
     delete obj.head_cards;
@@ -167,9 +176,7 @@ if (url.includes("guest/statuses_extend") || url.includes("statuses/extend")) {
     delete obj.comment_data;
     // delete obj.comment_manage_info;
 
-} 
-
-else if (url.includes("comments/build_comments")) {
+} else if (url.includes("comments/build_comments")) {
     // 评论区处理
     if (Array.isArray(obj.datas)) RemoveComment(obj.datas);
     if (Array.isArray(obj.root_comments)) RemoveComment(obj.root_comments);
@@ -183,14 +190,10 @@ else if (url.includes("comments/build_comments")) {
         // 子回复
         if (Array.isArray(obj.comments)) RemoveComment(obj.comments);
     }
-} 
-
-else if (url.includes("statuses/repost_timeline")) {
+} else if (url.includes("statuses/repost_timeline")) {
     // 某种帖子评论广告
     RemoveAds(obj.reposts);
-} 
-
-else if (url.includes("search/finder")) {
+} else if (url.includes("search/finder")) {
     const channels = obj?.channelInfo?.channels;
 
     if (Array.isArray(channels) && channels.length > 0) {
@@ -217,30 +220,23 @@ else if (url.includes("search/finder")) {
             }
         }
     }
-} 
-
-else if (url.includes("search/container_timeline") || url.includes("search/container_discover")) {
+} else if (url.includes("search/container_timeline") || url.includes("search/container_discover")) {
     // 发现页刷新
     if (obj?.loadedInfo) {
         delete obj.loadedInfo.headerBack;
         delete obj.loadedInfo.searchBarContent;
     }
     ProcessItems(obj.items);
-} 
-
-else if (url.includes("/2/searchall?")) {
+} else if (url.includes("/2/searchall?")) {
     // 搜索结果
     ProcessItems(obj.items);
-} 
-
-else if (url.includes("/statuses/container_timeline") || url.includes("profile/container_timeline")) {
+} else if (url.includes("/statuses/container_timeline") || url.includes("profile/container_timeline")) {
     // 推荐 & 超话
     if (obj?.loadedInfo) {
         delete obj.loadedInfo.headers;
     }
     ProcessItems(obj.items);
-} 
-else if (url.includes("/messageflow/notice")) {
+} else if (url.includes("/messageflow/notice")) {
     RemoveAds(obj.messages);
 }
 
