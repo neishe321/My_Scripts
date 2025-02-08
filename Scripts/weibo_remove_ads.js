@@ -54,7 +54,7 @@ function RemoveAds(array = []) {
 	    delete item.data.extra_button_info; // 关注按钮2
 	    delete item.data.user?.icons; 		// 用户标签
 	    delete item.data.user?.avatar_extend_info;  // 头像挂件
-	    delete item.data.user
+	    delete item.data.user;
 		
         }
 
