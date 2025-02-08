@@ -251,19 +251,23 @@ else if (url.includes("statuses/repost_timeline")) {
 
 //  20250208 接口数据结构变动
 else if (url.includes("search/finder")) {
-    // 
-    const data = obj?.header?.data;  // 获取 data属性
-    ProcessItems(channel.data.items)
+    // 处理头部数据
+    const data = obj?.header?.data;
+    if (data?.items && Array.isArray(data.items)) {
+        ProcessItems(data.items);
+    }
 
-    // moreChannels处理 微博商城等等
-    delete obj?.channelInfo?.moreChannels;
-  
-    // 热点/热转/热问//亚冬会/趋势/榜单内容处理
-    const channels = obj?.channelInfo?.channels;  // 获取 channels
+    // 移除 moreChannels（微博商城等）
+    if (obj?.channelInfo) {
+        delete obj.channelInfo.moreChannels;
+    }
+
+    // 处理热点/热转/热问//亚冬会/趋势/榜单内容
+    const channels = obj?.channelInfo?.channels;
     if (Array.isArray(channels) && channels.length > 0) {
         for (const channel of channels) {
-            if (channel?.payload?.items) {
-                ProcessItems(channel.payload.items); 
+            if (Array.isArray(channel?.payload?.items)) {
+                ProcessItems(channel.payload.items);
             }
         }
     }
