@@ -262,10 +262,14 @@ else if (url.includes("search/finder")) {
         delete obj.channelInfo.moreChannels;
     }
 
-    // 处理热点/热转/热问//亚冬会/趋势/榜单内容
-    const channels = obj?.channelInfo?.channels?.slice(0, 2);
-    if (Array.isArray(channels) && channels.length > 0) {
-        for (const channel of channels) {
+    // 只保留前两个频道
+    if (Array.isArray(obj?.channelInfo?.channels)) {
+        obj.channelInfo.channels = obj.channelInfo.channels.slice(0, 2);
+    }
+
+    // 处理热点/热转内容
+    if (Array.isArray(obj?.channelInfo?.channels)) {
+        for (const channel of obj.channelInfo.channels) {
             if (Array.isArray(channel?.payload?.items)) {
                 ProcessItems(channel.payload.items);
             }
