@@ -3,7 +3,7 @@ if (!$response.body) {
   $done({});
 }
 let obj = JSON.parse($response.body);
-
+  
 // ------------------ 函数定义 ------------------
 // 清理用户数据
 function cleanUserData(user) {
