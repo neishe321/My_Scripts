@@ -48,7 +48,7 @@ function RemoveComment(array = []) {
   }
 }
 
-// 去除广告
+// 去除广告项
 function RemoveAds(array = []) {
     let result = [];
     
@@ -87,14 +87,13 @@ function RemoveAds(array = []) {
         }
     }
 
-    // 更新原数组
     array.length = 0;
     if (result.length > 0) {
         array.push(...result);
     }
 }
 
-// 移除模块
+// 移除模块项
 function RemoveCardtype(array = []) {
     const group_itemId = new Set([
         "card86_card11_cishi", 
@@ -158,7 +157,6 @@ function RemoveCardtype(array = []) {
         }
     }
 
-    // 更新原数组
     array.length = 0;
     if (result.length > 0) {
         array.push(...result);
