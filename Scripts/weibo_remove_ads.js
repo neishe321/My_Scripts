@@ -5,7 +5,7 @@ if (!$response.body) {
 let obj = JSON.parse($response.body);
   
 
-// ------------------ 函数定义 ------------------
+// ------------------ 函数定义 -----------------
 
 // 清理用户信息
 function cleanUserData(user) {
