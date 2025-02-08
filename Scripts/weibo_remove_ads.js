@@ -94,7 +94,6 @@ function RemoveAds(array = []) {
 }
 
 // 移除模块项
-// 移除模块
 function RemoveCardtype(array = []) {
     const group_itemId = new Set([
         "card86_card11_cishi", 
