@@ -273,6 +273,10 @@ else if (url.includes("search/finder")) {
     }
 }
 
+else if (url.includes("/flowlist")) {
+  // 热转内容
+  ProcessItems(obj.items);
+}
 
 else if (url.includes("/2/searchall?")) {
   // 搜索结果
