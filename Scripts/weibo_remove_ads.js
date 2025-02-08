@@ -65,7 +65,7 @@ function RemoveAds(array = []) {
             delete data.pic_bg_new;  // 卡片背景
             delete data.buttons;     // 关注按钮1
             delete data.extra_button_info; // 关注按钮2
-            cleanUserData(data.user);
+            cleanUserData(data.user); // 用户信息清理
         }
 
         // 判断是否是广告
