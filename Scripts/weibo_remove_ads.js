@@ -49,9 +49,14 @@ function RemoveAds(array = []) {
             delete item.data.common_struct;
             delete item.data.ad_tag_nature;
             delete item.data.tag_struct;
-	    delete item.data.user?.icons;
-	    delete item.data.pic_bg_new;
+	    delete item.data.pic_bg_new; 	// 卡片背景
+	    delete item.data.buttons; 		// 关注按钮1
+	    delete item.data.extra_button_info; // 关注按钮2
+	    delete item.data.user?.icons; 		// 用户标签
+	    delete item.data.user?.avatar_extend_info   // 头像挂件
+		
         }
+
         
         const isSearchAd =
             item?.item_category === "hot_ad" || 
@@ -63,6 +68,7 @@ function RemoveAds(array = []) {
             item?.data?.card_type === 264 && item?.data?.is_shrink === 1 || // 发现页热搜下方缩小推广
 	    item?.data?.card_type === 196 // 亚运会奖牌
             item?.mblogtypename === "广告"
+	    
 
         if (!isSearchAd) {
             result.push(item);
