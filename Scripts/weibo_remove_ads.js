@@ -50,109 +50,133 @@ function RemoveComment(array = []) {
 
 // 去除广告
 function RemoveAds(array = []) {
-  let result = [];
-  const itemCategories = new Set([
-    "hot_ad", "trend", "广告"
-  ]);
-  
-  array.forEach(item => {
-    if (item?.data) {
-      delete item.data.semantic_brand_params;
-      delete item.data.common_struct;
-      delete item.data.ad_tag_nature;
-      delete item.data.tag_struct;
-      delete item.data.pic_bg_new;  // 卡片背景
-      delete item.data.buttons;     // 关注按钮1
-      delete item.data.extra_button_info; // 关注按钮2
-      cleanUserData(item.data.user);  // 清理用户数据
+    let result = [];
+    
+    for (let i = 0; i < array.length; i++) {
+        const item = array[i];
+
+        if (item?.data) {
+            // 删除不必要的字段
+            const data = item.data;
+            delete data.semantic_brand_params;
+            delete data.common_struct;
+            delete data.ad_tag_nature;
+            delete data.tag_struct;
+            delete data.pic_bg_new;  // 卡片背景
+            delete data.buttons;     // 关注按钮1
+            delete data.extra_button_info; // 关注按钮2
+            cleanUserData(data.user);
+        }
+
+        // 判断是否是广告
+        const isSearchAd = 
+            item?.item_category === "hot_ad" ||
+            (item?.item_category === "trend" && item?.data?.card_type !== 101) ||
+            item?.data?.mblogtypename === "广告" || // item.data 下的 mblogtypename
+            item?.mblogtypename === "广告" || // item 本身的 mblogtypename
+            item?.data?.ad_state === 1 ||
+            item?.isInsert === false ||         // 消息动态推广
+            item?.data?.card_type === 22 ||     // 不记得了
+            item?.data?.cate_id === "1114" ||   // 特定 cate_id
+            item?.data?.promotion?.adtype === 1 || // 发现页热搜下方轮播
+            item?.data?.card_type === 264 && item?.data?.is_shrink === 1 || // 发现页热搜下方缩小推广
+            item?.data?.card_type === 196; // 亚运会奖牌
+
+        if (!isSearchAd) {
+            result.push(item);
+        }
     }
 
-    // 判断是否是广告
-    const isSearchAd =
-      itemCategories.has(item?.item_category) ||
-      (item?.item_category === "trend" && item?.data?.card_type !== 101) ||
-      item?.data?.ad_state === 1 ||
-      item?.isInsert === false || // 消息动态推广
-      item?.data?.card_type === 22 || // 不记得了
-      item?.data?.cate_id === "1114" || // 特定 cate_id
-      item?.data?.promotion?.adtype === 1 || // 发现页热搜下方轮播
-      item?.data?.card_type === 264 && item?.data?.is_shrink === 1 || // 发现页热搜下方缩小推广
-      item?.data?.card_type === 196; // 亚运会奖牌
-
-    if (!isSearchAd) {
-      result.push(item);
+    // 更新原数组
+    array.length = 0;
+    if (result.length > 0) {
+        array.push(...result);
     }
-  });
-
-  array.length = 0;
-  if (result.length > 0) {
-    array.push(...result);
-  }
 }
 
-// 移除特定模块
+// 移除模块
 function RemoveCardtype(array = []) {
-  const group_itemId = new Set([
-    "card86_card11_cishi", "card86_card11", "INTEREST_PEOPLE",
-    "trend_top_qiehuan", "profile_collection", "realtime_tag_groug"
-  ]);
+    const group_itemId = new Set([
+        "card86_card11_cishi", 
+        "card86_card11", 
+        "INTEREST_PEOPLE",
+        "trend_top_qiehuan",
+        "profile_collection",         // 那年今日/近期热门
+        "realtime_tag_groug",         // 实时近期分享
+    ]);
+    
+    const card_itemid = new Set([
+        "finder_channel",             // 发现功能分类
+        "finder_window",              // 发现轮播广告
+        "tongcheng_usertagwords",     // 实时近期分享标签
+    ]);
 
-  const card_itemid = new Set([
-    "finder_channel", "finder_window", "tongcheng_usertagwords"
-  ]);
+    const keywords = new Set([
+        "hot_character", 
+        "local_hot_band", 
+        "hot_video", 
+        "hot_chaohua_list", 
+        "hot_link_mike",
+        "chaohua_discovery_banner",
+        "bottom",
+        "hot_search",                 // 发现页置顶提示 错过等
+    ]);
 
-  const keywords = new Set([
-    "hot_character", "local_hot_band", "hot_video", "hot_chaohua_list",
-    "hot_link_mike", "chaohua_discovery_banner", "bottom", "hot_search"
-  ]);
+    let result = [];
 
-  let result = [];
-  array.forEach(item => {
-    // 清除超话搜索框提示文字，但保留框架
-    if (item?.data?.hotwords && item?.data?.itemid === "sg_bottom_tab_search_input") {
-      delete item.data.hotwords;
+    for (let i = 0; i < array.length; i++) {
+        const item = array[i];
+        
+        // 清除超话搜索框提示文字，但保留框架
+        if (item?.data?.hotwords && item?.data?.itemid === "sg_bottom_tab_search_input") {
+            delete item.data.hotwords;
+        }
+        
+        // 判断是否需要移除该项
+        const shouldRemove = 
+            // 分类为 group 且 itemId 包含在 group_itemId 中
+            (item?.category === "group" && group_itemId.has(item?.itemId)) ||
+            
+            // 分类为 card 且 data.itemid 包含在 card_itemid 中
+            (item?.category === "card" && card_itemid.has(item?.data?.itemid)) ||
+            
+            // itemId|data.itemid 中包含 keywords 关键词
+            (item?.itemId && keywords.has(item.itemId)) ||
+            (item?.data?.itemid && keywords.has(item.data.itemid) && item.data.itemid !== "sg_bottom_tab_search_input") ||
+            
+            // 其他特定属性判断
+            item?.data?.wboxParam ||                      // 含有 wboxParam，可能是趋势相关的标记
+            item?.arrayText?.contents ||                  // 智搜总结内容
+            item?.data?.title === "大家都在问" ||          // 特定标题
+            item?.data?.desc === "相关搜索" ||             // 特定描述
+            (item?.data?.group && item?.data?.anchorId) ||// 相关搜索内容
+            item?.data?.card_ad_style === '1' ||          // 实时图片推广
+            item?.data?.card_id === "search_card";        // 推荐实时搜索框
+
+        if (!shouldRemove) {
+            result.push(item);
+        }
     }
 
-    // 判断是否需要移除该项
-    const shouldRemove =
-      // 分类为 group 且 itemId 包含在 group_itemId 中
-      (item?.category === "group" && group_itemId.has(item?.itemId)) ||
-      // 分类为 card 且 data.itemid 包含在 card_itemid 中
-      (item?.category === "card" && card_itemid.has(item?.data?.itemid)) ||
-      // itemId|data.itemid 中包含 keywords 关键词
-      (item?.itemId && Array.from(keywords).some(keyword => item.itemId.includes(keyword))) ||
-      (item?.data?.itemid && Array.from(keywords).some(keyword => item.data.itemid.includes(keyword)) && item.data.itemid !== "sg_bottom_tab_search_input") ||
-      // 其他特定属性判断
-      item?.data?.wboxParam ||
-      item?.arrayText?.contents ||
-      item?.data?.title === "大家都在问" ||
-      item?.data?.desc === "相关搜索" ||
-      (item?.data?.group && item?.data?.anchorId) ||
-      item?.data?.card_ad_style === '1' ||
-      item?.data?.card_id === "search_card";  // 推荐实时搜索框
-
-    if (!shouldRemove) {
-      result.push(item);
+    // 更新原数组
+    array.length = 0;
+    if (result.length > 0) {
+        array.push(...result);
     }
-  });
-
-  array.length = 0;
-  if (result.length > 0) {
-    array.push(...result);
-  }
 }
 
-// 处理嵌套的 items 数组
+// 处理嵌套的 items数组
 function ProcessItems(array = []) {
-  RemoveAds(array);
-  RemoveCardtype(array);
+    RemoveAds(array);
+    RemoveCardtype(array);
 
-  array.forEach(item => {
-    if (Array.isArray(item?.items)) {
-      ProcessItems(item.items);
-    }
-  });
+    array.forEach(item => {
+        if (Array.isArray(item?.items)) {
+            ProcessItems(item.items);
+        }
+    });
 }
+
 
 // ------------------ 处理响应 ------------------
 
