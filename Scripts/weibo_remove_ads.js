@@ -130,9 +130,9 @@ if (url.includes("guest/statuses_extend") || url.includes("statuses/extend")) {
 
 else if (url.includes("comments/build_comments")) {
   if (Array.isArray(obj.datas)) removeComments(obj.datas);
-  if (Array.isArray(obj.root_comments)) removeComments(obj.root_comments);
-  if (obj?.rootComment) cleanCommentItem(obj.rootComment);
-  if (Array.isArray(obj.comments)) removeComments(obj.comments);
+  // if (Array.isArray(obj.root_comments)) removeComments(obj.root_comments);
+  // if (obj?.rootComment) cleanCommentItem(obj.rootComment);
+  // if (Array.isArray(obj.comments)) removeComments(obj.comments);
 }
 
 else if (url.includes("statuses/repost_timeline")) {
