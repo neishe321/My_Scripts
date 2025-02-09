@@ -26,12 +26,12 @@ function cleanCommentItem(item) {
   cleanUserData(item.user);
 
   // 递归处理子评论
-  const comments = item.comments;
-  if (Array.isArray(comments)) {
-    for (let i = comments.length - 1; i >= 0; i--) {
-      if (comments[i]) cleanCommentItem(comments[i]); // 确保不处理 null/undefined
-    }
-  }
+  // const comments = item.comments;
+  // if (Array.isArray(comments)) {
+    // for (let i = comments.length - 1; i >= 0; i--) {
+      // if (comments[i]) cleanCommentItem(comments[i]); // 确保不处理 null/undefined
+    // }
+  // }
 }
 
 // 处理评论区
