@@ -9,45 +9,43 @@ let obj = JSON.parse($response.body);
 // 清理用户信息
 function cleanUserData(user) {
   if (!user) return;
-  ["icons", "avatar_extend_info", "mbtype", "mbrank", "level" ,"type"].forEach(key => delete user[key]);
+  delete user.icons;
+  delete user.avatar_extend_info;
+  delete user.mbtype;
+  delete user.mbrank;
+  delete user.level;
 }
 
-// 清理评论项气泡
+// 清理评论项
 function cleanCommentItem(item) {
   if (!item) return;
-  ["comment_bubble", "vip_button"].forEach(key => delete item[key]);
+  delete item.comment_bubble;
+  delete item.vip_button;
+  cleanUserData(item.user);
 }
 
-// 处理评论区，移除广告和无关内容
-function removeComments(comments = []) {
-  if (!Array.isArray(comments)) return comments;
-
-  for (let i = comments.length - 1; i >= 0; i--) {
-    let item = comments[i];
+// 处理评论区
+function removeComment(array = []) {
+  for (let i = array.length - 1; i >= 0; i--) {
+    const item = array[i];
 
     if (item.adType) {
-      comments.splice(i, 1);
+      array.splice(i, 1); // 移除广告
       continue;
     }
 
+    if (item.data) cleanCommentItem(item.data);
     cleanCommentItem(item);
-    cleanUserData(item);
-  
-    if (item.data) {
-      // 父评论 
-      cleanCommentItem(item.data);
-      cleanUserData(item.data.user);
 
-      if (Array.isArray(item.data.comments)) {
-        // 子评论
-        removeComments(item.data.comments);
+    if (Array.isArray(item.comments)) {
+      for (let j = 0; j < item.comments.length; j++) {
+        cleanCommentItem(item.comments[j]);
       }
     }
   }
 }
 
-
-// 处理嵌套的 items 数组，递归移除广告和无用模块
+// 移除广告和无用模块
 function processItems(array = []) {
   if (!Array.isArray(array)) return array;
 
