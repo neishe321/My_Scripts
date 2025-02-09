@@ -1,4 +1,3 @@
-// 拦截请求 URL
 let url = $request.url;
 if (!$response.body) {
   $done({});
@@ -21,9 +20,15 @@ function cleanCommentItem(item) {
 
 // 处理评论区，移除广告和无关内容
 function removeComments(comments = []) {
-  return comments.filter(item => {
-    // 直接过滤广告
-    if (item.adType) return false; 
+  if (!Array.isArray(comments)) return comments;
+
+  for (let i = comments.length - 1; i >= 0; i--) {
+    let item = comments[i];
+
+    if (item.adType) {
+      comments.splice(i, 1);
+      continue;
+    }
 
     cleanCommentItem(item);
     cleanUserData(item.user);
@@ -34,14 +39,17 @@ function removeComments(comments = []) {
     }
 
     if (Array.isArray(item.comments)) {
-      item.comments = removeComments(item.comments);
+      removeComments(item.comments);
     }
-    return true;
-  });
+  }
+
+  return comments;
 }
 
 // 处理嵌套的 items 数组，递归移除广告和无用模块
 function processItems(array = []) {
+  if (!Array.isArray(array)) return array;
+
   const groupItemIds = new Set([
     "card86_card11_cishi", "card86_card11", "INTEREST_PEOPLE",
     "trend_top_qiehuan", "profile_collection", "realtime_tag_groug"
@@ -56,7 +64,9 @@ function processItems(array = []) {
     "chaohua_discovery_banner", "bottom", "hot_search"
   ];
 
-  return array.filter(item => {
+  for (let i = array.length - 1; i >= 0; i--) {
+    let item = array[i];
+
     // 清理数据对象
     if (item?.data) {
       ["semantic_brand_params", "common_struct", "ad_tag_nature", "tag_struct", "pic_bg_new", "buttons", "extra_button_info"]
@@ -76,7 +86,6 @@ function processItems(array = []) {
       item?.mblogtypename === "广告" ||
       item?.data?.ad_state === 1 ||
       item?.isInsert === false ||
-      // 冬运会排行榜
       item?.data?.card_type === 196 ||
       (item?.category === "group" && groupItemIds.has(item?.itemId)) ||
       (item?.category === "card" && cardItemIds.has(item?.data?.itemid)) ||
@@ -85,16 +94,17 @@ function processItems(array = []) {
       (item?.data?.group && item?.data?.anchorId) ||
       item?.data?.card_ad_style === '1' || item?.data?.card_id === "search_card"
     ) {
-      return false;
+      array.splice(i, 1);
+      continue;
     }
 
     // 递归处理嵌套 items
     if (Array.isArray(item.items)) {
-      item.items = processItems(item.items);
+      processItems(item.items);
     }
+  }
 
-    return true;
-  });
+  return array;
 }
 
 // ------------------ 处理不同 API 的响应 ------------------
@@ -113,24 +123,24 @@ if (url.includes("guest/statuses_extend") || url.includes("statuses/extend")) {
 } 
 
 else if (url.includes("comments/build_comments")) {
-  if (Array.isArray(obj.datas)) obj.datas = removeComments(obj.datas);
-  if (Array.isArray(obj.root_comments)) obj.root_comments = removeComments(obj.root_comments);
+  if (Array.isArray(obj.datas)) removeComments(obj.datas);
+  if (Array.isArray(obj.root_comments)) removeComments(obj.root_comments);
   if (obj?.rootComment) {
     cleanCommentItem(obj.rootComment);
     cleanUserData(obj.rootComment.user);
   }
-  if (obj?.comments && Array.isArray(obj.comments)) {
-    obj.comments = removeComments(obj.comments);
+  if (Array.isArray(obj.comments)) {
+    removeComments(obj.comments);
   }
 } 
 
 else if (url.includes("statuses/repost_timeline")) {
-  obj.reposts = processItems(obj.reposts);
+  processItems(obj.reposts);
 } 
 
 else if (url.includes("search/finder")) {
   if (obj?.header?.data?.items && Array.isArray(obj.header.data.items)) {
-    obj.header.data.items = processItems(obj.header.data.items);
+    processItems(obj.header.data.items);
   }
 
   if (obj?.channelInfo) {
@@ -147,7 +157,7 @@ else if (url.includes("search/finder")) {
         delete channel.payload.loadedInfo.searchBarContent; 
       }
       if (Array.isArray(channel?.payload?.items)) {
-        channel.payload.items = processItems(channel.payload.items);
+        processItems(channel.payload.items);
       }
     }
   }
@@ -157,24 +167,24 @@ else if (url.includes("search/container_discover")) {
   if (obj.loadedInfo) {
     delete obj.loadedInfo?.searchBarContent;
   }
-  obj.items = processItems(obj.items);
+  processItems(obj.items);
 }
 
 else if (url.includes("/flowlist")) {
-  obj.items = processItems(obj.items);
+  processItems(obj.items);
 }
 
 else if (url.includes("/searchall")) {
-  obj.items = processItems(obj.items);
+  processItems(obj.items);
 } 
 
 else if (url.includes("/statuses/container_timeline") || url.includes("profile/container_timeline")) {
   if (obj?.loadedInfo) { delete obj.loadedInfo.headers; }
-  obj.items = processItems(obj.items);
+  processItems(obj.items);
 } 
 
 else if (url.includes("/messageflow/notice")) {
-  obj.messages = processItems(obj.messages);
+  processItems(obj.messages);
 }
 
 $done({ body: JSON.stringify(obj) });
