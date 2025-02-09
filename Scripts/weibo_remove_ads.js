@@ -23,19 +23,19 @@ function cleanCommentItem(item) {
   // 气泡和用户标签
   delete item.comment_bubble;
   delete item.vip_button;
-  if (item.user) cleanUserData(item.user);
+  cleanUserData(item.user);
 
   // 递归处理子评论
-  // const comments = item.comments;
-  // if (Array.isArray(comments)) {
-    // for (let i = comments.length - 1; i >= 0; i--) {
-      // if (comments[i]) cleanCommentItem(comments[i]); // 确保不处理 null/undefined
-    // }
-  // }
+  const comments = item.comments;
+  if (Array.isArray(comments)) {
+    for (let i = comments.length - 1; i >= 0; i--) {
+      if (comments[i]) cleanCommentItem(comments[i]); // 确保不处理 null/undefined
+    }
+  }
 }
 
 // 处理评论区
-function removeComment(array = []) {
+function removeComments(array = []) {
   for (let i = array.length - 1; i >= 0; i--) {
     const item = array[i];
 
@@ -130,9 +130,9 @@ if (url.includes("guest/statuses_extend") || url.includes("statuses/extend")) {
 
 else if (url.includes("comments/build_comments")) {
   if (Array.isArray(obj.datas)) removeComments(obj.datas);
-  // if (Array.isArray(obj.root_comments)) removeComments(obj.root_comments);
-  // if (obj?.rootComment) cleanCommentItem(obj.rootComment);
-  // if (Array.isArray(obj.comments)) removeComments(obj.comments);
+  if (Array.isArray(obj.root_comments)) removeComments(obj.root_comments);
+  if (obj?.rootComment) cleanCommentItem(obj.rootComment);
+  if (Array.isArray(obj.comments)) removeComments(obj.comments);
 }
 
 else if (url.includes("statuses/repost_timeline")) {
