@@ -9,7 +9,7 @@ let obj = JSON.parse($response.body);
 // 清理用户信息
 function cleanUserData(user) {
   if (!user) return;
-  ["icons", "avatar_extend_info", "mbtype", "mbrank", "level"].forEach(key => delete user[key]);
+  ["icons", "avatar_extend_info", "mbtype", "mbrank", "level" ,"type"].forEach(key => delete user[key]);
 }
 
 // 清理评论项气泡
@@ -32,13 +32,15 @@ function removeComments(comments = []) {
 
     cleanCommentItem(item);
     cleanUserData(item.user);
-
+  
     if (item.data) {
+      // 父评论
       cleanCommentItem(item.data);
       cleanUserData(item.data.user);
     }
 
     if (Array.isArray(item.comments)) {
+      // 子回复
       removeComments(item.comments);
     }
   }
