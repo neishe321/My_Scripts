@@ -8,20 +8,29 @@ let obj = JSON.parse($response.body);
 
 // 清理用户信息
 function cleanUserData(user) {
-  if (!user) return;
-  delete user.icons;
-  delete user.avatar_extend_info;
-  delete user.mbtype;
-  delete user.mbrank;
-  delete user.level;
+  if (user) {
+    delete user.icons;
+    delete user.avatar_extend_info; // 头像挂件
+    delete user.mbtype;
+    delete user.mbrank;
+    delete user.level;
+  }
 }
 
 // 清理评论项
 function cleanCommentItem(item) {
   if (!item) return;
+  // 气泡和用户标签
   delete item.comment_bubble;
   delete item.vip_button;
   cleanUserData(item.user);
+
+  // 递归处理子评论
+  if (Array.isArray(item.comments)) {
+    for (let i = item.comments.length - 1; i >= 0; i--) {
+      cleanCommentItem(item.comments[i]);
+    }
+  }
 }
 
 // 处理评论区
@@ -29,21 +38,18 @@ function removeComment(array = []) {
   for (let i = array.length - 1; i >= 0; i--) {
     const item = array[i];
 
+    // 移除广告
     if (item.adType) {
-      array.splice(i, 1); // 移除广告
+      array.splice(i, 1);
       continue;
     }
 
+    // 清理当前评论 item.data
     if (item.data) cleanCommentItem(item.data);
-    cleanCommentItem(item);
-
-    if (Array.isArray(item.comments)) {
-      for (let j = 0; j < item.comments.length; j++) {
-        cleanCommentItem(item.comments[j]);
-      }
-    }
   }
 }
+
+
 
 // 移除广告和无用模块
 function processItems(array = []) {
@@ -125,14 +131,9 @@ if (url.includes("guest/statuses_extend") || url.includes("statuses/extend")) {
 else if (url.includes("comments/build_comments")) {
   if (Array.isArray(obj.datas)) removeComments(obj.datas);
   if (Array.isArray(obj.root_comments)) removeComments(obj.root_comments);
-  if (obj?.rootComment) {
-    cleanCommentItem(obj.rootComment);
-    cleanUserData(obj.rootComment.user);
-  }
-  if (Array.isArray(obj.comments)) {
-    removeComments(obj.comments);
-  }
-} 
+  if (obj?.rootComment) cleanCommentItem(obj.rootComment);
+  if (Array.isArray(obj.comments)) removeComments(obj.comments);
+}
 
 else if (url.includes("statuses/repost_timeline")) {
   processItems(obj.reposts);
