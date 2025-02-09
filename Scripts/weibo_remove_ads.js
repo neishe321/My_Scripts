@@ -10,7 +10,7 @@ let obj = JSON.parse($response.body);
 function cleanUserData(user) {
   if (!user) return;
   delete user.icons;
-  delete user.avatar_extend_info; // 头像挂件
+  delete user.avatar_extend_info;
   delete user.mbtype;
   delete user.mbrank;
   delete user.level;
@@ -29,7 +29,7 @@ function cleanCommentItem(item) {
   const comments = item.comments;
   if (Array.isArray(comments)) {
     for (let i = comments.length - 1; i >= 0; i--) {
-      if (comments[i]) cleanCommentItem(comments[i]); // 确保不处理 null/undefined
+      if (comments[i]) cleanCommentItem(comments[i]);
     }
   }
 }
@@ -98,6 +98,7 @@ function processItems(array = []) {
       (item?.category === "group" && groupItemIds.has(item?.itemId)) ||
       (item?.category === "card" && cardItemIds.has(item?.data?.itemid)) ||
       (item?.itemId && keywords.some(keyword => item.itemId.includes(keyword))) ||
+      (item?.data?.itemid && keywords.some(keyword => item.data.itemid.includes(keyword))) ||
       item?.data?.title === "大家都在问" || item?.data?.desc === "相关搜索" ||
       (item?.data?.group && item?.data?.anchorId) ||
       item?.data?.card_ad_style === '1' || item?.data?.card_id === "search_card"
@@ -140,21 +141,17 @@ else if (url.includes("statuses/repost_timeline")) {
 } 
 
 else if (url.includes("search/finder")) {
-  if (obj?.header?.data?.items && Array.isArray(obj.header.data.items)) {
-    processItems(obj.header.data.items);
-  }
-
-  if (obj?.channelInfo) {
-    delete obj.channelInfo.moreChannels;
-  }
-
-  if (Array.isArray(obj?.channelInfo?.channels)) {
-    obj.channelInfo.channels = obj.channelInfo.channels.slice(0, 2);
-  }
-
+  // 
+  if (obj?.header?.data?.items && Array.isArray(obj.header.data.items)) processItems(obj.header.data.items);
+  // 商城入口
+  if (obj?.channelInfo) delete obj.channelInfo.moreChannels;
+  // 热点标签
+  if (Array.isArray(obj?.channelInfo?.channels)) obj.channelInfo.channels = obj.channelInfo.channels.slice(0, 2);
+  //
   if (Array.isArray(obj?.channelInfo?.channels)) {
     for (const channel of obj.channelInfo.channels) {
       if (channel?.payload?.loadedInfo?.searchBarContent) {
+        // 热搜关键词
         delete channel.payload.loadedInfo.searchBarContent; 
       }
       if (Array.isArray(channel?.payload?.items)) {
@@ -165,9 +162,8 @@ else if (url.includes("search/finder")) {
 }
 
 else if (url.includes("search/container_discover") || url.includes("search/container_timeline") ) {
-  if (obj.loadedInfo) {
-    delete obj.loadedInfo?.searchBarContent;
-  }
+  // 热搜关键词
+  if (obj.loadedInfo) delete obj.loadedInfo?.searchBarContent;
   processItems(obj.items);
 }
 
@@ -180,7 +176,7 @@ else if (url.includes("/searchall")) {
 } 
 
 else if (url.includes("/statuses/container_timeline") || url.includes("profile/container_timeline")) {
-  if (obj?.loadedInfo) { delete obj.loadedInfo.headers; }
+  if (obj?.loadedInfo) delete obj.loadedInfo.headers;
   processItems(obj.items);
 } 
 
