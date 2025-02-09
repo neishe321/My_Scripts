@@ -40,7 +40,7 @@ function removeComments(comments = []) {
 
       if (Array.isArray(item.data.comments)) {
         // 子评论
-        removeComments(item.data.comments);
+        item.data.comments = removeComments(item.data.comments);;
       }
     }
   }
