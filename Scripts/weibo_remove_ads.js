@@ -44,8 +44,6 @@ function removeComments(comments = []) {
       }
     }
   }
-
-  return comments;
 }
 
 
@@ -109,8 +107,6 @@ function processItems(array = []) {
       processItems(item.items);
     }
   }
-
-  return array;
 }
 
 // ------------------ 处理不同 API 的响应 ------------------
