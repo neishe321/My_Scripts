@@ -8,27 +8,28 @@ let obj = JSON.parse($response.body);
 
 // 清理用户信息
 function cleanUserData(user) {
-  if (user) {
-    delete user.icons;
-    delete user.avatar_extend_info; // 头像挂件
-    delete user.mbtype;
-    delete user.mbrank;
-    delete user.level;
-  }
+  if (!user) return;
+  delete user.icons;
+  delete user.avatar_extend_info; // 头像挂件
+  delete user.mbtype;
+  delete user.mbrank;
+  delete user.level;
 }
 
 // 清理评论项
 function cleanCommentItem(item) {
   if (!item) return;
+  
   // 气泡和用户标签
   delete item.comment_bubble;
   delete item.vip_button;
   cleanUserData(item.user);
 
   // 递归处理子评论
-  if (Array.isArray(item.comments)) {
-    for (let i = item.comments.length - 1; i >= 0; i--) {
-      cleanCommentItem(item.comments[i]);
+  const comments = item.comments;
+  if (Array.isArray(comments)) {
+    for (let i = comments.length - 1; i >= 0; i--) {
+      if (comments[i]) cleanCommentItem(comments[i]); // 确保不处理 null/undefined
     }
   }
 }
@@ -44,12 +45,11 @@ function removeComment(array = []) {
       continue;
     }
 
-    // 清理当前评论 item.data
+    // 清理当前评论项
+    cleanCommentItem(item);
     if (item.data) cleanCommentItem(item.data);
   }
 }
-
-
 
 // 移除广告和无用模块
 function processItems(array = []) {
