@@ -26,8 +26,8 @@ function removeComments(comments = []) {
     let item = comments[i];
 
     if (item.adType) {
-      comments.splice(i, 1);
-      continue;
+      comments.splice(i, 1);  // 直接删除广告评论
+      continue; // 删除后跳过后续逻辑
     }
 
     cleanCommentItem(item);
@@ -37,16 +37,17 @@ function removeComments(comments = []) {
       // 父评论
       cleanCommentItem(item.data);
       cleanUserData(item.data.user);
-    }
 
-    if (Array.isArray(item.data.comments)) {
-      // 子回复
-      removeComments(item.data.comments);
+      if (Array.isArray(item.data.comments)) {
+        // 子评论
+        removeComments(item.data.comments);
+      }
     }
   }
 
   return comments;
 }
+
 
 // 处理嵌套的 items 数组，递归移除广告和无用模块
 function processItems(array = []) {
