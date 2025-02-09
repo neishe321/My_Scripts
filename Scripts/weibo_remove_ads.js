@@ -31,7 +31,7 @@ function removeComments(comments = []) {
     }
 
     cleanCommentItem(item);
-    cleanUserData(item.user);
+    cleanUserData(item);
   
     if (item.data) {
       // 父评论 
