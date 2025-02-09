@@ -82,10 +82,13 @@ function processItems(array = []) {
     // 过滤广告和无用模块
     if (
       item?.item_category === "hot_ad" ||
+      item?.item_category === "trend" ||
       item?.data?.mblogtypename === "广告" ||
       item?.mblogtypename === "广告" ||
       item?.data?.ad_state === 1 ||
+      // 消息动态广告
       item?.isInsert === false ||
+      // 冬运会排行榜
       item?.data?.card_type === 196 ||
       (item?.category === "group" && groupItemIds.has(item?.itemId)) ||
       (item?.category === "card" && cardItemIds.has(item?.data?.itemid)) ||
@@ -163,7 +166,7 @@ else if (url.includes("search/finder")) {
   }
 }
 
-else if (url.includes("search/container_discover")) {
+else if (url.includes("search/container_discover") || url.includes("search/container_timeline") ) {
   if (obj.loadedInfo) {
     delete obj.loadedInfo?.searchBarContent;
   }
