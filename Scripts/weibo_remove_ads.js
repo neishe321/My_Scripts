@@ -23,7 +23,7 @@ function cleanCommentItem(item) {
   // 气泡和用户标签
   delete item.comment_bubble;
   delete item.vip_button;
-  if item.user cleanUserData(item.user);
+  if (item.user) cleanUserData(item.user);
 
   // 递归处理子评论
   // const comments = item.comments;
