@@ -26,8 +26,8 @@ function removeComments(comments = []) {
     let item = comments[i];
 
     if (item.adType) {
-      comments.splice(i, 1);  // 直接删除广告评论
-      continue; // 删除后跳过后续逻辑
+      comments.splice(i, 1);
+      continue;
     }
 
     cleanCommentItem(item);
