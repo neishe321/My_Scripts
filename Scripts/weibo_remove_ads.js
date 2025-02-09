@@ -39,9 +39,9 @@ function removeComments(comments = []) {
       cleanUserData(item.data.user);
     }
 
-    if (Array.isArray(item.comments)) {
+    if (Array.isArray(item.data.comments)) {
       // 子回复
-      removeComments(item.comments);
+      removeComments(item.data.comments);
     }
   }
 
