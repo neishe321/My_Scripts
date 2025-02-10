@@ -156,8 +156,12 @@ else if (url.includes("search/finder")) {
   if (obj?.header?.data?.items && Array.isArray(obj.header.data.items)) processItems(obj.header.data.items);
   // 商城入口
   if (obj?.channelInfo) delete obj.channelInfo.moreChannels;
-  // 热点标签
-  if (Array.isArray(obj?.channelInfo?.channels)) obj.channelInfo.channels = obj.channelInfo.channels.slice(0, 2);
+  // 热点/趋势/榜单
+  if (Array.isArray(obj?.channelInfo?.channels)) {
+    const allowedKeys = new Set(['discover_channel', 'trends_channel', 'band_channel']);
+    obj.channelInfo.channels = obj.channelInfo.channels.filter(channel => allowedKeys.has(channel.key));
+}
+
   //
   if (Array.isArray(obj?.channelInfo?.channels)) {
     for (const channel of obj.channelInfo.channels) {
@@ -178,9 +182,10 @@ else if (url.includes("search/container_discover") || url.includes("search/conta
   processItems(obj.items);
 }
 
-else if (url.includes("/flowlist")) {
-  processItems(obj.items);
-}
+// else if (url.includes("/flowlist")) {
+//   // 热转
+//   processItems(obj.items);
+// }
 
 else if (url.includes("/searchall")) {
   processItems(obj.items);
