@@ -136,6 +136,7 @@ function processItems(array = []) {
 
 if (url.includes("guest/statuses_extend") || url.includes("statuses/extend") || url.includes("statuses/show")) {
   // 帖子详情
+  if (obj.user) cleanUserData(obj.user);
   cleanExtend(obj);
 } 
 
