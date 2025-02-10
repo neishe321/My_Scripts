@@ -150,9 +150,6 @@ else if (url.includes("comments/build_comments")) {
   if (obj?.rootComment) cleanCommentItem(obj.rootComment);
   // 超话帖子详情
   if (obj?.status) cleanCommentItem(obj.status);
-  if (Array.isArray(obj?.status?.common_struct)) removeComments(obj.status.common_struct);
-  if (Array.isArray(obj?.status?.url_struct)) removeComments(obj.status.url_struct); 
-  // if (Array.isArray(obj?.status?.screen_name_suffix_new)) delete screen_name_suffix_new;  // 超话内用户标签
 }
 
 else if (url.includes("statuses/repost_timeline")) {
