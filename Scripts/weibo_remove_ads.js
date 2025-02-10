@@ -167,8 +167,9 @@ else if (url.includes("comments/build_comments")) {
 }
 
 else if (url.includes("statuses/repost_timeline")) {
-  // 超话内用户帖子详情
+  // 转发区处理
   if (Array.isArray(obj.reposts)) removeComments(obj.reposts);
+  if (Array.isArray(obj.reposts)) processItems(obj.reposts);
 } 
 
 else if (url.includes("search/finder")) {
