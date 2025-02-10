@@ -33,8 +33,7 @@ function cleanUserData(user) {
   delete user.mbrank;
   delete user.level;
   delete user.type;
-  delete user.pc_new;
-  delete user.verified_type_ext;
+  delete user.mlevel;
   
 }
 
@@ -45,6 +44,7 @@ function cleanCommentItem(item) {
   // 气泡和用户标签
   delete item.comment_bubble;
   delete item.vip_button;
+  delete item.source_type; // 超话等级
   cleanUserData(item.user);
 
   // 递归处理子评论
@@ -149,7 +149,7 @@ else if (url.includes("comments/build_comments")) {
   if (Array.isArray(obj.root_comments)) removeComments(obj.root_comments);
   if (Array.isArray(obj.comments)) removeComments(obj.comments);
   if (obj?.rootComment) cleanCommentItem(obj.rootComment);
-  // 超话帖子详情用户标签
+  // 超话帖子详情
   if (obj?.status) cleanCommentItem(obj.status);
 }
 
