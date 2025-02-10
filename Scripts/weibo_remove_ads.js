@@ -104,7 +104,7 @@ function processItems(array = []) {
       }
     }
   };
-
+  // 循环开始
   for (let i = array.length - 1; i >= 0; i--) {
     let item = array[i];
     
