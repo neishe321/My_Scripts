@@ -189,6 +189,15 @@ else if (url.includes("like/show")) {
   }
 }
 
+else if (url.includes("comments/mix_comments")) {
+  // 全部区域处理
+  if (obj?.status) cleanCommentItem(obj.status);
+  if (Array.isArray(obj.datas)) {
+    removeComments(obj.datas);
+    processItems(obj.datas);
+  };
+}
+  
 else if (url.includes("search/finder")) {
   // 
   if (obj?.header?.data?.items && Array.isArray(obj.header.data.items)) processItems(obj.header.data.items);
