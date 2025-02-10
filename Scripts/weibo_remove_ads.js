@@ -101,7 +101,7 @@ function processItems(array = []) {
         delete item.data.hotwords;
       }
     }
-
+    
     // 过滤广告和无用模块
     if (
       item?.item_category === "hot_ad" ||
@@ -135,10 +135,10 @@ function processItems(array = []) {
 // ------------------ 处理不同 API 的响应 ------------------
 
 if (url.includes("guest/statuses_extend") || url.includes("statuses/extend") || url.includes("statuses/show")) {
-  // 帖子详情
+  // 帖子详情 repost_timeline为超话内用户帖子详情
   if (obj.user) cleanUserData(obj.user);
   cleanExtend(obj);
-} 
+}
 
 else if (url.includes("comments/build_comments")) {
   if (Array.isArray(obj.datas)) removeComments(obj.datas);
@@ -147,11 +147,11 @@ else if (url.includes("comments/build_comments")) {
   if (obj?.rootComment) cleanCommentItem(obj.rootComment);
   // 超话帖子详情用户标签
   if (obj?.status) cleanCommentItem(obj.status);
-  if (Array.isArray(obj.ifreposts)) removeComments(obj.ifreposts);
 }
 
 else if (url.includes("statuses/repost_timeline")) {
-  processItems(obj.reposts);
+  // 超话内用户帖子详情
+  cleanCommentItem(obj.reposts);
 } 
 
 else if (url.includes("search/finder")) {
