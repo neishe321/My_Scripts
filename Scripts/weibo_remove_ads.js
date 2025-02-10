@@ -99,6 +99,7 @@ function processItems(array = []) {
       ["semantic_brand_params", "common_struct", "ad_tag_nature", "tag_struct", "pic_bg_new","pic_bg_new_dark", "buttons", "extra_button_info"]
         .forEach(key => delete item.data[key]);
       cleanUserData(item.data.user);
+      cleanExtend(item.data);
 
       // 清除超话搜索框提示文字，但保留框架
       if (item.data.hotwords && item.data.itemid === "sg_bottom_tab_search_input") {
