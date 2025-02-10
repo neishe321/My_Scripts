@@ -22,6 +22,7 @@ function cleanExtend(obj){
   delete obj.topic_struct;
   delete obj.extend_info;
   delete obj.common_struct;
+  delete obj.tag_struct; // 推广标签
 }
 
 // 清理用户信息
