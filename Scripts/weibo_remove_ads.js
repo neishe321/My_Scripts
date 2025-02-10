@@ -28,7 +28,7 @@ function cleanExtend(obj){
 function cleanUserData(user) {
   if (!user) return;
   delete user.icons;
-  delete user.avatar_extend_info;
+  delete user.avatar_extend_info;   // 头像挂件
   delete user.mbtype;
   delete user.mbrank;
   delete user.level;
@@ -45,6 +45,8 @@ function cleanCommentItem(item) {
   delete item.pic_bg_new
   delete item.pic_bg_new_dark;
   delete item.pic_bg_type;
+  delete item.buttons;     // 关注按钮
+  delete item.extra_button_info;
   cleanUserData(item.user);
   delete item.type; // 针对超话等级
   delete item.screen_name_suffix_new; // 针对超话用户标签
@@ -98,7 +100,7 @@ function processItems(array = []) {
 
     // 清理数据对象
     if (item?.data) {
-      ["semantic_brand_params", "common_struct", "ad_tag_nature", "tag_struct", "pic_bg_new", "buttons", "extra_button_info"]
+      ["semantic_brand_params", "common_struct", "ad_tag_nature", "tag_struct", "pic_bg_new","pic_bg_new_dark", "buttons", "extra_button_info"]
         .forEach(key => delete item.data[key]);
       cleanUserData(item.data.user);
 
