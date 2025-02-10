@@ -183,7 +183,7 @@ else if (url.includes("like/show")) {
   // 点赞区处理
   if (Array.isArray(obj.like_list)) {
     for (const like of obj.like_list) {
-      cleanUserData(like);
+      if (like.user) cleanUserData(like.user);
     }
   }
 }
