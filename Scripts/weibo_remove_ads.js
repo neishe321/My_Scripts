@@ -6,6 +6,18 @@ let obj = JSON.parse($response.body);
 
 // ------------------ 数据清理函数 -------------------
 
+// 清理帖子详情
+function cleanExtend(obj){
+  if (!obj) return;
+  delete obj.reward_info; // 点赞是美意
+  delete obj.head_cards; // 底部广告卡片
+  delete obj.report_data; // 举报类型
+  delete obj.snapshot_share_customize_dic; // 该博主其他信息
+  delete obj.top_cards; // 大家都在搜
+  delete obj.comment_data; // 友善评论
+  delete obj.dynamic_share_items; // 
+}
+
 // 清理用户信息
 function cleanUserData(user) {
   if (!user) return;
@@ -116,17 +128,12 @@ function processItems(array = []) {
 
 // ------------------ 处理不同 API 的响应 ------------------
 
-if (url.includes("guest/statuses_extend") || url.includes("statuses/extend")) {
-  delete obj.head_cards;
-  delete obj.trend;
-  delete obj.snapshot_share_customize_dic;
-  delete obj.dynamic_share_items;
-  delete obj.report_data;
-  delete obj.loyal_fans_guide_info;
-  delete obj.top_cards;
-  delete obj.reward_info;
-  delete obj.follow_data;
-  delete obj.comment_data;
+if (url.includes("guest/statuses_extend") || url.includes("statuses/extend") || url.includes("statuses/show")) {
+  // 帖子详细
+  // delete obj.trend;
+  // delete obj.loyal_fans_guide_info;
+  // delete obj.follow_data;
+  cleanExtend(obj);
 } 
 
 else if (url.includes("comments/build_comments")) {
