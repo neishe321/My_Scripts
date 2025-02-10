@@ -144,6 +144,7 @@ if (url.includes("guest/statuses_extend") || url.includes("statuses/extend") || 
 }
 
 else if (url.includes("comments/build_comments")) {
+  // 帖子详情
   if (Array.isArray(obj.datas)) removeComments(obj.datas);
   if (Array.isArray(obj.root_comments)) removeComments(obj.root_comments);
   if (Array.isArray(obj.comments)) removeComments(obj.comments);
