@@ -19,7 +19,7 @@ function cleanExtend(obj){
   delete obj.trend; // 好物种草 相关推荐
   delete obj.follow_data;
   delete obj.loyal_fans_guide_info; // 忠诚粉丝指南
-  delete obj.topic_struct;
+  delete obj.topic_struct; 
 }
 
 // 清理用户信息
