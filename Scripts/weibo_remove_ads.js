@@ -15,7 +15,10 @@ function cleanExtend(obj){
   delete obj.snapshot_share_customize_dic; // 该博主其他信息
   delete obj.top_cards; // 大家都在搜
   delete obj.comment_data; // 友善评论
-  delete obj.dynamic_share_items; // 
+  delete obj.dynamic_share_items;
+  delete obj.trend; // 好物种草 相关推荐
+  delete obj.follow_data;
+  delete obj.loyal_fans_guide_info; // 忠诚粉丝指南
 }
 
 // 清理用户信息
@@ -129,10 +132,7 @@ function processItems(array = []) {
 // ------------------ 处理不同 API 的响应 ------------------
 
 if (url.includes("guest/statuses_extend") || url.includes("statuses/extend") || url.includes("statuses/show")) {
-  // 帖子详细
-  // delete obj.trend;
-  // delete obj.loyal_fans_guide_info;
-  // delete obj.follow_data;
+  // 帖子详情
   cleanExtend(obj);
 } 
 
