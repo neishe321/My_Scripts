@@ -39,9 +39,12 @@ function cleanUserData(user) {
 function cleanCommentItem(item) {
   if (!item) return;
   
-  // 气泡和用户标签
+  // 气泡 用户标签 北京
   delete item.comment_bubble;
   delete item.vip_button;
+  delete item.pic_bg_new
+  delete item.pic_bg_new_dark;
+  delete item.pic_bg_type;
   cleanUserData(item.user);
   delete item.type; // 针对超话等级
   delete item.screen_name_suffix_new; // 针对超话用户标签
@@ -61,7 +64,7 @@ function removeComments(array = []) {
     const item = array[i];
 
     // 移除广告
-    if (item.adType) {
+    if (item.adType || item.business_type === "hot") {
       array.splice(i, 1);
       continue;
     }
