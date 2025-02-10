@@ -179,6 +179,15 @@ else if (url.includes("statuses/repost_timeline")) {
   }
 }
 
+else if (url.includes("like/show")) {
+  // 点赞区处理
+  if (Array.isArray(obj.like_list)) {
+    for (const like of obj.like_list) {
+      cleanUserData(like);
+    }
+  }
+}
+
 else if (url.includes("search/finder")) {
   // 
   if (obj?.header?.data?.items && Array.isArray(obj.header.data.items)) processItems(obj.header.data.items);
