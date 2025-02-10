@@ -88,25 +88,31 @@ function processItems(array = []) {
 
   const keywords = [
     "hot_character", "local_hot_band", "hot_video", "hot_chaohua_list", "hot_link_mike",
-    "chaohua_discovery_banner", "bottom", "hot_search"
+    "chaohua_discovery_banner", "bottom", "hot_search" , "广告"
   ];
 
-  for (let i = array.length - 1; i >= 0; i--) {
-    let item = array[i];
-
-    // 清理数据对象
+  const cleanData = (item) => {
     if (item?.data) {
       ["semantic_brand_params", "common_struct", "ad_tag_nature", "tag_struct", "pic_bg_new","pic_bg_new_dark", "buttons", "extra_button_info"]
         .forEach(key => delete item.data[key]);
       cleanUserData(item.data.user);
       cleanExtend(item.data);
-
+      
       // 清除超话搜索框提示文字，但保留框架
       if (item.data.hotwords && item.data.itemid === "sg_bottom_tab_search_input") {
         delete item.data.hotwords;
       }
     }
+  };
+
+  for (let i = array.length - 1; i >= 0; i--) {
+    let item = array[i];
     
+    // 递归处理嵌套 items
+    if (Array.isArray(item.items)) {
+      processItems(item.items);
+    }
+
     // 过滤广告和无用模块
     if (
       item?.item_category === "hot_ad" ||
@@ -114,9 +120,7 @@ function processItems(array = []) {
       item?.data?.mblogtypename === "广告" ||
       item?.mblogtypename === "广告" ||
       item?.data?.ad_state === 1 ||
-      // 消息动态广告
       item?.isInsert === false ||
-      // 冬运会排行榜
       item?.data?.card_type === 196 ||
       (item?.category === "group" && groupItemIds.has(item?.itemId)) ||
       (item?.category === "card" && cardItemIds.has(item?.data?.itemid)) ||
@@ -129,13 +133,19 @@ function processItems(array = []) {
       array.splice(i, 1);
       continue;
     }
-
-    // 递归处理嵌套 items
+    
+    // 清理数据对象
+    cleanData(item);
+    
+    // 递归清理嵌套 items
     if (Array.isArray(item.items)) {
-      processItems(item.items);
+      for (let j = 0; j < item.items.length; j++) {
+        cleanData(item.items[j]);
+      }
     }
   }
 }
+
 
 // ------------------ 处理不同 API 的响应 ------------------
 
