@@ -126,7 +126,8 @@ function processItems(array = []) {
       (item?.category === "card" && cardItemIds.has(item?.data?.itemid)) ||
       (item?.itemId && keywords.some(keyword => item.itemId.includes(keyword))) ||
       (item?.data?.itemid && keywords.some(keyword => item.data.itemid.includes(keyword))) ||
-      item?.data?.title === "大家都在问" || item?.data?.desc === "相关搜索" ||
+      // item?.data?.title === "大家都在问" || 
+      item?.data?.desc === "相关搜索" ||
       (item?.data?.group && item?.data?.anchorId) ||
       item?.data?.card_ad_style === '1' || item?.data?.card_id === "search_card"
     ) {
