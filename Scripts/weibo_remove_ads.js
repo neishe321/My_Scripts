@@ -147,7 +147,7 @@ else if (url.includes("comments/build_comments")) {
   if (obj?.rootComment) cleanCommentItem(obj.rootComment);
   // 超话帖子详情用户标签
   if (obj?.status) cleanCommentItem(obj.status);
-  
+  if (Array.isArray(obj.ifreposts)) removeComments(obj.ifreposts);
 }
 
 else if (url.includes("statuses/repost_timeline")) {
