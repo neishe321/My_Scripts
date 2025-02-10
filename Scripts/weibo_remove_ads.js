@@ -167,7 +167,7 @@ else if (url.includes("comments/build_comments")) {
 }
 
 else if (url.includes("statuses/repost_timeline")) {
-  // 转发区处理
+  // 帖子转发区处理
   if (Array.isArray(obj.reposts)) {
     removeComments(obj.reposts);
     processItems(obj.reposts);
