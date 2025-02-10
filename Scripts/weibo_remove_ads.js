@@ -32,6 +32,10 @@ function cleanUserData(user) {
   delete user.mbtype;
   delete user.mbrank;
   delete user.level;
+  delete user.type;
+  delete user.pc_new;
+  delete user.verified_type_ext;
+  
 }
 
 // 清理评论项
@@ -151,7 +155,7 @@ else if (url.includes("comments/build_comments")) {
 
 else if (url.includes("statuses/repost_timeline")) {
   // 超话内用户帖子详情
-  cleanCommentItem(obj.reposts);
+  removeComments(obj.reposts);
 } 
 
 else if (url.includes("search/finder")) {
