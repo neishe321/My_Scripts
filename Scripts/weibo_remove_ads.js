@@ -6,7 +6,7 @@ let obj = JSON.parse($response.body);
 
 // ------------------ 数据清理函数 -------------------
 
-// 清理帖子详情
+// 清理帖子详情广告
 function cleanExtend(obj){
   if (!obj) return;
   delete obj.reward_info; // 点赞是美意
@@ -39,7 +39,7 @@ function cleanUserData(user) {
 function cleanCommentItem(item) {
   if (!item) return;
   
-  // 气泡 用户标签 北京
+  // 气泡 用户标签 背景
   delete item.comment_bubble;
   delete item.vip_button;
   delete item.pic_bg_new
@@ -139,7 +139,7 @@ function processItems(array = []) {
 // ------------------ 处理不同 API 的响应 ------------------
 
 if (url.includes("guest/statuses_extend") || url.includes("statuses/extend") || url.includes("statuses/show")) {
-  // 帖子详情 repost_timeline为超话内用户帖子详情
+  // 帖子详情
   if (obj.user) cleanUserData(obj.user);
   cleanExtend(obj);
 }
