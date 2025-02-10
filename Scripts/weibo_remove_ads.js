@@ -45,11 +45,11 @@ function cleanCommentItem(item) {
   delete item.pic_bg_new
   delete item.pic_bg_new_dark;
   delete item.pic_bg_type;
-  delete item.buttons;     // 关注按钮
-  delete item.extra_button_info;
-  cleanUserData(item.user);
+  delete item.common_struct;   // 关注按钮
+  delete item.url_struct;
   delete item.type; // 针对超话等级
   delete item.screen_name_suffix_new; // 针对超话用户标签
+  cleanUserData(item.user);
 
   // 递归处理子评论
   const comments = item.comments;
