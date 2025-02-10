@@ -176,7 +176,8 @@ else if (url.includes("statuses/repost_timeline")) {
   if (Array.isArray(obj.hot_reposts)) {
     removeComments(obj.hot_reposts);
     processItems(obj.hot_reposts);
-} 
+  }
+}
 
 else if (url.includes("search/finder")) {
   // 
