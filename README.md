@@ -1,4 +1,4 @@
-## surge模块列表
+## surge模块导航
   注：需要解锁surge的Body Rewrite功能
 
 | 功能 | 链接 | 作者 | 状态 |
