@@ -1,5 +1,5 @@
-## surge功能模块
-需要解锁surge的Body Rewrite功能
+## surge模块列表
+  注：需要解锁surge的Body Rewrite功能
 
 | 功能 | 链接 | 作者 | 状态 |
 |----------|----------|------|------|
