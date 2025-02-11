@@ -1,9 +1,9 @@
-## 应用列表
+## surge功能模块
 
-| APP 名称 | 模块地址 | 作者 | 状态 |
+| 功能 | 链接 | 作者 | 状态 |
 |----------|----------|------|------|
-| 微博 | [点这里](https://raw.githubusercontent.com/neishe321/My_Scripts/refs/heads/main/Surge/Module/weibo.sgmodule) | Neishe321 | ✅ 正常 |
-| 微博_intl | [点这里](https://raw.githubusercontent.com/neishe321/My_Scripts/refs/heads/main/Surge/Module/weibo_intl.sgmodule) | Neishe321 |  ✅ 正常 |
-| 555影视 | [点这里](https://raw.githubusercontent.com/neishe321/My_Scripts/refs/heads/main/Surge/Module/555ys.sgmodule) | Neishe321 | ❌ 失效 |
+| 微博去广告 | [weibo.sgmodule](https://raw.githubusercontent.com/neishe321/My_Scripts/refs/heads/main/Surge/Module/weibo.sgmodule) | neishe321 | ✅ 正常 |
+| 微博_intl去广告 | [weibo_intl.sgmodule](https://raw.githubusercontent.com/neishe321/My_Scripts/refs/heads/main/Surge/Module/weibo_intl.sgmodule) | neishe321 |  ✅ 正常 |
+| 555影视去广告 | [555ys.sgmodule](https://raw.githubusercontent.com/neishe321/My_Scripts/refs/heads/main/Surge/Module/555ys.sgmodule) | neishe321 | ❌ 失效 |
 
 
