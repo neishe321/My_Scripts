@@ -1,18 +1,21 @@
-#!name = 微博Intl去广告 (已经停止更新 改用国内版本)
-#!desc = 去除微博轻享版广告，移除非必要模块
+#!name = 微博Intl去广告
+#!desc = 去除微博轻享版广告，移除非必要模块  (已经停止更新 改用国内版本)
 #!author = neishe321 
 #!category = Neishe
 #!date = 2024-12-19
 
-[URL Rewrite]
-# > 开屏
-^https?:\/\/adstrategy\.biz\.weibo\.com\/v\d\/strategy\/ad - reject
-^https?:\/\/boot(?:preload|realtime)\.uve\.weibo\.com\/v\d\/ad\/(?:preload|realtime) - reject
+[Rule]
+# > 开屏广告
+DOMAIN,adstrategy.biz.weibo.com,REJECT,pre-matching,no-resolve
+DOMAIN,bootpreload.uve.weibo.com,REJECT,pre-matching,no-resolve
+DOMAIN,bootrealtime.uve.weibo.com,REJECT,pre-matching,no-resolve
+
+[Map Local]
 # > 热推荐 
-^https?:\/\/api\.weibo\.cn\/\d\/ad\/weibointl\? - reject
+^https?:\/\/api\.weibo\.cn\/\d\/ad\/weibointl\? data-type=text data="{}" status-code=200
 
 [Script]
 weibo_intl_clean.js = type=http-response,pattern=^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/neishe321/My_Scripts/main/Scripts/weibo_intl_remove_ads.js
 
 [MITM]
-hostname = %APPEND% *api.weibo.cn, *.uve.weibo.com, *biz.weibo.com
+hostname = %APPEND% *api.weibo.cn
