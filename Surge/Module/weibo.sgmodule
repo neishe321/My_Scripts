@@ -12,9 +12,16 @@ DOMAIN,bootpreload.uve.weibo.com,REJECT,pre-matching,no-resolve
 DOMAIN,bootrealtime.uve.weibo.com,REJECT,pre-matching,no-resolve
 DOMAIN-SUFFIX,biz.weibo.com,REJECT,pre-matching,no-resolve
 
-[URL Rewrite]
-# > 推广内容
-^https?:\/\/api\.weibo\.cn\/\d\/(push\/active|client\/addlog_batch|container\/asyn|shproxy\/chaohua\/discovery\/searchactive|checkin\/show|!\/live\/media_homelist|statuses\/container_positive|!\/was\/finder\/searchbarchange) - reject
+[Map Local]
+# > 各种推广
+^https?:\/\/api\.weibo\.cn\/\d+\/push\/active  data-type=text  data="{}"  status-code=200  
+^https?:\/\/api\.weibo\.cn\/\d+\/client\/addlog_batch  data-type=text  data="{}"  status-code=200  
+^https?:\/\/api\.weibo\.cn\/\d+\/container\/asyn  data-type=text  data="{}"  status-code=200  
+^https?:\/\/api\.weibo\.cn\/\d+\/shproxy\/chaohua\/discovery\/searchactive  data-type=text  data="{}"  status-code=200  
+^https?:\/\/api\.weibo\.cn\/\d+\/checkin\/show  data-type=text  data="{}"  status-code=200  
+^https?:\/\/api\.weibo\.cn\/\d+\/!\/live\/media_homelist  data-type=text  data="{}"  status-code=200  
+^https?:\/\/api\.weibo\.cn\/\d+\/statuses\/container_positive  data-type=text  data="{}"  status-code=200  
+^https?:\/\/api\.weibo\.cn\/\d+\/!\/was\/finder\/searchbarchange  data-type=text  data="{}"  status-code=200  
 
 [Body Rewrite]
 # > tab标签处理
