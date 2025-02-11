@@ -4,8 +4,10 @@
 #!category = Neishe
 #!date = 2025-02-10
 
-[URL Rewrite]
-^https?:\/\/[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+){1,3}(:\d+)?\/api\/v\d\/(advert\/config|(notice|notice_v2)\/list) - reject
+[Map Local]
+^https?:\/\/[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+){1,3}(:\d+)?\/api\/v\d\/advert\/config  data-type=text  data="{}"  status-code=200
+^https?:\/\/[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+){1,3}(:\d+)?\/api\/v\d\/notice\/list  data-type=text  data="{}"  status-code=200
+^https?:\/\/[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+){1,3}(:\d+)?\/api\/v\d\/notice_v2\/list  data-type=text  data="{}"  status-code=200
 
 [Body Rewrite]
 http-response-jq ^https?:\/\/[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+){1,3}(:\d+)?\/api\/v\d\/movie\/index_recommend\? '.data |= map(select(.layout != "advert_self") | if .list then .list |= map(select(.type != 3)) else . end)'
