@@ -227,8 +227,8 @@ else if (url.includes("search/finder")) {
 else if (url.includes("search/container_discover") || url.includes("search/container_timeline") ) {
   if (obj.loadedInfo) {
     // 热搜关键词
-    delete obj.loadedInfo?.searchBarContent;
-    delete obj.loadedInfo?.headerBack;
+    delete obj.loadedInfo.searchBarContent;
+    delete obj.loadedInfo.headerBack;
   }
   processItems(obj.items);
 }
