@@ -94,7 +94,7 @@ function processItems(array = []) {
 
   const cleanData = (item) => {
     if (item?.data) {
-      ["semantic_brand_params", "common_struct", "ad_tag_nature", "tag_struct", "pic_bg_new","pic_bg_new_dark", "buttons", "extra_button_info"]
+      ["semantic_brand_params", "common_struct", "ad_tag_nature", "tag_struct", "pic_bg_new","pic_bg_new_dark", "buttons", "extra_button_info", "page_info"]
         .forEach(key => delete item.data[key]);
       cleanUserData(item.data.user);
       cleanExtend(item.data);
