@@ -215,8 +215,8 @@ else if (url.includes("search/finder")) {
       if (channel?.payload?.loadedInfo) {
         // 热搜关键词
         delete channel.payload.loadedInfo.searchBarContent;
-        channel.payload.loadedInfo.is_discover_channel = false
-        // delete channel.payload.loadedInfo.headerBack;
+        // 背景图片
+        delete channel.payload.loadedInfo?.headerBack?.channelStyleMap;
       }
       if (Array.isArray(channel?.payload?.items)) {
         processItems(channel.payload.items);
@@ -229,8 +229,8 @@ else if (url.includes("search/container_discover") || url.includes("search/conta
   if (obj.loadedInfo) {
     // 热搜关键词
     delete obj.loadedInfo.searchBarContent;
-    obj.loadedInfo.is_discover_channel = false
-    // delete obj.loadedInfo.headerBack;
+    // 背景图片
+    delete obj.loadedInfo?.headerBack?.channelStyleMap;
   }
   processItems(obj.items);
 }
