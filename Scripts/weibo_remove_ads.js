@@ -215,7 +215,7 @@ else if (url.includes("search/finder")) {
       if (channel?.payload?.loadedInfo) {
         // 热搜关键词
         delete channel.payload.loadedInfo.searchBarContent;
-        // 背景图片
+        // 热点背景
         delete channel.payload.loadedInfo?.headerBack?.channelStyleMap;
       }
       if (Array.isArray(channel?.payload?.items)) {
@@ -229,7 +229,7 @@ else if (url.includes("search/container_discover") || url.includes("search/conta
   if (obj.loadedInfo) {
     // 热搜关键词
     delete obj.loadedInfo.searchBarContent;
-    // 背景图片
+    // 热点背景
     delete obj.loadedInfo?.headerBack?.channelStyleMap;
   }
   processItems(obj.items);
