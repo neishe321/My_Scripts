@@ -212,6 +212,7 @@ else if (url.includes("search/finder")) {
   //
   if (Array.isArray(obj?.channelInfo?.channels)) {
     for (const channel of obj.channelInfo.channels) {
+      delete channel.payload.loadedInfo.headerBack;
       if (channel?.payload?.loadedInfo?.searchBarContent) {
         // 热搜关键词
         delete channel.payload.loadedInfo.searchBarContent; 
