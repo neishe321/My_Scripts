@@ -212,10 +212,10 @@ else if (url.includes("search/finder")) {
   //
   if (Array.isArray(obj?.channelInfo?.channels)) {
     for (const channel of obj.channelInfo.channels) {
-      delete channel.payload.loadedInfo.headerBack;
-      if (channel?.payload?.loadedInfo?.searchBarContent) {
+      if (channel?.payload?.loadedInfo) {
         // 热搜关键词
-        delete channel.payload.loadedInfo.searchBarContent; 
+        delete channel.payload.loadedInfo.searchBarContent;
+        delete channel.payload.loadedInfo.headerBack;
       }
       if (Array.isArray(channel?.payload?.items)) {
         processItems(channel.payload.items);
@@ -225,8 +225,11 @@ else if (url.includes("search/finder")) {
 }
 
 else if (url.includes("search/container_discover") || url.includes("search/container_timeline") ) {
-  // 热搜关键词
-  if (obj.loadedInfo) delete obj.loadedInfo?.searchBarContent;
+  if (obj.loadedInfo) {
+    // 热搜关键词
+    delete obj.loadedInfo?.searchBarContent;
+    delete obj.loadedInfo?.headerBack;
+  }
   processItems(obj.items);
 }
 
