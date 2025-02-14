@@ -34,6 +34,8 @@ function cleanUserData(user) {
   delete user.mbrank;
   delete user.level;
   delete user.type;
+  delete user.vvip;
+  delete user.svip;
 }
 
 // 清理评论项
