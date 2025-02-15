@@ -8,8 +8,8 @@
 # > 补充
 # > 清风dj
 DOMAIN,adv-api.shenshiads.com,REJECT,pre-matching,no-resolve
-# > 中国电信
-DOMAIN,img.189.cn,REJECT,pre-matching,no-resolve
+# > 
+
 
 
 [URL Rewrite]
