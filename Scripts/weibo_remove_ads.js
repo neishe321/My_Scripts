@@ -36,7 +36,7 @@ function cleanUserData(user) {
   delete user.type;
   delete user.vvip;
   delete user.svip;
-  delete user.verified_type_ext;
+  delete user.verified_type;
 }
 
 // 清理评论项
