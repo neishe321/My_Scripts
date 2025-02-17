@@ -101,13 +101,9 @@ function processItems(array = []) {
         .forEach(key => delete item.data[key]);
       cleanUserData(item.data.user);
       cleanExtend(item.data);
-      
-      // 清除超话搜索框提示文字，但保留框架
-      // if (item.data.hotwords && item.data.itemid === "sg_bottom_tab_search_input") {
-        // delete item.data.hotwords;
-      // }
     }
   };
+  
   // 循环开始
   for (let i = array.length - 1; i >= 0; i--) {
     let item = array[i];
@@ -140,7 +136,7 @@ function processItems(array = []) {
     }
     
     // 清理数据对象
-    cleanData(item);
+    if (item?.data) cleanData(item);
     
     // 递归清理嵌套 items
     if (Array.isArray(item.items)) {
