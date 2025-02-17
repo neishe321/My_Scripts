@@ -103,9 +103,9 @@ function processItems(array = []) {
       cleanExtend(item.data);
       
       // 清除超话搜索框提示文字，但保留框架
-      if (item.data.hotwords && item.data.itemid === "sg_bottom_tab_search_input") {
-        delete item.data.hotwords;
-      }
+      // if (item.data.hotwords && item.data.itemid === "sg_bottom_tab_search_input") {
+        // delete item.data.hotwords;
+      // }
     }
   };
   // 循环开始
