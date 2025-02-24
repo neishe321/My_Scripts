@@ -240,8 +240,7 @@ else if (url.includes("/searchall")) {
 
 else if (url.includes("/statuses/container_timeline") || url.includes("profile/container_timeline")) {
   if (obj?.loadedInfo) delete obj.loadedInfo.headers;
-  // 超话在这
-  removeComments(obj.items);
+  // 超话
   processItems(obj.items);
 } 
 
