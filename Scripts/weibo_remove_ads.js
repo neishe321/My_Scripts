@@ -92,7 +92,7 @@ function processItems(array = []) {
 
   const keywords = [
     "hot_character", "local_hot_band", "hot_video", "hot_chaohua_list", "hot_link_mike",
-    "chaohua_discovery_banner", "bottom", "hot_search" , "广告" ,"hot_spot_name"
+    "chaohua_discovery_banner", "bottom", "hot_search" , "广告" ,"hot_spot_name" ,"mid"
   ];
 
   const cleanData = (item) => {
