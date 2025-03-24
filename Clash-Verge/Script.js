@@ -23,16 +23,12 @@ const dnsConfig = {
   "enhanced-mode": "fake-ip",
   "fake-ip-range": "198.18.0.1/16",
   "fake-ip-filter": [
-    // 本地主机/设备
     "+.lan",
     "+.local",
-    // Windows网络出现小地球图标
     "+.msftconnecttest.com",
     "+.msftncsi.com",
-    // QQ快速登录检测失败
     "localhost.ptlogin2.qq.com",
     "localhost.sec.qq.com",
-    // 微信快速登录检测失败
     "localhost.work.weixin.qq.com"
   ],
   "default-nameserver": ["223.5.5.5", "119.29.29.29", "1.1.1.1", "8.8.8.8"],
@@ -57,7 +53,6 @@ const ruleProviders = {
     "url": "https://fastly.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt",
     "path": "./ruleset/loyalsoldier/reject.yaml"
   },
-  
   "openai": {
     ...ruleProviderCommon,
     "behavior": "classical",
@@ -67,11 +62,9 @@ const ruleProviders = {
 };
 // 规则
 const rules = [
-  // 自定义规则
   "RULE-SET,reject,广告过滤",
   "RULE-SET,openai,ChatGPT",
   "DOMAIN-KEYWORD,temby,全局直连,no-resolve",
-  // 其他规则
   "GEOIP,LAN,全局直连,no-resolve",
   "GEOIP,CN,全局直连,no-resolve",
   "MATCH,漏网之鱼"
@@ -86,6 +79,23 @@ const groupBaseOption = {
   "hidden": false
 };
 
+// 自建节点配置（支持多个节点，按需继续添加）
+const proxies = [
+  {
+    "name": "xxxx",
+    "type": "",
+    "server": "",
+    "port": xxxx,
+    "cipher": "aes-256-gcm",
+    "password": "",
+    "plugin": "obfs",
+    "plugin-opts": {
+      "mode": "http",
+      "host": "xxxx.com"
+    }
+  }
+];
+
 // 程序入口
 function main(config) {
   const proxyCount = config?.proxies?.length ?? 0;
@@ -94,6 +104,9 @@ function main(config) {
   if (proxyCount === 0 && proxyProviderCount === 0) {
     throw new Error("配置文件中未找到任何代理");
   }
+
+  // 添加自建节点
+  config["proxies"] = [...(config["proxies"] || []), ...proxies];
 
   // 覆盖原配置中DNS配置
   config["dns"] = dnsConfig;
@@ -160,6 +173,5 @@ function main(config) {
   config["rule-providers"] = ruleProviders;
   config["rules"] = rules;
 
-  // 返回修改后的配置
   return config;
 }
