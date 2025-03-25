@@ -81,16 +81,16 @@ const groupBaseOption = {
 // 自建节点配置（支持多个节点，按需继续添加）
 const proxies = [
   {
-    "name": "Nearoute Limited",
-    "type": "ss",
-    "server": "35.220.193.59",
-    "port": 11829,
+    "name": "",
+    "type": "",
+    "server": "",
+    "port": ,
     "cipher": "aes-256-gcm",
-    "password": "MMk5lgsOQ2",
+    "password": "",
     "plugin": "obfs",
     "plugin-opts": {
       "mode": "http",
-      "host": "bilibili.com"
+      "host": ""
     }
   }
 ];
