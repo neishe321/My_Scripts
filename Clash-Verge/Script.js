@@ -53,6 +53,18 @@ const ruleProviders = {
     "url": "https://fastly.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt",
     "path": "./ruleset/loyalsoldier/reject.yaml"
   },
+  "cncidr": {
+    ...ruleProviderCommon,
+    "behavior": "ipcidr",
+    "url": "https://fastly.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/cncidr.txt",
+    "path": "./ruleset/loyalsoldier/cncidr.yaml"
+  },
+  "lancidr": {
+    ...ruleProviderCommon,
+    "behavior": "ipcidr",
+    "url": "https://fastly.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/lancidr.txt",
+    "path": "./ruleset/loyalsoldier/lancidr.yaml"
+  },
   "openai": {
     ...ruleProviderCommon,
     "behavior": "classical",
@@ -62,9 +74,13 @@ const ruleProviders = {
 };
 // 规则
 const rules = [
+  //自定义规则
   "RULE-SET,reject,广告过滤",
   "RULE-SET,openai,ChatGPT",
-  "DOMAIN-KEYWORD,temby,全局直连,no-resolve",
+  "DOMAIN-KEYWORD,temby,全局直连",
+  "RULE-SET,lancidr,全局直连,no-resolve",
+  "RULE-SET,cncidr,全局直连,no-resolve",
+  // 其他规则
   "GEOIP,LAN,全局直连,no-resolve",
   "GEOIP,CN,全局直连,no-resolve",
   "MATCH,漏网之鱼"
@@ -80,19 +96,7 @@ const groupBaseOption = {
 };
 // 自建节点配置（支持多个节点，按需继续添加）
 const proxies = [
-  {
-    "name": "",
-    "type": "",
-    "server": "",
-    "port": ,
-    "cipher": "aes-256-gcm",
-    "password": "",
-    "plugin": "obfs",
-    "plugin-opts": {
-      "mode": "http",
-      "host": ""
-    }
-  }
+  {}
 ];
 
 // 程序入口
