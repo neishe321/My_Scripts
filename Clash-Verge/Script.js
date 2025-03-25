@@ -78,20 +78,19 @@ const groupBaseOption = {
   "max-failed-times": 3,
   "hidden": false
 };
-
 // 自建节点配置（支持多个节点，按需继续添加）
 const proxies = [
   {
-    "name": "xxxx",
-    "type": "",
-    "server": "",
-    "port": xxxx,
+    "name": "Nearoute Limited",
+    "type": "ss",
+    "server": "35.220.193.59",
+    "port": 11829,
     "cipher": "aes-256-gcm",
-    "password": "",
+    "password": "MMk5lgsOQ2",
     "plugin": "obfs",
     "plugin-opts": {
       "mode": "http",
-      "host": "xxxx.com"
+      "host": "bilibili.com"
     }
   }
 ];
@@ -127,6 +126,7 @@ function main(config) {
       "type": "url-test",
       "tolerance": 100,
       "include-all": true,
+      "filter": "美国|US|新加坡|SG|香港|HK|台湾|TW|日本|JP",
       "icon": "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/speed.svg"
     },
     {
@@ -134,6 +134,7 @@ function main(config) {
       "name": "故障转移",
       "type": "fallback",
       "include-all": true,
+      "filter": "美国|US|新加坡|SG|香港|HK|台湾|TW|日本|JP",
       "icon": "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/ambulance.svg"
     },
     {
@@ -143,7 +144,7 @@ function main(config) {
       "name": "ChatGPT",
       "type": "select",
       "include-all": true,
-      "filter": "香港|HK|日本|JP|美国|US|新加坡|SG|台湾|TW",
+      "filter": "美国|US|新加坡|SG|台湾|TW|日本|JP",
       "icon": "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/chatgpt.svg"
     },
     {
