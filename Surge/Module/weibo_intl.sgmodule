@@ -14,22 +14,21 @@ DOMAIN,bootrealtime.uve.weibo.com,REJECT,pre-matching,no-resolve
 # > 热推荐 
 ^https?:\/\/api\.weibo\.cn\/\d\/ad\/weibointl\? data-type=text data="{}" status-code=200
 
-
 [Body Rewrite]
 # > 用户中心：过滤掉 VIP 和个性装扮卡片
-http-response-jq ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=user_center$ '.data.data.cards |= map(.items |= map(select(.type != "personal_vip" and .type != "ic_profile_wallpaper")) | select(.items | length > 0))'
+http-response-jq ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=user_center$ '.data.cards |= map(.items |= map(select(.type != "personal_vip" and .type != "ic_profile_wallpaper")) | select(.items | length > 0))'
 # > 帖子页：删除广告与会员字段
-http-response-jq ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=open_app$ 'del(.data.data.close_ad_setting, .data.data.vip_title_blog, .data.data.vip_info)'
-# > 趋势页：重排模块并去除 discover 首项
-http-response-jq ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=trends$ '.data.data.order = ["discover", "search_topic"] | .data.data.discover |= .[1:]'
+http-response-jq ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=open_app$ 'del(.data.close_ad_setting, .data.vip_title_blog, .data.vip_info)'
+# > 趋势页：重排模块顺序并去除 discover 首项
+http-response-jq ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=trends$ '.data.order = ["discover", "search_topic"] | .data.discover |= .[1:]'
 # > 搜索推荐 & 开屏广告：清空 data
-http-response-jq ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=(get_searching_info|get_coopen_ads)$ '.data.data = {}'
+http-response-jq ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=(get_searching_info|get_coopen_ads)$ '.data = {}'
 # > 图标中心：解锁所有图标状态
-http-response-jq ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=icon_center$ '.data.data[]?.card[]? |= (.status = 1 | .forbidden = 0)'
+http-response-jq ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=icon_center$ '.data[]?.card[]? |= (.status = 1 | .forbidden = 0)'
 
 
 # [Script]
 # weibo_intl_clean.js = type=http-response,pattern=^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/neishe321/My_Scripts/main/Scripts/weibo_intl_remove_ads.js
 
 [MITM]
-hostname = %APPEND% weibointl.api.weibo.cn
+hostname = %APPEND% *api.weibo.cn
