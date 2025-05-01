@@ -15,16 +15,16 @@ DOMAIN,bootrealtime.uve.weibo.com,REJECT,pre-matching,no-resolve
 ^https?:\/\/api\.weibo\.cn\/\d\/ad\/weibointl\? data-type=text data="{}" status-code=200
 
 [Body Rewrite]
-# 用户中心：过滤 VIP 和个性装扮卡片
-http-response-jq ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=user_center$ '.data.cards |= map(.items |= map(select(.type != "personal_vip" and .type != "ic_profile_wallpaper")) | select(.items | length > 0))'
-# 帖子页：删除广告与会员字段
-http-response-jq ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=open_app$ 'del(.data.close_ad_setting, .data.vip_title_blog, .data.vip_info)'
-# 趋势页：重排模块顺序并去除 discover 首项
-http-response-jq ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=trends$ '.data.order = ["discover", "search_topic"] | .data.discover |= .[1:]'
-# 搜索推荐 & 开屏广告：清空 data
-http-response-jq ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=(get_searching_info|get_coopen_ads)$ '.data = {}'
-# 图标中心：解锁所有图标状态
-http-response-jq ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=icon_center$ '.data[]?.card[]? |= (.status = 1 | .forbidden = 0)'
+# > 用户中心：过滤掉 VIP 和个性装扮卡片
+http-response-jq ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=user_center\b.*$ '.data.cards |= map(.items |= map(select(.type != "personal_vip" and .type != "ic_profile_wallpaper")) | select(.items | length > 0))'
+# > 帖子页：删除广告与会员字段
+http-response-jq ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=open_app\b.*$ 'del(.data.close_ad_setting, .data.vip_title_blog, .data.vip_info)'
+# > 趋势页：重排模块顺序并去除 discover 首项
+http-response-jq ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=trends\b.*$ '.data.order = ["discover", "search_topic"] | .data.discover |= .[1:]'
+# > 搜索推荐 & 开屏广告：清空 data
+http-response-jq ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=(get_searching_info|get_coopen_ads)\b.*$ '.data = {}'
+# > 图标中心：解锁所有图标状态
+http-response-jq ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=icon_center\b.*$ '.data[]?.card[]? |= (.status = 1 | .forbidden = 0)'
 
 
 # [Script]
