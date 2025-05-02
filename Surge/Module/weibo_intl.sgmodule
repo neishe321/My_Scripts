@@ -1,5 +1,5 @@
 #!name = 微博Intl去广告
-#!desc = 去除微博轻享版广告，移除非必要模块
+#!desc = 去除广告，移除非必要模块
 #!author = neishe321 
 #!category = Neishe
 #!date = 2024-12-19
@@ -25,7 +25,6 @@ http-response-jq ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=trends\b.
 http-response-jq ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=(get_searching_info|get_coopen_ads)\b.*$ '.data = {}'
 # > 图标中心：解锁所有图标状态
 http-response-jq ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=icon_center\b.*$ '.data[]?.card[]? |= (.status = 1 | .forbidden = 0)'
-
 
 [MITM]
 hostname = %APPEND% *api.weibo.cn
