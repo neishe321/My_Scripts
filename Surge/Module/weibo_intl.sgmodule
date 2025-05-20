@@ -20,7 +20,7 @@ http-response-jq ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=user_cent
 # > 帖子页：删除广告与会员字段
 http-response-jq ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=open_app\b.*$ 'del(.data.close_ad_setting, .data.vip_title_blog, .data.vip_info)'
 # > 趋势页：重排模块顺序并去除 discover 首项
-http-response-jq ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=trends\b.*$ '.data.order = ["discover", "search_topic"] | .data.discover |= .[1:]'
+http-response-jq ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=trends\b.*$ '.data.order = ["discover", "search_topic", "topics", "native_content"] | .data.discover |= .[1:]'
 # > 搜索推荐 & 开屏广告：清空 data
 http-response-jq ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=(get_searching_info|get_coopen_ads)\b.*$ '.data = {}'
 # > 图标中心：解锁所有图标状态
