@@ -4,12 +4,6 @@
 #!category = Neishe
 #!date = 2024-12-19
 
-[Rule]
-# 开屏广告域名拦截
-DOMAIN,adstrategy.biz.weibo.com,REJECT,pre-matching,no-resolve
-DOMAIN,bootpreload.uve.weibo.com,REJECT,pre-matching,no-resolve
-DOMAIN,bootrealtime.uve.weibo.com,REJECT,pre-matching,no-resolve
-
 [Map Local]
 ^https?:\/\/api\.weibo\.cn\/\d\/ad\/weibointl\? data-type=text data="{}" status-code=200
 ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=get_searching_info& data-type=text data="{"retcode":0,"info":"","data":{"expiration_time":"86400","cards":[{"tip":"搜索微博","word":""}]}}" header="Content-Type:text/html"
