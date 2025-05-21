@@ -2,7 +2,7 @@
 #!desc = 去除广告，移除非必要模块
 #!author = neishe321 
 #!category = Neishe
-#!date = 2024-12-19
+#!date = 2025-05-19
 
 [Map Local]
 ^https?:\/\/api\.weibo\.cn\/\d\/ad\/weibointl\? data-type=text data="{}" status-code=200
