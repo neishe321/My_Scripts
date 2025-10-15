@@ -78,7 +78,9 @@ function removeComments(array = []) {
 		||item?.business_type === "hot" 
 		||item?.commentAdType 
 		||item?.commentAdSubType 
-		||item?.data?.adType) {
+		||item?.data?.adType
+	    ||item?.category==="card" // 罗伯特总结 
+		) {
       array.splice(i, 1);
       continue;
     }
@@ -106,9 +108,7 @@ function processItems(array = []) {
       "finder_channel"
 	  ,"finder_window"
 	  ,"tongcheng_usertagwords"
-	  ,"top_searching"// 帖子详情下方大家都在搜 2025/10/15
-	  ,"ai_summary_entrance_real_show" // 罗伯特总结  2025/10/15
-	  
+	  ,"top_searching"// 帖子详情下方大家都在搜 2025/10/15	  
   ]);
 
   const keywords = [
