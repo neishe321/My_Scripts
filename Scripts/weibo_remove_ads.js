@@ -169,28 +169,10 @@ function processItems(array = []) {
 
 // ------------------ 处理不同 API 的响应 ------------------
 
-if (url.includes("guest/statuses_extend") || url.includes("statuses/extend") || url.includes("statuses/show")) {
-  // 帖子详情
-  if (obj.user) cleanUserData(obj.user);
-  cleanExtend(obj);
-}
-
-else if (url.includes("comments/build_comments")) {
-  // 评论区处理
-  if (Array.isArray(obj.datas)) removeComments(obj.datas);
-  if (Array.isArray(obj.root_comments)) removeComments(obj.root_comments);
-  if (Array.isArray(obj.comments)) removeComments(obj.comments);
-  if (obj?.rootComment) cleanCommentItem(obj.rootComment);
-  // 超话帖子评论区
-  if (obj?.status) cleanCommentItem(obj.status);
-}
-
 // 帖子评论区新接口 2025/10/15
 // mix 关注的人关注的帖子 
-else if (url.includes("statuses/container_detail_comment") || url.includes("statuses/container_detail_mix") ) {
-  if (Array.isArray(obj.items)) {
-    removeComments(obj.items);
-  }
+if (url.includes("statuses/container_detail_comment") || url.includes("statuses/container_detail_mix") ) {
+  if (Array.isArray(obj.items)) removeComments(obj.items);
 }
 
 //帖子左下角转发目录新接口 2025/10/15
@@ -213,84 +195,23 @@ else if (url.includes("statuses/container_detail")) {
   };
 }
 
+// else if (url.includes("search/finder")) {
+// 	 return;
+// }
 
-else if (url.includes("statuses/repost_timeline")) {
-  // 转发区处理
-  if (Array.isArray(obj.reposts)) {
-    removeComments(obj.reposts);
-    processItems(obj.reposts);
-  };
- 
-  if (Array.isArray(obj.hot_reposts)) {
-    removeComments(obj.hot_reposts);
-    processItems(obj.hot_reposts);
-  }
-}
+// else if (url.includes("search/container_discover") || url.includes("search/container_timeline") ) {
+//   processItems(obj.items);
+// }
 
-else if (url.includes("like/show")) {
-  // 点赞区处理
-  if (Array.isArray(obj.like_list)) {
-    for (const like of obj.like_list) {
-      if (like.user) cleanUserData(like.user);
-    }
-  }
-}
+// else if (url.includes("/searchall")) {
+//   processItems(obj.items);
+// } 
 
-else if (url.includes("comments/mix_comments")) {
-  // 全部区域处理
-  if (obj?.status) cleanCommentItem(obj.status);
-  if (Array.isArray(obj.datas)) {
-    removeComments(obj.datas);
-    processItems(obj.datas);
-  };
-}
-  
-else if (url.includes("search/finder")) {
-  // 
-  if (obj?.header?.data?.items && Array.isArray(obj.header.data.items)) processItems(obj.header.data.items);
-  // 商城入口
-  if (obj?.channelInfo) delete obj.channelInfo.moreChannels;
-  // 热点/趋势/榜单
-  if (Array.isArray(obj?.channelInfo?.channels)) {
-    const allowedKeys = new Set(['discover_channel', 'trends_channel', 'band_channel']);
-    obj.channelInfo.channels = obj.channelInfo.channels.filter(channel => allowedKeys.has(channel.key));
-}
-
-  //
-  if (Array.isArray(obj?.channelInfo?.channels)) {
-    for (const channel of obj.channelInfo.channels) {
-      if (channel?.payload?.loadedInfo) {
-        // 热搜关键词
-        delete channel.payload.loadedInfo.searchBarContent;
-        // 热点背景
-        delete channel.payload.loadedInfo?.headerBack?.channelStyleMap;
-      }
-      if (Array.isArray(channel?.payload?.items)) {
-        processItems(channel.payload.items);
-      }
-    }
-  }
-}
-
-else if (url.includes("search/container_discover") || url.includes("search/container_timeline") ) {
-  if (obj.loadedInfo) {
-    // 热搜关键词
-    delete obj.loadedInfo.searchBarContent;
-    // 热点背景
-    delete obj.loadedInfo?.headerBack?.channelStyleMap;
-  }
-  processItems(obj.items);
-}
-
-else if (url.includes("/searchall")) {
-  processItems(obj.items);
-} 
-
-else if (url.includes("/statuses/container_timeline") || url.includes("profile/container_timeline")) {
-  if (obj?.loadedInfo) delete obj.loadedInfo.headers;
-  // 超话
-  processItems(obj.items);
-} 
+// else if (url.includes("/statuses/container_timeline") || url.includes("profile/container_timeline")) {
+//   if (obj?.loadedInfo) delete obj.loadedInfo.headers;
+//   // 超话
+//   processItems(obj.items);
+// } 
 
 else if (url.includes("/messageflow/notice")) {
   processItems(obj.messages);
