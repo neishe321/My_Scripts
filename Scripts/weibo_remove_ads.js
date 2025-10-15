@@ -131,8 +131,8 @@ function processItems(array = []) {
 	  || item?.data?.card_type === 227  // 此条微博讨论情况
       || (item?.category === "group" && groupItemIds.has(item?.itemId))
       || (item?.category === "card" && cardItemIds.has(item?.data?.itemid)) 
-      || (item?.itemId && keywords.some(keyword => item.itemId.includes(keyword))) 
-      || (item?.data?.itemid && keywords.some(keyword => item.data.itemid.includes(keyword)))
+      || (item?.itemId && keywords.some(keyword => String(item.itemId).includes(keyword))) 
+      || (item?.data?.itemid && keywords.some(keyword => String(item.data.itemid).includes(keyword)))
       || item?.data?.desc === "相关搜索" 
       || (item?.data?.group && item?.data?.anchorId)
       || item?.data?.card_ad_style === '1' 
@@ -177,7 +177,8 @@ else if (url.includes("comments/build_comments")) {
 }
 
 // 帖子评论区新接口 2025/10/15
-else if (url.includes("statuses/container_detail_comment")) {
+// mix 关注的人关注的帖子 
+else if (url.includes("statuses/container_detail_comment") || url.includes("statuses/container_detail_mix") ) {
   if (Array.isArray(obj.items)) {
     removeComments(obj.items);
   }
