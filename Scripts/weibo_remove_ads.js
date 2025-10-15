@@ -72,7 +72,11 @@ function removeComments(array = []) {
     const item = array[i];
 
     // 移除广告
-    if (item.adType || item.business_type === "hot" || item.commentAdType || item.commentAdSubType || item.data.adType) {
+    if (item?.adType 
+		||item?.business_type === "hot" 
+		||item?.commentAdType 
+		||item?.commentAdSubType 
+		||item?.data.?adType) {
       array.splice(i, 1);
       continue;
     }
