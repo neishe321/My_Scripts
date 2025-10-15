@@ -6,7 +6,7 @@ if (!$response.body) {
 }
 let obj = JSON.parse($response.body);
 
-// ------------------ 数据清理函数 ------------------- 
+// ------------------ 清理函数定义 --------------------
 // 清理帖子详情广告
 function cleanExtend(obj){
   if (!obj) return;
@@ -47,7 +47,7 @@ function cleanUserData(user) {
   delete user.verified_type;
 }
 
-// 清理评论项
+// 清理单个评论项
 function cleanCommentItem(item) {
   if (!item) return;
   
@@ -68,7 +68,7 @@ function cleanCommentItem(item) {
   }
 }
 
-// 处理评论区
+// 处理评论区列表
 function removeComments(array = []) {
   for (let i = array.length - 1; i >= 0; i--) {
     const item = array[i];
