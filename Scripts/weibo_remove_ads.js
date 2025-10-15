@@ -88,12 +88,21 @@ function processItems(array = []) {
   if (!Array.isArray(array)) return array;
 
   const groupItemIds = new Set([
-    "card86_card11_cishi", "card86_card11", "INTEREST_PEOPLE",
-    "trend_top_qiehuan", "profile_collection", "realtime_tag_groug"
+      "card86_card11_cishi"
+	  , "card86_card11"
+	  , "INTEREST_PEOPLE"
+      ，"trend_top_qiehuan"
+	  , "profile_collection"
+	  , "realtime_tag_groug"
   ]);
 
   const cardItemIds = new Set([
-    "finder_channel", "finder_window", "tongcheng_usertagwords","top_searching"// 帖子详情下方大家都在搜 2025/10/15
+      "finder_channel"
+	  , "finder_window"
+	  , "tongcheng_usertagwords"
+	  ,"top_searching"// 帖子详情下方大家都在搜 2025/10/15
+	  ,"ai_summary_entrance_real_show" // 罗伯特总结  2025/10/15
+	  
   ]);
 
   const keywords = [
