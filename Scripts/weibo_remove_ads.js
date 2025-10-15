@@ -76,7 +76,7 @@ function removeComments(array = []) {
 		||item?.business_type === "hot" 
 		||item?.commentAdType 
 		||item?.commentAdSubType 
-		||item?.data.?adType) {
+		||item?.data?.adType) {
       array.splice(i, 1);
       continue;
     }
