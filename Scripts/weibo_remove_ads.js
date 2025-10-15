@@ -79,7 +79,7 @@ function removeComments(array = []) {
 		||item?.commentAdType 
 		||item?.commentAdSubType 
 		||item?.data?.adType
-	    ||item?.category==="card" // 罗伯特总结 
+	    ||item?.data?.itemid === "ai_summary_entrance_real_show"  // 罗伯特总结 
 		) {
       array.splice(i, 1);
       continue;
