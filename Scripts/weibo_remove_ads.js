@@ -5,7 +5,6 @@ if (!$response.body) {
 let obj = JSON.parse($response.body);
 
 // ------------------ 数据清理函数 -------------------
-
 // 清理帖子详情广告
 function cleanExtend(obj){
   if (!obj) return;
@@ -23,6 +22,13 @@ function cleanExtend(obj){
   delete obj.extend_info;
   delete obj.common_struct;
   delete obj.tag_struct; // 推广标签
+
+  delete obj.pic_infos;
+  delete obj.pic_bg_new;
+  delete obj.hot_page;
+  delete obj.sharecontent?.additional_indication_icon_url; // 底部按钮贴图广告
+  delete obj.detail_top_right_button; // 右上角搜索
+
 }
 
 // 清理用户信息
@@ -66,7 +72,7 @@ function removeComments(array = []) {
     const item = array[i];
 
     // 移除广告
-    if (item.adType || item.business_type === "hot") {
+    if (item.adType || item.business_type === "hot" || item.commentAdType || item.commentAdSubType || item?.data.adType) {
       array.splice(i, 1);
       continue;
     }
@@ -87,7 +93,7 @@ function processItems(array = []) {
   ]);
 
   const cardItemIds = new Set([
-    "finder_channel", "finder_window", "tongcheng_usertagwords"
+    "finder_channel", "finder_window", "tongcheng_usertagwords","top_searching"// 帖子详情下方大家都在搜 2025/10/15
   ]);
 
   const keywords = [
@@ -115,21 +121,25 @@ function processItems(array = []) {
 
     // 过滤广告和无用模块
     if (
-      item?.item_category === "hot_ad" ||
-      item?.item_category === "trend" ||
-      item?.data?.mblogtypename === "广告" ||
-      item?.mblogtypename === "广告" ||
-      item?.data?.ad_state === 1 ||
-      item?.isInsert === false ||
-      item?.data?.card_type === 196 ||
-      (item?.category === "group" && groupItemIds.has(item?.itemId)) ||
-      (item?.category === "card" && cardItemIds.has(item?.data?.itemid)) ||
-      (item?.itemId && keywords.some(keyword => item.itemId.includes(keyword))) ||
-      (item?.data?.itemid && keywords.some(keyword => item.data.itemid.includes(keyword))) ||
-      // item?.data?.title === "大家都在问" || 
-      item?.data?.desc === "相关搜索" ||
-      (item?.data?.group && item?.data?.anchorId) ||
-      item?.data?.card_ad_style === '1' || item?.data?.card_id === "search_card"
+      item?.item_category === "hot_ad" 
+      || item?.item_category === "trend" 
+      || item?.data?.mblogtypename === "广告" 
+      || item?.mblogtypename === "广告" 
+      || item?.data?.ad_state === 1 
+      || item?.isInsert === false 
+      || item?.data?.card_type === 196 
+			|| item?.data?.card_type === 227  // 此条微博讨论情况
+      || (item?.category === "group" && groupItemIds.has(item?.itemId))
+      || (item?.category === "card" && cardItemIds.has(item?.data?.itemid)) 
+      || (item?.itemId && keywords.some(keyword => item.itemId.includes(keyword))) 
+      || (item?.data?.itemid && keywords.some(keyword => item.data.itemid.includes(keyword)))
+      || item?.data?.desc === "相关搜索" 
+      || (item?.data?.group && item?.data?.anchorId)
+      || item?.data?.card_ad_style === '1' 
+      || item?.data?.card_id === "search_card" 
+      || item?.category === "wboxcard" // 帖子下方广告横幅 2025/10/15
+      || (item?.category === "group" && item?.type === "vertical") // 帖子下方好物种草 2025/10/15
+      || (item?.category === "detail" && item?.type === "trend") // 帖子左下转发广告 2025/10/15
     ) {
       array.splice(i, 1);
       continue;
@@ -165,6 +175,34 @@ else if (url.includes("comments/build_comments")) {
   // 超话帖子评论区
   if (obj?.status) cleanCommentItem(obj.status);
 }
+
+// 帖子评论区新接口 2025/10/15
+else if (url.includes("statuses/container_detail_comment")) {
+  if (Array.isArray(obj.items)) {
+    removeComments(obj.items);
+  }
+}
+
+//帖子左下角转发目录新接口 2025/10/15
+else if (url.includes("statuses/container_detail_forward")) {
+	if (obj.items) processItems(obj.items);
+}
+
+// 帖子详情新接口 2025/10/15
+else if (url.includes("statuses/container_detail")) {
+	// 帖子内容和其他卡片
+  if (obj?.pageHeader?.data.items) processItems(obj?.pageHeader?.data.items);
+	
+  if (obj?.detailInfo?.status) {
+	  cleanUserData(obj?.detailInfo?.status.user);
+	  cleanExtend(obj?.detailInfo?.status);
+  };
+    if (obj?.detailInfo?.extend) {
+	  cleanUserData(obj?.detailInfo?.extend.user);
+	  cleanExtend(obj?.detailInfo?.extend);
+  };
+}
+
 
 else if (url.includes("statuses/repost_timeline")) {
   // 转发区处理
