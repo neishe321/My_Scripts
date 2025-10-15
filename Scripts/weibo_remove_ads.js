@@ -128,7 +128,7 @@ function processItems(array = []) {
       || item?.data?.ad_state === 1 
       || item?.isInsert === false 
       || item?.data?.card_type === 196 
-			|| item?.data?.card_type === 227  // 此条微博讨论情况
+	  || item?.data?.card_type === 227  // 此条微博讨论情况
       || (item?.category === "group" && groupItemIds.has(item?.itemId))
       || (item?.category === "card" && cardItemIds.has(item?.data?.itemid)) 
       || (item?.itemId && keywords.some(keyword => item.itemId.includes(keyword))) 
