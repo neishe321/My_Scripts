@@ -195,6 +195,16 @@ else if (url.includes("statuses/container_detail")) {
   };
 }
 
+else if (url.includes("comments/build_comments")) {
+  // 折叠评论区处理
+  if (Array.isArray(obj.datas)) removeComments(obj.datas);
+  if (Array.isArray(obj.root_comments)) removeComments(obj.root_comments);
+  if (Array.isArray(obj.comments)) removeComments(obj.comments);
+  if (obj?.rootComment) cleanCommentItem(obj.rootComment);
+  // 超话帖子评论区
+  if (obj?.status) cleanCommentItem(obj.status);
+}
+	
 else if (url.includes("/statuses/container_timeline") || url.includes("profile/container_timeline")) {
   if (obj?.loadedInfo) delete obj.loadedInfo.headers;
   // 超话
