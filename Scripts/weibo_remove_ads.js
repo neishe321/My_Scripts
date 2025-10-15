@@ -207,11 +207,11 @@ else if (url.includes("statuses/container_detail")) {
 //   processItems(obj.items);
 // } 
 
-// else if (url.includes("/statuses/container_timeline") || url.includes("profile/container_timeline")) {
-//   if (obj?.loadedInfo) delete obj.loadedInfo.headers;
-//   // 超话
-//   processItems(obj.items);
-// } 
+else if (url.includes("/statuses/container_timeline") || url.includes("profile/container_timeline")) {
+  if (obj?.loadedInfo) delete obj.loadedInfo.headers;
+  // 超话
+  processItems(obj.items);
+} 
 
 else if (url.includes("/messageflow/notice")) {
   processItems(obj.messages);
