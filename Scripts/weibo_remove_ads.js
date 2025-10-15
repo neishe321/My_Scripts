@@ -206,8 +206,9 @@ else if (url.includes("comments/build_comments")) {
   if (Array.isArray(obj.datas)) removeComments(obj.datas);
   if (Array.isArray(obj.root_comments)) removeComments(obj.root_comments);
   if (Array.isArray(obj.comments)) removeComments(obj.comments);
+  // 处理评论项
   if (obj?.rootComment) cleanCommentItem(obj.rootComment);
-  // 超话帖子评论区
+  // 超话帖子评论项
   if (obj?.status) cleanCommentItem(obj.status);
 }
 	
