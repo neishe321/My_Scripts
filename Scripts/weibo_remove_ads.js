@@ -1,10 +1,12 @@
+// 修改时间：2025/10/15
+
 let url = $request.url;
 if (!$response.body) {
   $done({});
 }
 let obj = JSON.parse($response.body);
 
-// ------------------ 数据清理函数 ------------------- 
+// ------------------ 数据清理函数 -------------------
 // 清理帖子详情广告
 function cleanExtend(obj){
   if (!obj) return;
