@@ -289,7 +289,7 @@ else if (url.includes("search/container_discover") || url.includes("search/conta
 	if (obj?.loadedInfo?.headerBack?.channelStyleMap) delete obj.loadedInfo.headerBack.channelStyleMap;	// 搜索框主题 下拉背景
 }
 
-else if (url.includes("2/flowlist") || url.includes("2/statuses/longtext_show_batch")) {  // 热转||长文本动态
+else if (url.includes("2/flowlist") || url.includes("2/statuses/longtext_show_batch")) { // 热转||长文本动态
 	if (obj?.items) processItems(obj.items);
 	if (obj?.longtexts?.data) processItems(obj.longtexts.data);
 }
