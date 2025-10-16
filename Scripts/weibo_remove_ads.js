@@ -194,6 +194,7 @@ function processItems(array = []) {
             data?.desc === "相关搜索" ||
             (data?.group && data?.anchorId) ||
             data?.card_ad_style === "1" ||
+			data?.is_ad_card === "1" ||
             data?.card_id === "search_card" ||
             item?.category === "wboxcard" || // 帖子下方广告横幅
             (item?.category === "group" && item?.type === "vertical" && item?.header?.title?.content === "相关推荐" ) || // 帖子下方好物种草 相关推荐
