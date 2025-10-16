@@ -197,6 +197,7 @@ function processItems(array = []) {
             data?.card_id === "search_card" ||
             item?.category === "wboxcard" || // 帖子下方广告横幅
             (item?.category === "group" && item?.type === "vertical" && item?.header?.title?.content === "相关推荐" ) || // 帖子下方好物种草 相关推荐
+			(item?.category === "group" && item?.type === "vertical" && item?.header?.title?.content === "博主好物种草" ) || // 帖子下方好物种草 相关推荐
             (item?.category === "detail" && item?.type === "trend") // 帖子左下转发广告
         ) {
             array.splice(i, 1);
