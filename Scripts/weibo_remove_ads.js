@@ -7,12 +7,12 @@ if (!$response.body) {
 let obj = JSON.parse($response.body);
 
 // ------------------ 函数定义 --------------------
-// 清理帖子详情广告 cleanExtend(obj) 
-// 清理用户信息 cleanUserData(user)
-// 清理单个评论项 cleanCommentItem(item)
-// 处理评论区列表 removeComments(array = [])
-// 移除广告和无用模块 processItems(array = [])
-// 清理 screen_name_suffix_new 数组中的 VIP 图标 cleanScreenNameSuffix(data) 
+// cleanExtend(obj)  清理帖子详情广告 
+// cleanUserData(user) 清理用户信息
+// cleanCommentItem(item) 清理单个评论项 
+// removeComments(array = []) 处理评论区列表
+// processItems(array = []) 移除广告和无用模块
+// cleanScreenNameSuffix(data)  清理 data.screen_name_suffix_new 数组中的 VIP 图标(主要是超话信息流)
 
 // 清理帖子详情广告
 function cleanExtend(obj){
