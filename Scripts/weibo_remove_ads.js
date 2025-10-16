@@ -257,13 +257,13 @@ else if (url.includes("comments/build_comments")) {
   if (obj?.status) cleanCommentItem(obj.status);
 }
 	
-else if (url.includes("/statuses/container_timeline") || url.includes("profile/container_timeline")) {
+else if (url.includes("statuses/container_timeline") || url.includes("profile/container_timeline")) {
   if (obj?.loadedInfo) delete obj.loadedInfo.headers;
   // 信息流和超话流
   processItems(obj.items);
 } 
 
-else if (url.includes("/messageflow/notice")) {
+else if (url.includes("messageflow/notice")) {
   processItems(obj.messages);
 }
 
@@ -289,7 +289,12 @@ else if (url.includes("search/container_discover") || url.includes("search/conta
 	if (obj?.loadedInfo?.headerBack?.channelStyleMap) delete obj.loadedInfo.headerBack.channelStyleMap;	// 搜索框主题 下拉背景
 }
 
-else if (url.includes("/searchall")) {
+else if (url.includes("2/flowlist") || url.includes("2/statuses/longtext_show_batch")) {  // 热转||长文本动态
+	if (obj?.items) processItems(obj.items);
+	if (obj?.longtexts?.data) processItems(obj.longtexts.data);
+}
+	
+else if (url.includes("searchall")) {
   processItems(obj.items);
 } 
 
