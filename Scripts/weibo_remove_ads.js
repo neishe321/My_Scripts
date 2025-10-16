@@ -282,7 +282,7 @@ else if (url.includes("search/finder")) {
 
 else if (url.includes("search/container_discover") || url.includes("search/container_timeline") ) {
 	// container_timeline 热点信息流  
-	// container_discover 热搜覆盖
+	// container_discover 发现header覆盖
 	processItems(obj.items);
 	if (obj?.loadedInfo?.searchBarContent) delete obj.loadedInfo.searchBarContent;	// 处理大家正在搜
 	if (obj?.loadedInfo?.theme) delete obj.loadedInfo.theme;
