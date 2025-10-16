@@ -125,8 +125,8 @@ function processItems(array = []) {
     ]);
 
     const cardItemIds = new Set([
-        "finder_channel",
-        "finder_window",
+        "finder_channel", // 发现页热搜滚动横幅下方广告
+        "finder_window",  // 发现页热搜下方滚动横幅
         "tongcheng_usertagwords",
         "top_searching", // 帖子详情下方大家都在搜 2025/10/15
     ]);
@@ -196,7 +196,7 @@ function processItems(array = []) {
             data?.card_ad_style === "1" ||
             data?.card_id === "search_card" ||
             item?.category === "wboxcard" || // 帖子下方广告横幅
-            (item?.category === "group" && item?.type === "vertical") || // 帖子下方好物种草
+            //(item?.category === "group" && item?.type === "vertical") || // 帖子下方好物种草 误伤发现页热搜 ，需修改
             (item?.category === "detail" && item?.type === "trend") // 帖子左下转发广告
         ) {
             array.splice(i, 1);
@@ -266,9 +266,13 @@ else if (url.includes("/messageflow/notice")) {
 }
 
 
-// else if (url.includes("search/finder")) {
-// 	 return;
-// }
+else if (url.includes("search/finder")) {
+	if (obj?.header?.data?.items && Array.isArray(obj.header.data.items)) processItems(obj.header.data.items);  // 发现页热搜下方滚动横幅和滚动横幅下方广告
+	if (obj?.channelInfo) delete obj.channelInfo.moreChannels;	//下拉功能入口
+  	if (Array.isArray(obj?.channelInfo?.channels)) {
+    	const allowedtitles = new Set(['热点','热问', '热转', '指数']);	// 发现页热搜下方tab导航筛选
+    	obj.channelInfo.channels = obj.channelInfo.channels.filter(channel => allowedtitles.has(channel.title));
+}
 
 // else if (url.includes("search/container_discover") || url.includes("search/container_timeline") ) {
 //   processItems(obj.items);
