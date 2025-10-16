@@ -272,6 +272,7 @@ else if (url.includes("search/finder")) {
   	if (Array.isArray(obj?.channelInfo?.channels)) {
     	const allowedtitles = new Set(['热点','热问', '热转', '指数']);	// 发现页热搜下方tab导航筛选
     	obj.channelInfo.channels = obj.channelInfo.channels.filter(channel => allowedtitles.has(channel.title));
+	}
 }
 
 // else if (url.includes("search/container_discover") || url.includes("search/container_timeline") ) {
