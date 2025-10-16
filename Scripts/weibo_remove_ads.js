@@ -232,15 +232,15 @@ else if (url.includes("statuses/container_detail_forward")) {
 // 帖子详情新接口 2025/10/15
 else if (url.includes("statuses/container_detail")) {
 	// 删除除帖子内容外的其他卡片
-  	 if (obj?.pageHeader?.data.items) delete(obj?.pageHeader?.data.items);
+  	 if (Array.isArray(obj?.pageHeader?.data?.items))  processItems(obj.pageHeader.data.items);
 	// 帖子内容
   	if (obj?.detailInfo?.status) {
-	  	cleanUserData(obj?.detailInfo?.status.user);
-	  	cleanExtend(obj?.detailInfo?.status);
+	  	cleanUserData(obj.detailInfo.status.user);
+	  	cleanExtend(obj.detailInfo.status);
   	};
     if (obj?.detailInfo?.extend) {
-	  	cleanUserData(obj?.detailInfo?.extend.user);
-	  	cleanExtend(obj?.detailInfo?.extend);
+	  	cleanUserData(obj.detailInfo.extend.user);
+	  	cleanExtend(obj.detailInfo.extend);
   	};
 }
 
