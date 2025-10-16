@@ -266,14 +266,14 @@ else if (url.includes("/messageflow/notice")) {
   processItems(obj.messages);
 }
 
-
 else if (url.includes("search/finder")) {
 	if (Array.isArray(obj?.header?.data?.items)) processItems(obj.header.data.items);  // 发现页热搜下方滚动横幅和滚动横幅下方广告
 	if (obj?.channelInfo) delete obj.channelInfo.moreChannels;	//下拉功能入口
   	if (Array.isArray(obj?.channelInfo?.channels)) {
     	const allowedtitles = new Set(['热点','热问', '热转', '指数']);	// 发现页热搜下方tab导航筛选
     	obj.channelInfo.channels = obj.channelInfo.channels.filter(channel => allowedtitles.has(channel.title));
-	}
+	};
+	if (Array.isArray(obj.channelInfo.channels?.[0]?.payload?.items)) processItems(obj.channelInfo.channels.[0].payload.items); // 处理热点下的信息流  payload数组
 }
 
 else if (url.includes("search/container_discover") || url.includes("search/container_timeline") ) {
@@ -283,6 +283,5 @@ else if (url.includes("search/container_discover") || url.includes("search/conta
 else if (url.includes("/searchall")) {
   processItems(obj.items);
 } 
-
 
 $done({ body: JSON.stringify(obj) });
