@@ -32,7 +32,7 @@ function cleanExtend(obj){
   delete obj.common_struct;
   delete obj.tag_struct; // 推广标签
 
-  delete obj.pic_infos;
+  // delete obj.pic_infos; // 文案带的图片
   delete obj.pic_bg_new;
   delete obj.hot_page;
   delete obj.sharecontent?.additional_indication_icon_url; // 底部按钮贴图广告
