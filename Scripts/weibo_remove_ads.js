@@ -274,8 +274,8 @@ else if (url.includes("search/finder")) {
     	const allowedtitles = new Set(['热点','热问', '热转', '指数']);	// 发现页热搜下方tab导航筛选
     	obj.channelInfo.channels = obj.channelInfo.channels.filter(channel => allowedtitles.has(channel.title));
 	};
-	const payload = obj.channelInfo?.channels[0]?.payload;  // 热点下的信息流提取
-	if (Array.isArray(payload?.items)) processItems (payload.items);  // 处理热点下的信息流 
+	const payload = obj.channelInfo?.channels?.find(c => c?.payload)?.payload;  // 自动提取tab下的下的信息流
+	if (Array.isArray(payload?.items)) processItems (payload.items);  // 处理提取的信息流 
 	if (payload?.loadedInfo?.searchBarContent) delete payload.loadedInfo.searchBarContent;	// 处理大家正在搜
 	if (payload?.loadedInfo?.headerBack?.channelStyleMap) delete payload.loadedInfo.headerBack.channelStyleMap;	// 搜索框主题 下拉背景
 }
