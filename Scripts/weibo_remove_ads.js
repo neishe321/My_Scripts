@@ -142,7 +142,7 @@ function processItems(array = []) {
         "hot_search",
         "广告",
         "hot_spot_name",
-        "mid",
+        // "mid",
     ];
 
 	// 清理主逻辑函数 cleanData
