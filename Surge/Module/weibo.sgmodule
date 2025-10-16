@@ -22,6 +22,7 @@ DOMAIN-SUFFIX,biz.weibo.com,REJECT,pre-matching,no-resolve
 ^https?:\/\/api\.weibo\.cn\/\d+\/!\/live\/media_homelist  data-type=text  data="{}"  status-code=200  
 ^https?:\/\/api\.weibo\.cn\/\d+\/statuses\/container_positive  data-type=text  data="{}"  status-code=200  
 ^https?:\/\/api\.weibo\.cn\/\d+\/!\/was\/finder\/searchbarchange  data-type=text  data="{}"  status-code=200  
+^https?:\/\/api\.weibo\.cn\/\d+\/live\/media_homelist  data-type=text  data="{}"  status-code=200  
 
 [Body Rewrite]
 # > tab标签处理
