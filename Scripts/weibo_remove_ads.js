@@ -276,7 +276,7 @@ else if (url.includes("search/finder")) {
 	const payload = obj.channelInfo?.channels[0]?.payload;  // 热点下的信息流提取
 	if (Array.isArray(payload?.items)) processItems (payload.items);  // 处理热点下的信息流 
 	if (payload?.loadedInfo?.searchBarContent) delete payload.loadedInfo.searchBarContent;	// 处理大家正在搜
-	if (payload?.loadedInfo?.headerBack) delete payload.loadedInfo.headerBack;	// 搜索框主题背景
+	if (payload?.loadedInfo?.headerBack) delete payload.loadedInfo.headerBack;	// 搜索框主题 下拉背景
 }
 
 else if (url.includes("search/container_discover") || url.includes("search/container_timeline") ) {
