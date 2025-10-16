@@ -18,10 +18,11 @@ DOMAIN-SUFFIX,biz.weibo.com,REJECT,pre-matching,no-resolve
 ^https?:\/\/api\.weibo\.cn\/\d+\/client\/addlog_batch  data-type=text  data="{}"  status-code=200  
 ^https?:\/\/api\.weibo\.cn\/\d+\/container\/asyn  data-type=text  data="{}"  status-code=200  
 ^https?:\/\/api\.weibo\.cn\/\d+\/shproxy\/chaohua\/discovery\/searchactive  data-type=text  data="{}"  status-code=200  
-^https?:\/\/api\.weibo\.cn\/\d+\/checkin\/show  data-type=text  data="{}"  status-code=200  
+^https?:\/\/api\.weibo\.cn\/\d+\/checkin\/show  data-type=text  data="{}"  status-code=200 
+^https?:\/\/api\.weibo\.cn\/\d+\/live\/media_homelist  data-type=text  data="{}"  status-code=200  
 ^https?:\/\/api\.weibo\.cn\/\d+\/statuses\/container_positive  data-type=text  data="{}"  status-code=200  
 ^https?:\/\/api\.weibo\.cn\/\d+\/!\/was\/finder\/searchbarchange  data-type=text  data="{}"  status-code=200  
-^https?:\/\/api\.weibo\.cn\/\d+\/live\/media_homelist  data-type=text  data="{}"  status-code=200  
+
 
 [Body Rewrite]
 # > tab标签处理
