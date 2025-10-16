@@ -179,27 +179,27 @@ function processItems(array = []) {
 
         // 过滤广告和无用模块
         if (
-            item?.item_category === "hot_ad" ||
-            item?.item_category === "trend" ||
-            data?.mblogtypename === "广告" ||
-            item?.mblogtypename === "广告" ||
-            data?.ad_state === 1 ||
-            item?.isInsert === false ||
-            data?.card_type === 196 ||
-            data?.card_type === 227 || // 此条微博讨论情况
-            (item?.category === "group" && groupItemIds.has(item?.itemId)) ||
-            (item?.category === "card" && cardItemIds.has(data?.itemid)) ||
-            (item?.itemId && keywords.some((k) => String(item.itemId).includes(k))) ||
-            (data?.itemid && keywords.some((k) => String(data.itemid).includes(k))) ||
-            data?.desc === "相关搜索" ||
-            (data?.group && data?.anchorId) ||
-            data?.card_ad_style === 1 ||
-			data?.is_ad_card === 1 ||
-            data?.card_id === "search_card" ||
-            item?.category === "wboxcard" || // 帖子下方广告横幅
-            (item?.category === "group" && item?.type === "vertical" && item?.header?.title?.content === "相关推荐" ) || // 帖子下方好物种草 相关推荐
-			(item?.category === "group" && item?.type === "vertical" && item?.header?.title?.content === "博主好物种草" ) || // 帖子下方好物种草 相关推荐
-            (item?.category === "detail" && item?.type === "trend") // 帖子左下转发广告
+            item?.item_category === "hot_ad"
+            || item?.item_category === "trend"
+            || data?.mblogtypename === "广告"
+            || item?.mblogtypename === "广告"
+            || data?.ad_state === 1
+            || item?.isInsert === false
+            || data?.card_type === 196
+            || data?.card_type === 227 // 此条微博讨论情况
+            || (item?.category === "group" && groupItemIds.has(item?.itemId))
+            || (item?.category === "card" && cardItemIds.has(data?.itemid))
+            || (item?.itemId && keywords.some((k) => String(item.itemId).includes(k)))
+            || (data?.itemid && keywords.some((k) => String(data.itemid).includes(k)))
+            || data?.desc === "相关搜索"
+            || (data?.group && data?.anchorId)
+            || data?.card_ad_style === 1
+			|| data?.is_ad_card === 1
+            || data?.card_id === "search_card"
+            || item?.category === "wboxcard" // 帖子下方广告横幅
+            || (item?.category === "group" && item?.type === "vertical" && item?.header?.title?.content === "相关推荐" )
+			|| (item?.category === "group" && item?.type === "vertical" && item?.header?.title?.content === "博主好物种草" )
+            || (item?.category === "detail" && item?.type === "trend") // 帖子左下转发广告
         ) {
             array.splice(i, 1);
             continue;
