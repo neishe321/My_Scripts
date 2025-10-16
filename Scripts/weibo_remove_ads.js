@@ -276,13 +276,13 @@ else if (url.includes("search/finder")) {
 	}
 }
 
-// else if (url.includes("search/container_discover") || url.includes("search/container_timeline") ) {
-//   processItems(obj.items);
-// }
+else if (url.includes("search/container_discover") || url.includes("search/container_timeline") ) {
+  processItems(obj.items);
+}
 
-// else if (url.includes("/searchall")) {
-//   processItems(obj.items);
-// } 
+else if (url.includes("/searchall")) {
+  processItems(obj.items);
+} 
 
 
 $done({ body: JSON.stringify(obj) });
