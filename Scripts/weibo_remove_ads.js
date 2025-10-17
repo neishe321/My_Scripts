@@ -7,15 +7,18 @@ if (!$response.body) {
 let obj = JSON.parse($response.body);
 
 // ------------------ 函数定义 --------------------
-// cleanExtend(obj)  清理帖子详情广告 
-// cleanUser(user) 清理用户信息
-// cleanComment(item) 清理单个评论项 
-// processCommentArray(array = []) 处理评论区列表
-// processFeedArray(array = []) 移除广告和无用模块
-// removeVipSuffix(data)  清理 data.screen_name_suffix_new 数组中的 VIP 图标(主要是超话信息流)
+// cleanExtend(obj) 帖子详情页广告清理逻辑
+// cleanUser(user) 用户信息清理逻辑
+// cleanComment(item) 单个评论清理逻辑
+// removeVipSuffix(data)  清理 data.screen_name_suffix_new 中的 VIP 图标、超话标识等(主要是超话信息流)
+// processCommentArray(array = []) 评论区列表清理逻辑
+// processFeedArray(array = []) 信息流列表清理逻辑 --> 内置清理主逻辑函数 cleanData()
 
-// 清理帖子详情广告
+
+
+
 function cleanExtend(obj){
+	// 帖子详情页广告清理逻辑
   if (!obj) return;
   delete obj.reward_info; // 点赞是美意
   delete obj.head_cards; // 底部广告卡片
@@ -40,8 +43,8 @@ function cleanExtend(obj){
 
 }
 
-// 清理用户信息
 function cleanUser(user) {
+	// 用户信息清理逻辑
   if (!user) return;
   delete user.icons;
   delete user.avatar_extend_info;   // 头像挂件
@@ -54,21 +57,9 @@ function cleanUser(user) {
   delete user.verified_type;
 }
 
-// 清理 screen_name_suffix_new 数组中的 VIP 图标
-function removeVipSuffix(data) {
-  if (!Array.isArray(data?.screen_name_suffix_new)) return;
-  for (const suffix of data.screen_name_suffix_new) {
-    if (Array.isArray(suffix.icon)) {
-      suffix.icon = suffix.icon.filter(icon => icon?.type !== "vip");
-    }
-  }
-}
-
-
-// 清理单个评论项
 function cleanComment(item) {
+	// 单个评论清理逻辑
   if (!item) return;
-  
   // 气泡 用户标签 背景
   delete item.comment_bubble;
   delete item.vip_button;
@@ -86,10 +77,18 @@ function cleanComment(item) {
   }
 }
 
+function removeVipSuffix(data) {
+	// 清理 data.screen_name_suffix_new 中的 VIP 图标、超话标识等
+  if (!Array.isArray(data?.screen_name_suffix_new)) return;
+  for (const suffix of data.screen_name_suffix_new) {
+    if (Array.isArray(suffix.icon)) {
+      suffix.icon = suffix.icon.filter(icon => icon?.type !== "vip");
+    }
+  }
+}
 
-
-// 处理评论区列表
 function processCommentArray(array = []) {
+	// 评论区列表清理逻辑
   for (let i = array.length - 1; i >= 0; i--) {
     const item = array[i];
 
@@ -111,8 +110,8 @@ function processCommentArray(array = []) {
   }
 }
 
-// 移除广告和无用模块
 function processFeedArray(array = []) {
+	// 信息流列表清理逻辑
     if (!Array.isArray(array)) return array;
 
     const groupItemIds = new Set([
@@ -170,7 +169,7 @@ function processFeedArray(array = []) {
 
     for (let i = array.length - 1; i >= 0; i--) {
         const item = array[i];
-        const data = item?.data || item?.status; // ✅ 自动兼容 data / status
+        const data = item?.data || item?.status; // 兼容 data / status
 
         // 递归处理嵌套 items
         if (Array.isArray(item.items)) {
