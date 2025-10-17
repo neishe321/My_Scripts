@@ -8,11 +8,11 @@ let obj = JSON.parse($response.body);
 
 // ------------------ 函数定义 --------------------
 // cleanExtend(obj)  清理帖子详情广告 
-// cleanUserData(user) 清理用户信息
-// cleanCommentItem(item) 清理单个评论项 
-// removeComments(array = []) 处理评论区列表
-// processItems(array = []) 移除广告和无用模块
-// cleanScreenNameSuffix(data)  清理 data.screen_name_suffix_new 数组中的 VIP 图标(主要是超话信息流)
+// cleanUser(user) 清理用户信息
+// cleanComment(item) 清理单个评论项 
+// processCommentArray(array = []) 处理评论区列表
+// processFeedArray(array = []) 移除广告和无用模块
+// removeVipSuffix(data)  清理 data.screen_name_suffix_new 数组中的 VIP 图标(主要是超话信息流)
 
 // 清理帖子详情广告
 function cleanExtend(obj){
@@ -41,7 +41,7 @@ function cleanExtend(obj){
 }
 
 // 清理用户信息
-function cleanUserData(user) {
+function cleanUser(user) {
   if (!user) return;
   delete user.icons;
   delete user.avatar_extend_info;   // 头像挂件
@@ -55,7 +55,7 @@ function cleanUserData(user) {
 }
 
 // 清理 screen_name_suffix_new 数组中的 VIP 图标
-function cleanScreenNameSuffix(data) {
+function removeVipSuffix(data) {
   if (!Array.isArray(data?.screen_name_suffix_new)) return;
   for (const suffix of data.screen_name_suffix_new) {
     if (Array.isArray(suffix.icon)) {
@@ -66,7 +66,7 @@ function cleanScreenNameSuffix(data) {
 
 
 // 清理单个评论项
-function cleanCommentItem(item) {
+function cleanComment(item) {
   if (!item) return;
   
   // 气泡 用户标签 背景
@@ -75,13 +75,13 @@ function cleanCommentItem(item) {
   delete item.pic_bg_new
   delete item.pic_bg_new_dark;
   delete item.pic_bg_type;
-  cleanUserData(item.user);
+  cleanUser(item.user);
 
   // 递归处理子评论
   const comments = item.comments;
   if (Array.isArray(comments)) {
     for (let i = comments.length - 1; i >= 0; i--) {
-      if (comments[i]) cleanCommentItem(comments[i]);
+      if (comments[i]) cleanComment(comments[i]);
     }
   }
 }
@@ -89,7 +89,7 @@ function cleanCommentItem(item) {
 
 
 // 处理评论区列表
-function removeComments(array = []) {
+function processCommentArray(array = []) {
   for (let i = array.length - 1; i >= 0; i--) {
     const item = array[i];
 
@@ -106,13 +106,13 @@ function removeComments(array = []) {
     }
 
     // 清理当前评论项
-    cleanCommentItem(item);
-    if (item.data) cleanCommentItem(item.data);
+    cleanComment(item);
+    if (item.data) cleanComment(item.data);
   }
 }
 
 // 移除广告和无用模块
-function processItems(array = []) {
+function processFeedArray(array = []) {
     if (!Array.isArray(array)) return array;
 
     const groupItemIds = new Set([
@@ -163,9 +163,9 @@ function processItems(array = []) {
         ].forEach((key) => delete data[key]);
 
         // 清理用户信息与扩展数据
-        cleanUserData(data.user);
+        cleanUser(data.user);
         cleanExtend(data);
-		cleanScreenNameSuffix(data);
+		removeVipSuffix(data);
     };
 
     for (let i = array.length - 1; i >= 0; i--) {
@@ -174,7 +174,7 @@ function processItems(array = []) {
 
         // 递归处理嵌套 items
         if (Array.isArray(item.items)) {
-            processItems(item.items);
+            processFeedArray(item.items);
         }
 
         // 过滤广告和无用模块
@@ -197,8 +197,9 @@ function processItems(array = []) {
 			|| data?.is_ad_card === 1
             || data?.card_id === "search_card"
             || item?.category === "wboxcard" // 帖子下方广告横幅
-            || (item?.category === "group" && item?.type === "vertical" && item?.header?.title?.content === "相关推荐" )
-			|| (item?.category === "group" && item?.type === "vertical" && item?.header?.title?.content === "博主好物种草" )
+            // || (item?.category === "group" && item?.type === "vertical" && item?.header?.title?.content === "相关推荐" )
+			// || (item?.category === "group" && item?.type === "vertical" && item?.header?.title?.content === "博主好物种草" )
+			|| (item?.category === "group" && item?.type === "vertical" && item?.header) // 统一去掉有header的
             || (item?.category === "detail" && item?.type === "trend") // 帖子左下转发广告
         ) {
             array.splice(i, 1);
@@ -223,59 +224,59 @@ function processItems(array = []) {
 // 帖子评论区新接口 2025/10/15
 // mix 关注的人关注的帖子 
 if (url.includes("statuses/container_detail_comment") || url.includes("statuses/container_detail_mix") ) {
-  if (Array.isArray(obj.items)) removeComments(obj.items);
+  if (Array.isArray(obj.items)) processCommentArray(obj.items);
 }
 
 //帖子左下角转发目录新接口 2025/10/15
 else if (url.includes("statuses/container_detail_forward")) {
-	if (obj.items) processItems(obj.items);
+	if (obj.items) processFeedArray(obj.items);
 }
 
 // 帖子详情新接口 2025/10/15
 else if (url.includes("statuses/container_detail")) {
-	// 删除除帖子内容外的其他卡片
-  	 if (Array.isArray(obj?.pageHeader?.data?.items))  processItems(obj.pageHeader.data.items);
+	// 删除除帖子内容和帖子图片外的其他卡片信息
+  	 if (Array.isArray(obj?.pageHeader?.data?.items))  processFeedArray(obj.pageHeader.data.items);
 	// 帖子内容
   	if (obj?.detailInfo?.status) {
-	  	cleanUserData(obj.detailInfo.status.user);
+	  	cleanUser(obj.detailInfo.status.user);
 	  	cleanExtend(obj.detailInfo.status);
   	};
     if (obj?.detailInfo?.extend) {
-	  	cleanUserData(obj.detailInfo.extend.user);
+	  	cleanUser(obj.detailInfo.extend.user);
 	  	cleanExtend(obj.detailInfo.extend);
   	};
 }
 
 else if (url.includes("comments/build_comments")) {
   // 折叠评论区处理
-  if (Array.isArray(obj.datas)) removeComments(obj.datas);
-  if (Array.isArray(obj.root_comments)) removeComments(obj.root_comments);
-  if (Array.isArray(obj.comments)) removeComments(obj.comments);
+  if (Array.isArray(obj.datas)) processCommentArray(obj.datas);
+  if (Array.isArray(obj.root_comments)) processCommentArray(obj.root_comments);
+  if (Array.isArray(obj.comments)) processCommentArray(obj.comments);
   // 处理评论项
-  if (obj?.rootComment) cleanCommentItem(obj.rootComment);
+  if (obj?.rootComment) cleanComment(obj.rootComment);
   // 超话帖子评论项
-  if (obj?.status) cleanCommentItem(obj.status);
+  if (obj?.status) cleanComment(obj.status);
 }
 	
 else if (url.includes("statuses/container_timeline") || url.includes("profile/container_timeline")) {
   if (obj?.loadedInfo) delete obj.loadedInfo.headers;
   // 信息流和超话流
-  processItems(obj.items);
+  processFeedArray(obj.items);
 } 
 
 else if (url.includes("messageflow/notice")) {
-  processItems(obj.messages);
+  processFeedArray(obj.messages);
 }
 
 else if (url.includes("search/finder")) {
-	if (Array.isArray(obj?.header?.data?.items)) processItems(obj.header.data.items);  // 发现页热搜下方滚动横幅和滚动横幅下方广告
+	if (Array.isArray(obj?.header?.data?.items)) processFeedArray(obj.header.data.items);  // 发现页热搜下方滚动横幅和滚动横幅下方广告
 	if (obj?.channelInfo) delete obj.channelInfo.moreChannels;	//下拉功能入口
   	if (Array.isArray(obj?.channelInfo?.channels)) {
     	const allowedtitles = new Set(['热点','热问', '热转', '指数']);	// 发现页热搜下方tab导航筛选
     	obj.channelInfo.channels = obj.channelInfo.channels.filter(channel => allowedtitles.has(channel.title));
 	};
 	const payload = obj.channelInfo?.channels?.find(c => c?.payload)?.payload;  // 自动提取tab下的下的信息流
-	if (Array.isArray(payload?.items)) processItems (payload.items);  // 处理提取的信息流 
+	if (Array.isArray(payload?.items)) processFeedArray (payload.items);  // 处理提取的信息流 
 	if (payload?.loadedInfo?.searchBarContent) delete payload.loadedInfo.searchBarContent;	// 处理大家正在搜
 	if (payload?.loadedInfo?.headerBack?.channelStyleMap) delete payload.loadedInfo.headerBack.channelStyleMap;	// 搜索框主题 下拉背景
 }
@@ -283,19 +284,19 @@ else if (url.includes("search/finder")) {
 else if (url.includes("search/container_discover") || url.includes("search/container_timeline") ) {
 	// container_timeline 热点信息流  
 	// container_discover 发现header覆盖
-	processItems(obj.items);
+	processFeedArray(obj.items);
 	if (obj?.loadedInfo?.searchBarContent) delete obj.loadedInfo.searchBarContent;	// 处理大家正在搜
 	if (obj?.loadedInfo?.theme) delete obj.loadedInfo.theme;
 	if (obj?.loadedInfo?.headerBack?.channelStyleMap) delete obj.loadedInfo.headerBack.channelStyleMap;	// 搜索框主题 下拉背景
 }
 
 else if (url.includes("2/flowlist") || url.includes("2/statuses/longtext_show_batch")) { // 热转||长文本动态
-	if (obj?.items) processItems(obj.items);
-	if (obj?.longtexts?.data) processItems(obj.longtexts.data);
+	if (obj?.items) processFeedArray(obj.items);
+	if (obj?.longtexts?.data) processFeedArray(obj.longtexts.data);
 }
 	
 else if (url.includes("searchall")) {
-  processItems(obj.items);
+  processFeedArray(obj.items);
 } 
 
 $done({ body: JSON.stringify(obj) });
