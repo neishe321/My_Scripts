@@ -12,7 +12,7 @@ let obj = JSON.parse($response.body);
 // cleanComment(item) 单个评论清理逻辑
 // removeVipSuffix(data)  清理 data.screen_name_suffix_new 中的 VIP 图标、超话标识等(主要是超话信息流)
 // processCommentArray(array = []) 评论区列表清理逻辑
-// processFeedArray(array = []) 信息流列表清理逻辑 --> 内置清理主逻辑函数 cleanData()
+// processFeedArray(array = []) 信息流列表清理逻辑 
 
 function cleanExtend(obj) {
     // 帖子详情页广告清理逻辑
@@ -115,7 +115,7 @@ function processCommentArray(array = []) {
 
 function processFeedArray(array = []) {
     // 信息流列表清理逻辑
-    if (!Array.isArray(array)) return array;
+    if (!Array.isArray(array)) return;
 
     const groupItemIds = new Set([
         "card86_card11_cishi",
@@ -128,9 +128,9 @@ function processFeedArray(array = []) {
 
     const cardItemIds = new Set([
         "finder_channel", // 发现页热搜滚动横幅下方广告
-        "finder_window", // 发现页热搜下方滚动横幅
+        "finder_window",  // 发现页热搜下方滚动横幅
         "tongcheng_usertagwords",
-        "top_searching", // 帖子详情下方大家都在搜 2025/10/15
+        "top_searching",  // 帖子详情下方大家都在搜 2025/10/15
     ]);
 
     const keywords = [
@@ -147,39 +147,11 @@ function processFeedArray(array = []) {
         // "mid",
     ];
 
-    // 清理主逻辑函数 cleanData
-    const cleanData = (data) => {
-        if (!data) return;
-
-        // // 删除多余字段
-        // [
-        //     "semantic_brand_params",
-        //     "common_struct",
-        //     "ad_tag_nature",
-        //     "tag_struct",
-        //     "pic_bg_new",
-        //     "pic_bg_new_dark",
-        //     "buttons",
-        //     "extra_button_info",
-        //     "page_info",
-        // ].forEach((key) => delete data[key]);
-
-        // 清理用户信息与扩展数据
-        cleanUser(data.user);
-        cleanExtend(data);
-        removeVipSuffix(data);
-    };
-
     for (let i = array.length - 1; i >= 0; i--) {
         const item = array[i];
         const data = item?.data || item?.status; // 兼容 data / status
 
-        // 递归处理嵌套 items
-        if (Array.isArray(item.items)) {
-            processFeedArray(item.items);
-        }
-
-        // 过滤广告和无用模块
+        // ------------------ 1️⃣ 外层 item 判断是否删除 ------------------
         if (
             item?.item_category === "hot_ad" ||
             item?.item_category === "trend" ||
@@ -198,29 +170,31 @@ function processFeedArray(array = []) {
             data?.card_type === 227 || // 此条微博讨论情况
             (item?.category === "group" && groupItemIds.has(item?.itemId)) ||
             (item?.category === "card" && cardItemIds.has(data?.itemid)) ||
-            (item?.itemId && keywords.some((k) => String(item.itemId).includes(k))) ||
-            (data?.itemid && keywords.some((k) => String(data.itemid).includes(k)))
-            // || (item?.category === "group" && item?.type === "vertical" && item?.header?.title?.content === "相关推荐" )
-            // || (item?.category === "group" && item?.type === "vertical" && item?.header?.title?.content === "博主好物种草" )
-            || (item?.category === "group" && item?.type === "vertical" && item?.header) // 统一去掉有header的
-            || (item?.category === "detail" && item?.type === "trend") // 帖子左下转发广告
+            (item?.itemId && keywords.some(k => String(item.itemId).includes(k))) ||
+            (data?.itemid && keywords.some(k => String(data.itemid).includes(k))) ||
+            // || (item?.category === "group" && item?.type === "vertical" && item?.header?.title?.content === "相关推荐")
+            // || (item?.category === "group" && item?.type === "vertical" && item?.header?.title?.content === "博主好物种草")
+            (item?.category === "group" && item?.type === "vertical" && item?.header) || // 统一去掉有header的
+            (item?.category === "detail" && item?.type === "trend") // 帖子左下转发广告
         ) {
             array.splice(i, 1);
             continue;
         }
 
-        // 清理主要数据
-        cleanData(data);
+        // ------------------ 2️⃣ 保留下来的 item 清理 data/status ------------------
+        if (data) {
+            cleanUser(data.user);        // 清理用户信息
+            cleanExtend(data);           // 清理帖子详情广告及多余字段
+            removeVipSuffix(data);       // 清理 data.screen_name_suffix_new 中的 VIP 图标、超话标识等
+        }
 
-        // 清理子项内数据
+        // ------------------ 3️⃣ 如果 item 有子 items，递归调用 ------------------
         if (Array.isArray(item.items)) {
-            for (let j = 0; j < item.items.length; j++) {
-                const subData = item.items[j]?.data || item.items[j]?.status;
-                cleanData(subData);
-            }
+            processFeedArray(item.items);
         }
     }
 }
+
 
 // ------------------ 处理不同 API 的响应 ------------------
 
