@@ -43,14 +43,15 @@ function cleanExtend(obj) {
     delete obj.detail_top_right_button; // 右上角搜索
 
     delete obj?.title_source?.flag_img;    // tab超话的信息流头像的超话等级
-    delete obj?.header_info?.avatar?.flag_img;
+    delete obj?.title_source?.right_icon;    // 超话帖子详情 最上边超话等级图标2
     if (obj?.title_source?.show_verified) obj.title_source.show_verified = false;
+    delete obj?.header_info?.avatar?.flag_img;
     if (obj?.header_info?.show_verified) obj.header_info.show_verified = false;
+    
     delete obj?.pageinfo?.icon_list;    // 超话帖子详情用户后边一串图标 title_more
     delete obj?.pageinfo?.title_more;   // 超话帖子详情 最上边超话等级图标1
     delete obj?.pageinfo?.button;    // 关注按钮
     // delete obj?.pageinfo?.desc_more;   // 帖子和粉丝量
-    delete obj?.title_source?.right_icon;    // 超话帖子详情 最上边超话等级图标2
 }
 
 function cleanUser(user) {
