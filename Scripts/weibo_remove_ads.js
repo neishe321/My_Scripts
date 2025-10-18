@@ -44,8 +44,8 @@ function cleanExtend(obj) {
 
     delete obj?.title_source?.flag_img;    // tab超话的信息流头像的超话等级
     delete obj?.header_info?.avatar?.flag_img;
-    if (obj?.title_source?.show_verified) obj?.title_source?.show_verified = false;
-    if (obj?.header_info?.show_verified) obj?.header_info?.show_verified = false;
+    if (obj?.title_source?.show_verified) obj.title_source.show_verified = false;
+    if (obj?.header_info?.show_verified) obj.header_info.show_verified = false;
 }
 
 function cleanUser(user) {
