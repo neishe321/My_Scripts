@@ -1,9 +1,7 @@
 // 修改时间：2025/10/15
 
-let url = $request.url;
-if (!$response.body) {
-    $done({});
-}
+const url = $request.url;
+if (!$response|| !$response.body)  $done({});
 let obj = JSON.parse($response.body);
 
 // ------------------ 函数定义 --------------------
