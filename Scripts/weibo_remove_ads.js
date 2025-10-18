@@ -41,6 +41,9 @@ function cleanExtend(obj) {
     delete obj.page_info;
     delete obj.sharecontent?.additional_indication_icon_url; // 底部按钮贴图广告
     delete obj.detail_top_right_button; // 右上角搜索
+
+    delete obj.title_source.flag_img;    // tab超话的信息流头像的超话等级
+    delete obj.header_info.avatar.flag_img;
 }
 
 function cleanUser(user) {
@@ -128,6 +131,7 @@ function processFeedArray(array = []) {
         "finder_channel", // 发现页热搜滚动横幅下方广告
         "finder_window",  // 发现页热搜下方滚动横幅
         "tongcheng_usertagwords",
+        // "mine_topics",    // 我的超话列表一键签到
         "top_searching",  // 帖子详情下方大家都在搜 2025/10/15
     ]);
 
@@ -235,12 +239,12 @@ else if (url.includes("comments/build_comments")) {
 
 else if (url.includes("statuses/container_timeline") || url.includes("profile/container_timeline")) {
     if (obj?.loadedInfo) delete obj.loadedInfo.headers;
-    // 信息流和超话流
-    processFeedArray(obj.items);
+    // 信息流和超话流  statuses/container_timeline_top? tab 超话社区
+    if (obj.items) processFeedArray(obj.items);
 }
 
 else if (url.includes("messageflow/notice")) {
-    processFeedArray(obj.messages);
+    if (obj.messages) processFeedArray(obj.messages);
 }
 
 else if (url.includes("search/finder")) {
@@ -271,7 +275,7 @@ else if (url.includes("2/flowlist") || url.includes("2/statuses/longtext_show_ba
 }
 
 else if (url.includes("searchall")) {
-    processFeedArray(obj.items);
+    if (obj.items) processFeedArray(obj.items);
 }
 
 $done({ body: JSON.stringify(obj) });
