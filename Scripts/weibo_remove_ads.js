@@ -222,12 +222,12 @@ else if (url.includes("statuses/container_detail")) {
     if (obj?.detailInfo?.status) {
         cleanUser(obj.detailInfo.status.user);
         cleanExtend(obj.detailInfo.status);
-        oveVipSuffix(obj.detailInfo.status);
+        removeVipSuffix(obj.detailInfo.status);
     }
     if (obj?.detailInfo?.extend) {
         cleanUser(obj.detailInfo.extend.user);
         cleanExtend(obj.detailInfo.extend);
-        oveVipSuffix(obj.detailInfo.extend); 
+        removeVipSuffix(obj.detailInfo.extend); 
     }
 }
 
