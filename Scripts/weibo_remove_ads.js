@@ -222,12 +222,12 @@ else if (url.includes("statuses/container_detail")) {
     if (obj?.detailInfo?.status) {
         cleanUser(obj.detailInfo.status.user);
         cleanExtend(obj.detailInfo.status);
-        // oveVipSuffix(obj.detailInfo.status); // 超话帖子详情去头像各种等级和标签
+        oveVipSuffix(obj.detailInfo.status);
     }
     if (obj?.detailInfo?.extend) {
         cleanUser(obj.detailInfo.extend.user);
         cleanExtend(obj.detailInfo.extend);
-        // oveVipSuffix(obj.detailInfo.extend); 
+        oveVipSuffix(obj.detailInfo.extend); 
     }
 }
 
