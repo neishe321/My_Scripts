@@ -88,7 +88,7 @@ function removeVipSuffix(data) {
     if (!Array.isArray(data?.screen_name_suffix_new)) return;
     for (const suffix of data.screen_name_suffix_new) {
         if (Array.isArray(suffix.icons)) {
-            suffix.icons = suffix.icons.filter(icon => icon?.type !== "vip");
+            suffix.icons = suffix.icons.filter(icon => icon?.type === "chaohua");
         }
     }
 }
