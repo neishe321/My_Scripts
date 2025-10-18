@@ -81,8 +81,8 @@ function removeVipSuffix(data) {
     // 清理 data.screen_name_suffix_new 中的 VIP 图标、超话标识等
     if (!Array.isArray(data?.screen_name_suffix_new)) return;
     for (const suffix of data.screen_name_suffix_new) {
-        if (Array.isArray(suffix.icon)) {
-            suffix.icon = suffix.icon.filter(icon => icon?.type !== "vip");
+        if (Array.isArray(suffix.icons)) {
+            suffix.icons = suffix.icons.filter(icon => icon?.type !== "vip");
         }
     }
 }
