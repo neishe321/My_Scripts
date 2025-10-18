@@ -50,7 +50,7 @@ function cleanExtend(obj) {
     
     delete obj?.pageinfo?.icon_list;    // 超话帖子详情用户后边一串图标 title_more
     delete obj?.pageinfo?.title_more;   // 超话帖子详情 最上边超话等级图标1
-    delete obj?.pageinfo?.button;    // 关注按钮
+    // delete obj?.pageinfo?.button;    // 关注按钮
     // delete obj?.pageinfo?.desc_more;   // 帖子和粉丝量
 }
 
