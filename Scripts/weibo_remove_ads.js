@@ -39,11 +39,11 @@ function cleanExtend(obj) {
     delete obj.buttons;
     delete obj.extra_button_info;
     delete obj.page_info;
-    delete obj.sharecontent?.additional_indication_icon_url; // 底部按钮贴图广告
+    delete obj?.sharecontent?.additional_indication_icon_url; // 底部按钮贴图广告
     delete obj.detail_top_right_button; // 右上角搜索
 
-    delete obj.title_source?.flag_img;    // tab超话的信息流头像的超话等级
-    delete obj.header_info?.avatar?.flag_img;
+    delete obj?.title_source?.show_verified;    // tab超话的信息流头像的超话等级
+    delete obj?.header_info?.show_verified;
 }
 
 function cleanUser(user) {
