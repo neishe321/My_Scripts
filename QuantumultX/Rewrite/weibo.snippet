@@ -3,7 +3,7 @@
 #!author = neishe321
 #!data = 2025/10/15
 
-hostname=api.weibo.cn, new.vip.weibo.cn
+hostname = *api.weibo.cn, new.vip.weibo.cn
 
 # > 开屏广告
 host, wbapp.uve.weibo.com, reject
@@ -35,6 +35,7 @@ host-suffix, biz.weibo.com, reject
 
 # > 微博净化
 ^https?:\/\/api\.weibo\.cn\/\d\/(statuses\/container_detail|comments\/build_comments|statuses\/container_timeline|profile\/container_timeline|messageflow\/notice|search\/finder|search\/container_discover|search\/container_timeline|flowlist|statuses\/longtext_show_batch|searchall) url script-response-body https://raw.githubusercontent.com/neishe321/My_Scripts/main/Scripts/weibo_remove_ads.js
+
 
 
 
