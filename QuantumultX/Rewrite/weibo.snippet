@@ -5,6 +5,14 @@
 
 hostname=api.weibo.cn, new.vip.weibo.cn
 
+# > 开屏广告
+host, wbapp.uve.weibo.com, reject
+host, sdkapp.uve.weibo.com, reject
+host, bootpreload.uve.weibo.com, reject
+host, bootrealtime.uve.weibo.com, reject
+host-suffix, biz.weibo.com, reject
+
+# > 各种推广
 ^https?:\/\/api\.weibo\.cn\/\d+\/push\/active url reject-200
 ^https?:\/\/api\.weibo\.cn\/\d+\/client\/addlog_batch url reject-200
 ^https?:\/\/api\.weibo\.cn\/\d+\/container\/asyn url reject-200
@@ -14,19 +22,19 @@ hostname=api.weibo.cn, new.vip.weibo.cn
 ^https?:\/\/api\.weibo\.cn\/\d+\/statuses\/container_positive url reject-200
 ^https?:\/\/api\.weibo\.cn\/\d+\/!\/was\/finder\/searchbarchange url reject-200
 
-# 微博净化
+# > tab标签处理
+^https?:\/\/api\.weibo\.cn\/\d\/groups\/allgroups\/v\d url jsonjq-response-body '.pageDatas |= map(select(.pageDataType != "homeExtend")) | (.pageDatas[0].categories[0].pageDatas |= del(.[0]))'
+# > 精简我的页面
+^https?:\/\/api\.weibo\.cn\/\d\/profile\/me url jsonjq-response-body '.items |= (.[0:2] | if length > 0 and .[0].header? then .[0].header |= del(.vipIcon, .vipView) else . end | if length > 1 and .[1].items? then .[1].items |= .[0:4] else . end)'
+# > 去除超话广场
+^https?:\/\/api\.weibo\.cn\/\d\/\!\/huati\/discovery_home_bottom_channels url jsonjq-response-body '.button_configs? |= empty | .channelInfo.channel_list |= if length > 1 then del(.[1]) else . end'
+# > 去除视频流广告
+^https?:\/\/api\.weibo\.cn\/\d\/video\/tiny_stream_video_list url jsonjq-response-body '.statuses |= map(if (.is_ad == 1 or .mblogtypename == "广告") then empty else . end)'
+# > 解锁会员图标
+^https?:\/\/new\.vip\.weibo\.cn\/aj\/appicon\/list url jsonjq-response-body '.data.list |= map(if has("cardType") then .cardType = "2" else . end | if has("tag") then .tag = "" else . end)'
+
+# > 微博净化
 ^https?:\/\/api\.weibo\.cn\/\d\/(statuses\/container_detail|comments\/build_comments|statuses\/container_timeline|profile\/container_timeline|messageflow\/notice|search\/finder|search\/container_discover|search\/container_timeline|flowlist|statuses\/longtext_show_batch|searchall) url script-response-body https://raw.githubusercontent.com/neishe321/My_Scripts/main/Scripts/weibo_remove_ads.js
 
-[Body Rewrite]
-# > tab标签处理
-http-response-jq ^https?:\/\/api\.weibo\.cn\/\d\/groups\/allgroups\/v\d '.pageDatas |= map(select(.pageDataType != "homeExtend")) | (.pageDatas[0].categories[0].pageDatas |= del(.[0]))'
-# > 精简我的页面
-http-response-jq ^https?:\/\/api\.weibo\.cn\/\d\/profile\/me '.items |= (.[0:2] | if length > 0 and .[0].header? then .[0].header |= del(.vipIcon, .vipView) else . end | if length > 1 and .[1].items? then .[1].items |= .[0:4] else . end)'
-# > 去除超话广场
-http-response-jq ^https?:\/\/api\.weibo\.cn\/\d\/\!\/huati\/discovery_home_bottom_channels '.button_configs? |= empty | .channelInfo.channel_list |= if length > 1 then del(.[1]) else . end'
-# > 去除视频流广告
-http-response-jq ^https?:\/\/api\.weibo\.cn\/\d\/video\/tiny_stream_video_list '.statuses |= map(if (.is_ad == 1 or .mblogtypename == "广告") then empty else . end)'
-# > 解锁会员图标
-http-response-jq ^https?:\/\/new\.vip\.weibo\.cn\/aj\/appicon\/list '.data.list |= map(if has("cardType") then .cardType = "2" else . end | if has("tag") then .tag = "" else . end)'
 
 
