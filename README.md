@@ -1,10 +1,7 @@
-## Surge模块导航
+## 微博去广告导航
 
 | 功能           | 链接                                                                                             | 作者       | 状态     | 更新时间                |
 |----------------|--------------------------------------------------------------------------------------------------|------------|----------|------------------------|
-| 微博去广告     | [weibo.sgmodule](https://raw.githubusercontent.com/neishe321/My_Scripts/refs/heads/main/Surge/Module/weibo.sgmodule) | neishe321  | ✅ 正常  | 2025/10/15                      |
-| 微博_intl去广告| [weibo_intl.sgmodule](https://raw.githubusercontent.com/neishe321/My_Scripts/refs/heads/main/Surge/Module/weibo_intl.sgmodule) | neishe321  | ❌ 停止更新  | *                      |
-| 555影视去广告  | [555ys.sgmodule](https://raw.githubusercontent.com/neishe321/My_Scripts/refs/heads/main/Surge/Module/555ys.sgmodule) | neishe321  | ❌ 停止更新 | *                      |
-| 自用APP去开屏  | [AdBlock.sgmodule](https://raw.githubusercontent.com/neishe321/My_Scripts/refs/heads/main/Surge/Module/AdBlock.sgmodule) | neishe321  | ❌ 停止更新  |   *      |
+| 微博去广告     | [weibo.sgmodule](https://raw.githubusercontent.com/neishe321/My_Scripts/refs/heads/main/Surge/Module/weibo.sgmodule) | neishe321  | ✅ 正常  | 2025/10/30                      |
+|微博去广告      | [weibo.snippet](https://raw.githubusercontent.com/neishe321/My_Scripts/refs/heads/main/QuantumultX/Rewrite/weibo.snippet)  | neishe321  | ✅ 正常  | 2025/10/30                      |
 
-*注：需要解锁surge的Body Rewrite功能*
