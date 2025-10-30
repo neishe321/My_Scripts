@@ -2,7 +2,7 @@
 #!desc = 去除微博广告，移除非必要模块
 #!author = neishe321
 #!category = Neishe
-#!date = 2025/10/15  
+#!date = 2025/10/30
 
 [Rule]
 # > 开屏广告
@@ -22,6 +22,7 @@ DOMAIN-SUFFIX,biz.weibo.com,REJECT,pre-matching,no-resolve
 ^https?:\/\/api\.weibo\.cn\/\d+\/live\/media_homelist  data-type=text  data="{}"  status-code=200  
 ^https?:\/\/api\.weibo\.cn\/\d+\/statuses\/container_positive  data-type=text  data="{}"  status-code=200  
 ^https?:\/\/api\.weibo\.cn\/\d+\/!\/was\/finder\/searchbarchange  data-type=text  data="{}"  status-code=200  
+^https?:\/\/api\.weibo\.cn\/\d+\/search\/finder_nav_polling  data-type=text  data="{}"  status-code=200  
 
 
 [Body Rewrite]
