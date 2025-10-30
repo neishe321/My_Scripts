@@ -174,7 +174,7 @@ function processFeedArray(array = []) {
             data?.desc === "相关搜索" ||
             data?.card_ad_style === 1 ||
             data?.is_ad_card === 1 ||
-            data?.promotion?.ad === “ad” ||
+            data?.promotion?.ad === "ad" ||
             data?.promotion?.adtype === 1 ||    // 热搜下方横幅漏网之鱼
             data?.is_detail === true || // 可能误杀
             data?.card_id === "search_card" ||
