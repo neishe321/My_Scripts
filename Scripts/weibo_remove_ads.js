@@ -1,4 +1,4 @@
-// 修改时间：2025/10/30
+// 更新时间：2025/10/30
 
 const url = $request.url;
 if (!$response|| !$response.body)  $done({});
