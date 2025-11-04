@@ -27,8 +27,7 @@ DOMAIN-SUFFIX,biz.weibo.com,REJECT,pre-matching,no-resolve
 
 [Body Rewrite]
 # > tab标签处理
-# http-response-jq ^https?:\/\/api\.weibo\.cn\/\d\/groups\/allgroups\/v\d '.pageDatas |= map(select(.pageDataType != "homeExtend")) | (.pageDatas[0].categories[0].pageDatas |= del(.[0]))'
-http-response-jq ^https?:\/\/api\.weibo\.cn\/\d\/groups\/allgroups\/v\d '.pageDatas |= map(select(.pageDataType != "homeExtend" and .pageDataType != "homeHot")) | (.pageDatas[0].categories[0].pageDatas |= del(.[0]))'
+http-response-jq ^https?:\/\/api\.weibo\.cn\/\d\/groups\/allgroups\/v\d '.pageDatas |= map(select(.pageDataType != "homeExtend")) | (.pageDatas[0].categories[0].pageDatas |= del(.[0]))'
 # > 精简我的页面
 http-response-jq ^https?:\/\/api\.weibo\.cn\/\d\/profile\/me '.items |= (.[0:2] | if length > 0 and .[0].header? then .[0].header |= del(.vipIcon, .vipView) else . end | if length > 1 and .[1].items? then .[1].items |= .[0:4] else . end)'
 # > 去除超话广场
