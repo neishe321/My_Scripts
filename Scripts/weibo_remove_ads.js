@@ -1,4 +1,8 @@
-// 更新时间：2025/10/30
+/**
+ * @author neishe321
+ * @function 微博去广告
+ * @date 2025-10-30
+ */
 
 const url = $request.url;
 if (!$response|| !$response.body)  $done({});
@@ -161,7 +165,6 @@ function processFeedArray(array = []) {
         const item = array[i];
         const data = item?.data || item?.status; // 兼容 data / status
 
-        // ------------------ 1️⃣ 外层 item 判断是否删除 ------------------
         if (
             item?.item_category === "hot_ad" ||
             item?.item_category === "trend" ||
@@ -193,14 +196,14 @@ function processFeedArray(array = []) {
             continue;
         }
 
-        // ------------------ 2️⃣ 保留下来的 item 清理 data/status ------------------
+        // 清理 data/status
         if (data) {
             cleanUser(data.user);        // 清理用户信息
             cleanExtend(data);           // 清理帖子详情广告及多余字段
             removeVipSuffix(data);       // 清理 data.screen_name_suffix_new 中的 VIP 图标、超话标识等
         }
 
-        // ------------------ 3️⃣ 如果 item 有子 items，递归调用 ------------------
+        // 递归调用
         if (Array.isArray(item.items)) {
             processFeedArray(item.items);
         }
