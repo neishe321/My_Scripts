@@ -8,13 +8,14 @@ const url = $request.url;
 if (!$response|| !$response.body)  $done({});
 let obj = JSON.parse($response.body);
 
-// ------------------ 函数定义 --------------------
-// cleanExtend(obj) 帖子详情页广告清理逻辑
-// cleanUser(user) 用户信息清理逻辑
-// cleanComment(item) 单个评论清理逻辑
-// removeVipSuffix(data)  清理 data.screen_name_suffix_new 中的 VIP 图标、超话标识等(主要是超话信息流)
-// processCommentArray(array = []) 评论区列表清理逻辑
-// processFeedArray(array = []) 信息流列表清理逻辑 
+/**
+ * cleanExtend(obj) 帖子详情页广告清理逻辑
+ * cleanUser(user) 用户信息清理逻辑
+ * cleanComment(item) 单个评论清理逻辑
+ * removeVipSuffix(data)  清理 data.screen_name_suffix_new 中的 VIP 图标、超话标识等(主要是超话信息流)
+ * processCommentArray(array = []) 评论区列表清理逻辑
+ * processFeedArray(array = []) 信息流列表清理逻辑 
+ */
 
 function cleanExtend(obj) {
     // 帖子详情页广告清理逻辑
@@ -211,7 +212,7 @@ function processFeedArray(array = []) {
 }
 
 
-// ------------------ 处理不同 API 的响应 ------------------
+// 处理不同 API 的响应 
 
 // 帖子评论区新接口 2025/10/15
 // mix 关注的人关注的帖子
@@ -273,7 +274,7 @@ else if (url.includes("search/finder")) {
     const payload = obj.channelInfo?.channels?.find(c => c?.payload)?.payload; // 自动提取tab下的下的信息流
     if (Array.isArray(payload?.items)) processFeedArray(payload.items); // 处理提取的信息流
     if (payload?.loadedInfo?.searchBarContent) delete payload.loadedInfo.searchBarContent; // 处理大家正在搜
-    if (payload?.loadedInfo?.headerBack?.channelStyleMap) delete payload.loadedInfo.headerBack.channelStyleMap; // 搜索框主题 下拉背景
+    if (payload?.loadedInfo?.headerBack) delete payload.loadedInfo.headerBack; // 搜索框主题 下拉背景
 }
 
 else if (url.includes("search/container_discover") || url.includes("search/container_timeline")) {
@@ -282,7 +283,7 @@ else if (url.includes("search/container_discover") || url.includes("search/conta
     processFeedArray(obj.items);
     if (obj?.loadedInfo?.searchBarContent) delete obj.loadedInfo.searchBarContent; // 处理大家正在搜
     if (obj?.loadedInfo?.theme) delete obj.loadedInfo.theme;
-    if (obj?.loadedInfo?.headerBack?.channelStyleMap) delete obj.loadedInfo.headerBack.channelStyleMap; // 搜索框主题 下拉背景
+    if (obj?.loadedInfo?.headerBack) delete obj.loadedInfo.headerBack; // 搜索框主题 下拉背景
 }
 
 else if (url.includes("2/flowlist") || url.includes("2/statuses/longtext_show_batch")) { // 热转||长文本动态
