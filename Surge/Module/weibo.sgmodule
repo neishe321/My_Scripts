@@ -15,6 +15,7 @@ DOMAIN-SUFFIX,biz.weibo.com,REJECT,pre-matching,no-resolve
 [Map Local]
 # > 各种推广
 ^https?:\/\/api\.weibo\.cn\/\d+\/push\/active  data-type=text  data="{}"  status-code=200  
+^https?:\/\/api\.weibo\.cn\/\d+\/push\/info  data-type=text  data="{}"  status-code=200  
 ^https?:\/\/api\.weibo\.cn\/\d+\/client\/addlog_batch  data-type=text  data="{}"  status-code=200  
 ^https?:\/\/api\.weibo\.cn\/\d+\/container\/asyn  data-type=text  data="{}"  status-code=200  
 ^https?:\/\/api\.weibo\.cn\/\d+\/shproxy\/chaohua\/discovery\/searchactive  data-type=text  data="{}"  status-code=200  
